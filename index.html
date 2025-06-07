@@ -1,0 +1,2425 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>شركة إنترنت - خدمات متطورة</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --transition: all 0.3s ease;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            --radius: 10px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e7f1 100%);
+            color: var(--dark);
+            line-height: 1.6;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(90deg, var(--primary) 0%, #1a2530 100%);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .logo i {
+            color: var(--secondary);
+        }
+
+        .navbar {
+            display: flex;
+            list-style: none;
+        }
+
+        .navbar li {
+            margin: 0 5px;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: var(--radius);
+            transition: var(--transition);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.9rem;
+        }
+
+        .navbar a:hover, .navbar a.active {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .navbar a i {
+            font-size: 1rem;
+        }
+
+        /* Mobile Menu Button */
+        .mobile-menu-btn {
+            display: none;
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1517433456452-f9633a875f6f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 65vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+            animation: fadeInUp 1.2s ease;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--secondary);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            animation: fadeInUp 1.4s ease;
+        }
+
+        .cta-button:hover {
+            background: #2980b9;
+            transform: translateY(-3px);
+        }
+
+        /* Main Content Sections */
+        .section-title {
+            text-align: center;
+            margin: 30px 0;
+            font-size: 1.8rem;
+            color: var(--primary);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--secondary);
+            border-radius: 2px;
+        }
+
+        .services {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .service-card {
+            background: white;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .service-img {
+            height: 180px;
+            overflow: hidden;
+        }
+
+        .service-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .service-card:hover .service-img img {
+            transform: scale(1.05);
+        }
+
+        .service-content {
+            padding: 20px;
+        }
+
+        .service-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+            color: var(--primary);
+        }
+
+        .service-content p {
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+
+        .service-link {
+            display: inline-block;
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            font-size: 0.95rem;
+        }
+
+        /* Content Sections */
+        .content-section {
+            display: none;
+            padding: 30px 0;
+            min-height: 60vh;
+        }
+
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        /* Maps Section */
+        .maps-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .map-item {
+            background: white;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            cursor: pointer;
+            text-align: center;
+            display: block;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .map-item:hover {
+            transform: translateY(-3px);
+        }
+
+        .map-number {
+            background: var(--primary);
+            color: white;
+            padding: 8px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .map-name {
+            padding: 15px 10px;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        /* Offers Section */
+        .offers-form {
+            background: white;
+            max-width: 600px;
+            margin: 30px auto;
+            padding: 25px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--primary);
+            font-size: 0.95rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            border-color: var(--secondary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn:hover {
+            background: #2980b9;
+        }
+
+        .results-container {
+            margin-top: 30px;
+            display: none;
+        }
+
+        .results-container.active {
+            display: block;
+        }
+
+        .offer-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: var(--shadow);
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .offer-icon {
+            background: var(--secondary);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .offer-content h3 {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            color: var(--primary);
+        }
+
+        .offer-content p {
+            color: #666;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+
+        .offer-price {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--accent);
+            margin-top: 8px;
+        }
+
+        /* VLANs Section */
+        .vlan-container {
+            max-width: 600px;
+            margin: 30px auto;
+            background: white;
+            padding: 25px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .vlan-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .vlan-result {
+            margin-top: 25px;
+            font-size: 1.3rem;
+            padding: 15px;
+            background: var(--light);
+            border-radius: var(--radius);
+            display: none;
+        }
+
+        .vlan-result.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        /* Materials Section */
+        .categories {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .category-btn {
+            padding: 10px 20px;
+            background: white;
+            border: 2px solid var(--secondary);
+            border-radius: var(--radius);
+            color: var(--secondary);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+
+        .category-btn:hover, .category-btn.active {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .materials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .material-card {
+            background: white;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .material-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .material-img {
+            height: 180px;
+            overflow: hidden;
+        }
+
+        .material-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .material-card:hover .material-img img {
+            transform: scale(1.05);
+        }
+
+        .material-content {
+            padding: 20px;
+        }
+
+        .material-content h3 {
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            color: var(--primary);
+        }
+
+        .material-price {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--accent);
+            margin: 8px 0;
+        }
+
+        .material-specs {
+            color: #666;
+            margin-bottom: 12px;
+            font-size: 0.9rem;
+        }
+
+        .material-specs li {
+            margin-bottom: 6px;
+            list-style-position: inside;
+        }
+
+        /* Contact Section */
+        .contact-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .contact-title {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            color: var(--primary);
+        }
+
+        .contact-methods {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .contact-method {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            transition: var(--transition);
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .contact-method:hover {
+            transform: translateY(-3px);
+        }
+
+        .contact-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            transition: var(--transition);
+        }
+
+        .instagram {
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+        }
+
+        .whatsapp {
+            background: linear-gradient(45deg, #25d366, #128c7e);
+        }
+
+        .contact-method span {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary);
+            color: white;
+            padding: 30px 0 15px;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            position: relative;
+            padding-bottom: 8px;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--secondary);
+        }
+
+        .footer-column p {
+            margin-bottom: 12px;
+            color: #ddd;
+            font-size: 0.9rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 8px;
+        }
+
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #aaa;
+            font-size: 0.85rem;
+        }
+
+        /* Mobile Menu */
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 280px;
+            height: 100%;
+            background: var(--primary);
+            z-index: 1100;
+            padding: 20px;
+            transition: var(--transition);
+            overflow-y: auto;
+        }
+
+        .mobile-nav.active {
+            right: 0;
+        }
+
+        .mobile-nav-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .close-menu {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .mobile-nav-links {
+            list-style: none;
+        }
+
+        .mobile-nav-links li {
+            margin-bottom: 10px;
+        }
+
+        .mobile-nav-links a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 12px 15px;
+            border-radius: var(--radius);
+            transition: var(--transition);
+            font-size: 1rem;
+        }
+
+        .mobile-nav-links a:hover, .mobile-nav-links a.active {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .mobile-nav-links a i {
+            margin-left: 10px;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1090;
+            display: none;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .navbar {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero {
+                height: 60vh;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .section-title {
+                font-size: 1.6rem;
+            }
+            
+            .contact-methods {
+                gap: 25px;
+            }
+            
+            .contact-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 1.8rem;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .logo {
+                font-size: 1.3rem;
+            }
+            
+            .hero {
+                height: 55vh;
+            }
+            
+            .hero h1 {
+                font-size: 1.5rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .cta-button {
+                padding: 10px 25px;
+                font-size: 0.95rem;
+            }
+            
+            .section-title {
+                font-size: 1.4rem;
+                margin: 25px 0;
+            }
+            
+            .services {
+                grid-template-columns: 1fr;
+            }
+            
+            .maps-container {
+                grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            }
+            
+            .offers-form {
+                padding: 20px;
+            }
+            
+            .vlan-container {
+                padding: 20px;
+            }
+            
+            .materials-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-container {
+                padding: 25px 15px;
+            }
+            
+            .contact-title {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* جدول العروض الجديد */
+        .offer-table-container {
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 20px;
+            margin-top: 20px;
+            overflow-x: auto;
+        }
+
+        .offer-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            text-align: center;
+        }
+
+        .offer-table th {
+            background-color: var(--secondary);
+            color: white;
+            padding: 12px;
+            font-weight: 600;
+        }
+
+        .offer-table td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .offer-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .offer-table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .offer-note {
+            background-color: var(--light);
+            border-radius: var(--radius);
+            padding: 15px;
+            margin-top: 20px;
+            font-weight: 500;
+            color: var(--primary);
+            text-align: center;
+        }
+
+        .area-title {
+            text-align: center;
+            margin-bottom: 15px;
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Navigation -->
+    <header>
+        <div class="container nav-container">
+            <div class="logo">
+                <i class="fas fa-globe"></i>
+                <span>شركة العصر الذكي لخدمات الانترنت</span>
+            </div>
+            
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <ul class="navbar">
+                <li><a href="#" class="nav-link active" data-section="home"><i class="fas fa-home"></i> الرئيسية</a></li>
+                <li><a href="#" class="nav-link" data-section="maps"><i class="fas fa-map"></i> الخرائط</a></li>
+                <li><a href="#" class="nav-link" data-section="offers"><i class="fas fa-percent"></i> العروض</a></li>
+                <li><a href="#" class="nav-link" data-section="vlans"><i class="fas fa-network-wired"></i> الفيلانات</a></li>
+                <li><a href="#" class="nav-link" data-section="materials"><i class="fas fa-microchip"></i> المواد</a></li>
+                <li><a href="#" class="nav-link" data-section="contact"><i class="fas fa-phone"></i> اتصل بنا</a></li>
+            </ul>
+        </div>
+    </header>
+    
+    <!-- Mobile Navigation -->
+    <div class="overlay"></div>
+    <div class="mobile-nav">
+        <div class="mobile-nav-header">
+            <div class="logo">
+                <i class="fas fa-globe"></i>
+                <span>شركة العصر الذكي لخدمات الانترنت</span>
+            </div>
+            <button class="close-menu">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <ul class="mobile-nav-links">
+            <li><a href="#" class="nav-link active" data-section="home"><i class="fas fa-home"></i> الرئيسية</a></li>
+            <li><a href="#" class="nav-link" data-section="maps"><i class="fas fa-map"></i> الخرائط</a></li>
+            <li><a href="#" class="nav-link" data-section="offers"><i class="fas fa-percent"></i> العروض</a></li>
+            <li><a href="#" class="nav-link" data-section="vlans"><i class="fas fa-network-wired"></i> الفيلانات</a></li>
+            <li><a href="#" class="nav-link" data-section="materials"><i class="fas fa-microchip"></i> المواد</a></li>
+            <li><a href="#" class="nav-link" data-section="contact"><i class="fas fa-phone"></i> اتصل بنا</a></li>
+        </ul>
+    </div>
+
+    <!-- Home/Hero Section -->
+    <section id="home" class="content-section active">
+        <div class="hero">
+            <div class="hero-content">
+                <h1>خدمات إنترنت فائقة السرعة</h1>
+                <p>نقدم لكم أحدث حلول الإنترنت والاتصالات مع أفضل الخدمات التقنية والدعم الفني المتميز</p>
+            </div>
+        </div>
+
+        <div class="container">
+            <h2 class="section-title">خدماتنا المتطورة</h2>
+            <div class="services">
+                <div class="service-card">
+                    <div class="service-img">
+                        <img src="https://momiiz.com/wp-content/uploads/2022/07/most-visited-countries.jpeg" alt="خرائط الشبكة">
+                    </div>
+                    <div class="service-content">
+                        <h3>خرائط الشبكة</h3>
+                        <p>استكشف خرائط الشبكة التفصيلية لجميع المناطق التي نغطيها بخدماتنا</p>
+                        <a href="#" class="service-link nav-link" data-section="maps">استعرض الخرائط <i class="fas fa-arrow-left"></i></a>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-img">
+                        <img src="https://images.unsplash.com/photo-1584438784894-089d6a62b8fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="عروض شركة العصر الذكي">
+                    </div>
+                    <div class="service-content">
+                        <h3>عروض شركة العصر الذكي</h3>
+                        <p>اكتشف أحدث العروض والخصومات الحصرية على باقات الإنترنت والخدمات</p>
+                        <a href="#" class="service-link nav-link" data-section="offers">عرض العروض <i class="fas fa-arrow-left"></i></a>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-img">
+                        <img src="https://media.besraha.com/2023/8/large/1/5/183.jpg" alt="الأجهزة والمواد">
+                    </div>
+                    <div class="service-content">
+                        <h3>الأجهزة والمواد</h3>
+                        <p>تصفح أحدث أجهزة الإنترنت والمواد التقنية بأسعار تنافسية وجودة عالية</p>
+                        <a href="#" class="service-link nav-link" data-section="materials">تصفح الأجهزة <i class="fas fa-arrow-left"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Maps Section -->
+    <section id="maps" class="content-section">
+        <div class="container">
+            <h2 class="section-title">خرائط المناطق</h2>
+            <div class="maps-container">
+                <!-- Map items will be generated dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Offers Section -->
+    <section id="offers" class="content-section">
+        <div class="container">
+            <h2 class="section-title">عروض شركة العصر الذكي</h2>
+            <div class="offers-form">
+                <div class="form-group">
+                    <label for="areaNumber">أدخل رقم المنطقة:</label>
+                    <input type="text" id="areaNumber" class="form-control" placeholder="مثلاً : 99 او 162 او اهلي او الزراعي ...">
+                </div>
+                <button id="showOffersBtn" class="btn">عرض العروض <i class="fas fa-arrow-left"></i></button>
+            </div>
+            
+            <div id="offersResults" class="results-container">
+                <!-- Offers will be displayed here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- VLANs Section -->
+    <section id="vlans" class="content-section">
+        <div class="container">
+            <h2 class="section-title">فيلانات المناطق</h2>
+            <div class="vlan-container">
+                <div class="form-group">
+                    <label for="vlanInput">أدخل رقم الزون او المنطقة:</label>
+                    <input type="text" id="vlanInput" class="form-control" placeholder="اكتب هنا">
+                </div>
+                <button id="showVlanBtn" class="btn">اضغط لعرض الـVLAN <i class="fas fa-arrow-left"></i></button>
+                <div id="vlanResult" class="vlan-result"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Materials Section -->
+    <section id="materials" class="content-section">
+        <div class="container">
+            <h2 class="section-title">الأجهزة والمواد</h2>
+            
+            <div class="categories">
+                <button class="category-btn active" data-category="routers">الراوترات</button>
+                <button class="category-btn" data-category="onu">ONU</button>
+                <button class="category-btn" data-category="ont">ONT</button>
+                <button class="category-btn" data-category="other">أجهزة أخرى</button>
+            </div>
+            
+            <div class="materials-grid">
+                <!-- Materials will be displayed here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="content-section">
+        <div class="container">
+            <div class="contact-container">
+                <h2 class="contact-title">تواصل معنا</h2>
+                <p>يسعدنا تواصلكم معنا عبر القنوات التالية:</p>
+                
+                <div class="contact-methods">
+                    <a href="https://instagram.com/developer" target="_blank" class="contact-method">
+                        <div class="contact-icon instagram">
+                            <i class="fab fa-instagram"></i>
+                        </div>
+                        <span>حساب الإنستغرام</span>
+                    </a>
+                    
+                    <a href="https://wa.me/966500000000" target="_blank" class="contact-method">
+                        <div class="contact-icon whatsapp">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <span>واتساب الدعم الفني</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>عن شركاتنا العصر الذكي</h3>
+                    <p>شركة إنترنت رائدة في تقديم خدمات الإنترنت عالية الجودة والحلول التقنية المتطورة لعملائنا في جميع المناطق.</p>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>روابط سريعة</h3>
+                    <ul class="footer-links">
+                        <li><a href="#" class="nav-link" data-section="home"><i class="fas fa-home"></i> الرئيسية</a></li>
+                        <li><a href="#" class="nav-link" data-section="maps"><i class="fas fa-map"></i> الخرائط</a></li>
+                        <li><a href="#" class="nav-link" data-section="offers"><i class="fas fa-percent"></i> العروض</a></li>
+                        <li><a href="#" class="nav-link" data-section="vlans"><i class="fas fa-network-wired"></i> الفيلانات</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>معلومات الاتصال</h3>
+                    <p><i class="fas fa-map-marker-alt"></i>العنوان: الحرية, شارع الدور العريض, قرب مكتبة خالد</p>
+                    <p><i class="fas fa-phone"></i> الهاتف: 07705377655</p>
+                    <p><i class="fas fa-envelope"></i> البريد: ali.dragon58@gmail.com</p>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>جميع الحقوق محفوظة &copy; 2023 شركة إنترنت</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navigation and Section Switching
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('.nav-link');
+            const contentSections = document.querySelectorAll('.content-section');
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const closeMenuBtn = document.querySelector('.close-menu');
+            const mobileNav = document.querySelector('.mobile-nav');
+            const overlay = document.querySelector('.overlay');
+            
+            // Navigation functionality
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Remove active class from all links and sections
+                    navLinks.forEach(link => link.classList.remove('active'));
+                    contentSections.forEach(section => section.classList.remove('active'));
+                    
+                    // Add active class to clicked link
+                    this.classList.add('active');
+                    
+                    // Show corresponding section
+                    const targetSection = this.getAttribute('data-section');
+                    document.getElementById(targetSection).classList.add('active');
+                    
+                    // Close mobile menu
+                    mobileNav.classList.remove('active');
+                    overlay.classList.remove('active');
+                    
+                    // Scroll to top
+                    window.scrollTo(0, 0);
+                });
+            });
+            
+            // Mobile menu toggle
+            mobileMenuBtn.addEventListener('click', function() {
+                mobileNav.classList.add('active');
+                overlay.classList.add('active');
+            });
+            
+            closeMenuBtn.addEventListener('click', function() {
+                mobileNav.classList.remove('active');
+                overlay.classList.remove('active');
+            });
+            
+            overlay.addEventListener('click', function() {
+                mobileNav.classList.remove('active');
+                this.classList.remove('active');
+            });
+            
+            // Initialize Maps
+            initMaps();
+            
+            // Initialize Materials
+            initMaterials();
+            
+            // Set up offers functionality
+            setupOffers();
+            
+            // Set up VLANs functionality
+            setupVLANs();
+        });
+        
+        // Maps Section - Initialize map items with external links
+        function initMaps() {
+            const mapsContainer = document.querySelector('.maps-container');
+            const areas = [
+                "وطني الدور", "سوبرسيل الدور", "وطني السلام", "وطني الأولى", 
+                "وطني الثانية", "وطني الثالثة", "النسيم الشرقي", "النسيم الغربي", 
+                "المنتزه", "الخالدية", "الروضة", "الريان", "الرحاب", "النهضة",
+                "الربيع", "المروج", "الزهور", "الخزامى", "الواحة"
+            ];
+            
+            // روابط خارجية لكل منطقة
+            const areaLinks = [
+                "https://example.com/map1",
+                "https://example.com/map2",
+                "https://example.com/map3",
+                "https://example.com/map4",
+                "https://example.com/map5",
+                "https://example.com/map6",
+                "https://example.com/map7",
+                "https://example.com/map8",
+                "https://example.com/map9",
+                "https://example.com/map10",
+                "https://example.com/map11",
+                "https://example.com/map12",
+                "https://example.com/map13",
+                "https://example.com/map14",
+                "https://example.com/map15",
+                "https://example.com/map16",
+                "https://example.com/map17",
+                "https://example.com/map18",
+                "https://example.com/map19"
+            ];
+            
+            areas.forEach((area, index) => {
+                const mapItem = document.createElement('a');
+                mapItem.className = 'map-item';
+                mapItem.href = areaLinks[index];
+                mapItem.target = "_blank";
+                mapItem.innerHTML = `
+                    <div class="map-number">${index + 1}</div>
+                    <div class="map-name">${area}</div>
+                `;
+                mapsContainer.appendChild(mapItem);
+            });
+        }
+        
+        // Offers Section - Setup functionality
+        function setupOffers() {
+            const showOffersBtn = document.getElementById('showOffersBtn');
+            const areaNumberInput = document.getElementById('areaNumber');
+            const offersResults = document.getElementById('offersResults');
+            
+            showOffersBtn.addEventListener('click', function() {
+                const areaNumber = areaNumberInput.value.trim();
+                
+                if (!areaNumber) {
+                    alert('الرجاء إدخال رقم المنطقة');
+                    return;
+                }
+                
+                // Display offers based on area number
+                displayOffers(areaNumber);
+            });
+            
+            // Also handle Enter key
+            areaNumberInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    showOffersBtn.click();
+                }
+            });
+        }
+        
+        // بيانات العروض الجديدة
+        const offersData = {
+            "سوبر سيل حكومي": {
+        table: [
+          ["شهر", "38,000", "48,000", "68,000", "غير متوفر"],
+          ["3 أشهر", "غير متوفر", "غير متوفر", "غير متوفر", "غير متوفر"]
+        ],
+        note: "الكيبل بـ10,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 10"
+      },
+      "سوبرسيل حكومي": {
+        table: [
+          ["شهر", "38,000", "48,000", "68,000", "غير متوفر"],
+          ["3 أشهر", "غير متوفر", "غير متوفر", "غير متوفر", "غير متوفر"]
+        ],
+        note: "الكيبل بـ10,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 10"
+      },
+      "سوبر حكومي": {
+        table: [
+          ["شهر", "38,000", "48,000", "68,000", "غير متوفر"],
+          ["3 أشهر", "غير متوفر", "غير متوفر", "غير متوفر", "غير متوفر"]
+        ],
+        note: "الكيبل بـ10,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 10"
+      },
+      "سوبر": {
+        table: [
+          ["شهر", "38,000", "48,000", "68,000", "غير متوفر"],
+          ["3 أشهر", "غير متوفر", "غير متوفر", "غير متوفر", "غير متوفر"]
+        ],
+        note: "الكيبل بـ10,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 10"
+      },
+      "سوبر سيل": {
+        table: [
+          ["شهر", "38,000", "48,000", "68,000", "غير متوفر"],
+          ["3 أشهر", "غير متوفر", "غير متوفر", "غير متوفر", "غير متوفر"]
+        ],
+        note: "الكيبل بـ10,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 10"
+      },
+      "الاهليات": {
+        table: [
+          ["ايرثلنك", "35,000", "40,000", "50,000", "غير متوفر"],
+          ["سوبرسيل", "30,000", "35,000", "45,000", "55,000"]
+        ],
+        note: "تنويه : السرعات المذكورة في الاعلى لا تمثل الخدمة الاهلية | الكيبل بـ10,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 2"
+      },
+      "اهليات": {
+        table: [
+          ["ايرثلنك", "35,000", "40,000", "50,000", "غير متوفر"],
+          ["سوبرسيل", "30,000", "35,000", "45,000", "55,000"]
+        ],
+        note: "تنويه : السرعات المذكورة في الاعلى لا تمثل الخدمة الاهلية | الكيبل بـ10,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 2"
+      },
+      "الزراعي": {
+        table: [
+          ["ايرثلنك", "35,000", "40,000", "50,000", "غير متوفر"],
+          ["سوبرسيل", "30,000", "35,000", "45,000", "55,000"]
+        ],
+        note: "تنويه : السرعات المذكورة في الاعلى لا تمثل الخدمة الاهلية | الكيبل بـ10,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 2"
+      },
+      "زراعي": {
+        table: [
+          ["ايرثلنك", "35,000", "40,000", "50,000", "غير متوفر"],
+          ["سوبرسيل", "30,000", "35,000", "45,000", "55,000"]
+        ],
+        note: "تنويه : السرعات المذكورة في الاعلى لا تمثل الخدمة الاهلية | الكيبل بـ10,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 2"
+      },
+      "المجمع": {
+        table: [
+          ["ايرثلنك", "35,000", "40,000", "50,000", "غير متوفر"],
+          ["سوبرسيل", "30,000", "35,000", "45,000", "55,000"]
+        ],
+        note: "تنويه : السرعات المذكورة في الاعلى لا تمثل الخدمة الاهلية | الكيبل بـ10,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 2"
+      },
+      "مجمع": {
+        table: [
+          ["ايرثلنك", "35,000", "40,000", "50,000", "غير متوفر"],
+          ["سوبرسيل", "30,000", "35,000", "45,000", "55,000"]
+        ],
+        note: "تنويه : السرعات المذكورة في الاعلى لا تمثل الخدمة الاهلية | الكيبل بـ10,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 2"
+      },
+      "الاهلي": {
+        table: [
+          ["ايرثلنك", "35,000", "40,000", "50,000", "غير متوفر"],
+          ["سوبرسيل", "30,000", "35,000", "45,000", "55,000"]
+        ],
+        note: "تنويه : السرعات المذكورة في الاعلى لا تمثل الخدمة الاهلية | الكيبل بـ10,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 2"
+      },
+      "اهلي": {
+        table: [
+          ["ايرثلنك", "35,000", "40,000", "50,000", "غير متوفر"],
+          ["سوبرسيل", "30,000", "35,000", "45,000", "55,000"]
+        ],
+        note: "تنويه : السرعات المذكورة في الاعلى لا تمثل الخدمة الاهلية | الكيبل بـ10,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 2"
+      },
+    "سوبرسيل": {
+        table: [
+          ["شهر", "38,000", "48,000", "68,000", "غير متوفر"],
+          ["3 أشهر", "غير متوفر", "غير متوفر", "غير متوفر", "غير متوفر"]
+        ],
+        note: "الكيبل بـ10,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 10"
+      },
+        "122": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 الاف | الجهاز الضوئي بـ10,000 | الڤيلان : 615"
+      },
+        "176": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "يرجى التأكد من وسيم بخصوص التفعيل | الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 516"
+      },
+        "178": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 518"
+      },
+        "43": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل مجاني | الجهاز الضوئي بـ5,000 | الڤيلان : 311"
+      },
+      "44": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل مجاني | الجهاز الضوئي بـ5,000 | الڤيلان : 313"
+      },
+      "45": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل مجاني | الجهاز الضوئي بـ5,000 | الڤيلان : 312"
+      },
+        "107": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 612"
+      },
+        "108": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 616"
+      },
+        "61": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 220"
+      },
+        "60": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 219"
+      },
+        "183": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 519"
+      },
+        "106": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 611"
+      },
+        "175": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "يرجى التأكد من وسيم بخصوص التفعيل | الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 516"
+      },
+        "174": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "يرجى التأكد من وسيم بخصوص التفعيل | الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 516"
+      },
+        "173": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "يرجى التأكد من وسيم بخصوص التفعيل | الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 516"
+      },
+        "54": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 217"
+      },
+        "152": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 514"
+      },
+        "52": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 214"
+      },
+        "51": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 216"
+      },
+        "55": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 215"
+      },
+        "1747": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 213"
+      },
+        "163": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 513"
+      },
+        "376": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 218"
+      },
+        "147": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 417"
+      },
+        "182": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 512"
+      },
+        "1980": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 211"
+      },
+        "68": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 111"
+      },
+        "72": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 112"
+      },
+        "71": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 114"
+      },
+        "49": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 120"
+      },
+        "50": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 119"
+      },
+        "53": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 210"
+      },
+        "1850": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 118"
+      },
+        "165": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 511"
+      },
+        "181": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 510"
+      },
+        "170": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 418"
+      },
+        "134": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 419"
+      },
+        "172": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 416"
+      },
+        "164": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 413"
+      },
+        "48": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 117"
+      },
+        "46": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 115"
+      },
+        "47": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 113"
+      },
+        "311": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 411"
+      },
+        "99": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 110"
+      },
+        "119": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 120"
+      },
+        "118": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 410"
+      },
+        "167": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 217"
+      },
+        "139": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 315"
+      },
+        "116": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 319"
+      },
+        "171": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 311"
+      },
+        "180": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 218"
+      },
+        "162": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 215"
+      },
+        "161": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 115"
+      },
+        "166": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 316"
+      },
+        "169": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 216"
+      },
+        "179": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 317"
+      },
+        "138": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 212"
+      },
+        "142": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 214"
+      },
+        "136": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 314"
+      },
+        "143": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 313"
+      },
+        "137": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 213"
+      },
+        "146": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 118"
+      },
+        "144": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 119"
+      },
+        "266": {
+        table: [
+        ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 115"
+      },
+        "1697": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 715"
+      },
+        "265": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 114"
+      },
+        "1720": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 310"
+      },
+        "149": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 117"
+      },
+        "264": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 119"
+      },
+        "1696": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 612"
+      },
+        "259": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 117"
+      },
+        "148": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 113"
+      },
+        "1698": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 716"
+      },
+        "1721": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 315"
+      },
+        "267": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 213"
+      },
+        "140": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 211"
+      },
+        "1692": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 115"
+      },
+        "1699": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 717"
+      },
+        "1694": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 112"
+      },
+        "1310": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 114"
+      },
+        "151": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 210"
+      },
+      "121": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 318"
+      },
+      "109": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 617"
+      },
+      "110": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 614"
+      },
+      "111": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 310"
+      },
+      "112": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 312"
+      },
+      "113": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 411"
+      },
+      "117": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 618"
+      },
+      "120": {
+        table: [
+          ["شهر", "15,000", "20,000", "30,000", "75,000"],
+          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
+        ],
+        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 412"
+      }
+        };
+
+        function displayOffers(areaNumber) {
+            const offersResults = document.getElementById('offersResults');
+            offersResults.innerHTML = '';
+            offersResults.classList.add('active');
+            
+            // البحث عن عروض المنطقة
+            const areaOffers = offersData[areaNumber];
+            
+            if (!areaOffers) {
+                offersResults.innerHTML = `
+                    <div class="offer-table-container">
+                        <div class="area-title">لا توجد عروض متاحة للمنطقة ${areaNumber}</div>
+                        <p>الرجاء التأكد من رقم المنطقة أو التواصل مع الدعم الفني</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // إنشاء جدول العروض
+            let tableHTML = `
+                <div class="offer-table-container">
+                    <div class="area-title">عروض منطقة ${areaNumber}</div>
+                    <table class="offer-table">
+                        <thead>
+                            <tr>
+                                <th>المدة</th>
+                                <th>فئة اولى (35 ميگا)</th>
+                                <th>فئة ثانية (50 ميگ)</th>
+                                <th>فئة ثالثة (75 ميگا)</th>
+                                <th>فئة رابعة (150 ميگا)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+            `;
+            
+            // إضافة صفوف الجدول
+            areaOffers.table.forEach(row => {
+                tableHTML += '<tr>';
+                row.forEach(cell => {
+                    tableHTML += `<td>${cell}</td>`;
+                });
+                tableHTML += '</tr>';
+            });
+            
+            tableHTML += `
+                        </tbody>
+                    </table>
+                    <div class="offer-note">${areaOffers.note}</div>
+                </div>
+            `;
+            
+            offersResults.innerHTML = tableHTML;
+        }
+        
+        // VLANs Section - Setup functionality
+        function setupVLANs() {
+            const showVlanBtn = document.getElementById('showVlanBtn');
+            const vlanInput = document.getElementById('vlanInput');
+            const vlanResult = document.getElementById('vlanResult');
+            
+            // VLAN mapping
+            const vlanMap = {
+                "151": "210 : VLAN",
+                "235": "317 : VLAN",
+                "مجمع": "2 : VLAN",
+                "المجمع": "2 : VLAN",
+                "اهلي": "2 : VLAN",
+                "الاهلي": "2 : VLAN",
+                "الاهليات": "2 : VLAN",
+                "اهليات": "2 : VLAN",
+                "زراعي": "2 : VLAN",
+                "الزراعي": "2 : VLAN",
+                "1310": "114 : VLAN",
+                "1694": "112 : VLAN",
+                "1692": "115 : VLAN",
+                "140": "211 : VLAN",
+                "267": "213 : VLAN",
+                "1721": "315 : VLAN",
+                "1698": "716 : VLAN",
+                "148": "113 : VLAN",
+                "259": "117 : VLAN",
+                "1696": "612 : VLAN",
+                "264": "119 : VLAN",
+                "149": "117 : VLAN",
+                "1720": "310 : VLAN",
+                "265": "114 : VLAN",
+                "1697": "715 : VLAN",
+                "266": "115 : VLAN",
+                "144": "119 : VLAN",
+                "146": "118 : VLAN",
+                "137": "213 : VLAN",
+                "143": "313 : VLAN",
+                "136": "314 : VLAN",
+                "142": "214 : VLAN",
+                "138": "212 : VLAN",
+                "111": "310 : VLAN",
+                "179": "317 : VLAN",
+                "169": "216 : VLAN",
+                "166": "316 : VLAN",
+                "161": "115 : VLAN",
+                "162": "215 : VLAN",
+                "180": "218 : VLAN",
+                "171": "311 : VLAN",
+                "116": "319 : VLAN",
+                "139": "315 : VLAN",
+                "112": "312 : VLAN",
+                "167": "217 : VLAN",
+                "118": "410 : VLAN",
+                "119": "120 : VLAN",
+                "121": "318 : VLAN",
+                "311": "411 : VLAN",
+                "120": "412 : VLAN",
+                "99": "110 : VLAN",
+                "47": "113 : VLAN",
+                "46": "115 : VLAN",
+                "48": "117 : VLAN",
+                "164": "413 : VLAN",
+                "172": "416 : VLAN",
+                "134": "419 : VLAN",
+                "170": "418 : VLAN",
+                "181": "510 : VLAN",
+                "165": "511 : VLAN",
+                "1850": "118 : VLAN",
+                "53": "210 : VLAN",
+                "50": "119 : VLAN",
+                "49": "120 : VLAN",
+                "71": "114 : VLAN",
+                "72": "112 : VLAN",
+                68: 111,
+                69: 116,
+                "113": "411 : VLAN",
+                "1980": "211 : VLAN",
+                73: 212,
+                "182": "512 : VLAN",
+                "147": "417 : VLAN",
+                376: 218,
+                "163": "513 : VLAN",
+                "1747": "213 : VLAN",
+                "55": "215 : VLAN",
+                "51": "216 : VLAN",
+                "52": "214 : VLAN",
+                "152": "514 : VLAN",
+                "54": "217 : VLAN",
+                "173": "515 : VLAN",
+                "174": "516 : VLAN",
+                "175": "517 : VLAN",
+                "106": "611 : VLAN",
+                "183": "519 : VLAN",
+                "60": "219 : VLAN",
+                "61": "220 : VLAN",
+                "108": "616 : VLAN",
+                "117": "618 : VLAN",     
+                "107": "612 : VLAN",
+                "110": "614 : VLAN",    
+                "109": "617 : VLAN",
+                "122": "615 : VLAN",
+                "178": "518 : VLAN",
+                "176": "610 : VLAN",
+                "45": "312 : VLAN",
+                "44": "313 : VLAN",
+                "43": "311 : VLAN",
+            };
+            
+            showVlanBtn.addEventListener('click', function() {
+                const area = vlanInput.value.trim();
+                
+                if (!area) {
+                    alert('الرجاء إدخال رقم المنطقة');
+                    return;
+                }
+                
+                if (vlanMap[area]) {
+                    vlanResult.textContent = `VLAN: ${vlanMap[area]}`;
+                    vlanResult.classList.add('active');
+                } else {
+                    vlanResult.textContent = 'لم يتم العثور على فيلان لهذه المنطقة';
+                    vlanResult.classList.add('active');
+                }
+            });
+            
+            // Also handle Enter key
+            vlanInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    showVlanBtn.click();
+                }
+            });
+        }
+        
+        // Materials Section - Initialize materials
+        function initMaterials() {
+            const materialsGrid = document.querySelector('.materials-grid');
+            const categoryBtns = document.querySelectorAll('.category-btn');
+            
+            // Sample materials data
+            const materials = {
+                routers: [
+                    {
+                        name: "راوتر Tplink Deco S7",
+                        price: "799 ريال",
+                        image: "https://m.media-amazon.com/images/I/51TcxnC664L._SL1000_.jpg",
+                        specs: [
+                            "سرعة 6000 ميجابت/ثانية",
+                            "نطاق مزدوج",
+                            "8 منافذ LAN",
+                            "دعم MU-MIMO"
+                        ]
+                    },
+                    {
+                        name: "راوتر Tplink Deco M4 1 Pack",
+                        price: "799 ريال",
+                        image: "https://m.media-amazon.com/images/I/61oS-WGrrWL._AC_SL1378_.jpg",
+                        specs: [
+                            "سرعة 6000 ميجابت/ثانية",
+                            "نطاق مزدوج",
+                            "8 منافذ LAN",
+                            "دعم MU-MIMO"
+                        ]
+                    },
+                    {
+                        name: "راوتر TP-Link Archer C7",
+                        price: "399 ريال",
+                        image: "https://images.unsplash.com/photo-1620012253295-c15cc3b65e8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                        specs: [
+                            "سرعة 1750 ميجابت/ثانية",
+                            "نطاق مزدوج",
+                            "4 منافذ LAN",
+                            "تقنية Beamforming"
+                        ]
+                    },
+                    {
+                        name: "راوتر Netgear Nighthawk R7000",
+                        price: "599 ريال",
+                        image: "https://images.unsplash.com/photo-1614064641938-3bbee52942c7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                        specs: [
+                            "سرعة 1900 ميجابت/ثانية",
+                            "نطاق مزدوج",
+                            "5 منافذ LAN",
+                            "معالج مزدوج النواة"
+                        ]
+                    }
+                ],
+                onu: [
+                    {
+                        name: "جهاز ONU Huawei HG8245H",
+                        price: "299 ريال",
+                        image: "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                        specs: [
+                            "دعم GPON",
+                            "4 منافذ LAN",
+                            "2 منافذ VoIP",
+                            "واجهة ويب سهلة"
+                        ]
+                    },
+                    {
+                        name: "جهاز ONU ZTE F660",
+                        price: "249 ريال",
+                        image: "https://images.unsplash.com/photo-1550009158-9ebf69173e03?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                        specs: [
+                            "دعم GPON",
+                            "4 منافذ LAN",
+                            "2 منافذ VoIP",
+                            "واجهة استخدام بسيطة"
+                        ]
+                    }
+                ],
+                ont: [
+                    {
+                        name: "جهاز ONT Nokia G-010G-A",
+                        price: "349 ريال",
+                        image: "https://images.unsplash.com/photo-1587202372775-e229f172b5c1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                        specs: [
+                            "دعم XGS-PON",
+                            "منفذ SFP+",
+                            "سرعة تصل إلى 10 جيجابت/ثانية",
+                            "تبريد فعال"
+                        ]
+                    },
+                    {
+                        name: "جهاز ONT FiberHome HG6143D",
+                        price: "279 ريال",
+                        image: "https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                        specs: [
+                            "دعم GPON",
+                            "4 منافذ LAN",
+                            "واجهة ويب متطورة",
+                            "دعم IPv6"
+                        ]
+                    }
+                ],
+                other: [
+                    {
+                        name: "مفتاح شبكة 8 منافذ",
+                        price: "149 ريال",
+                        image: "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                        specs: [
+                            "8 منافذ Gigabit",
+                            "تبديل بسرعة 16Gbps",
+                            "دعم MDI/MDIX",
+                            "تصميم بدون صوت"
+                        ]
+                    },
+                    {
+                        name: "كاميرا مراقبة IP",
+                        price: "329 ريال",
+                        image: "https://images.unsplash.com/photo-1581591524425-c7e0978865fc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                        specs: [
+                            "دقة 4MP",
+                            "رؤية ليلية 30 متر",
+                            "مقاومة الطقس IP67",
+                            "دعم PoE"
+                        ]
+                    }
+                ]
+            };
+            
+            // Display initial materials (routers)
+            displayMaterials('routers');
+            
+            // Category switching
+            categoryBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    categoryBtns.forEach(b => b.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    // Display materials for selected category
+                    const category = this.getAttribute('data-category');
+                    displayMaterials(category);
+                });
+            });
+            
+            function displayMaterials(category) {
+                materialsGrid.innerHTML = '';
+                
+                materials[category].forEach(item => {
+                    const materialCard = document.createElement('div');
+                    materialCard.className = 'material-card';
+                    materialCard.innerHTML = `
+                        <div class="material-img">
+                            <img src="${item.image}" alt="${item.name}">
+                        </div>
+                        <div class="material-content">
+                            <h3>${item.name}</h3>
+                            <div class="material-price">${item.price}</div>
+                            <ul class="material-specs">
+                                ${item.specs.map(spec => `<li>${spec}</li>`).join('')}
+                            </ul>
+                        </div>
+                    `;
+                    materialsGrid.appendChild(materialCard);
+                });
+            }
+        }
+    </script>
+</body>
+</html>
