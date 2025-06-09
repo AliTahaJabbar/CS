@@ -96,6 +96,28 @@
             outline: none;
             box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
         }
+
+        .remember-me-group {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 8px;
+            margin-top: 15px;
+            margin-bottom: 20px;
+            text-align: right;
+        }
+
+        .remember-me-group label {
+            margin-bottom: 0;
+            font-weight: 500;
+            color: #555;
+            cursor: pointer;
+        }
+
+        .remember-me-group input {
+            width: auto;
+            cursor: pointer;
+        }
         
         .login-btn, .viewer-btn, .admin-login-trigger-btn {
             display: block;
@@ -110,7 +132,6 @@
             border: none;
         }
 
-        /* Blue button for viewer and form submission */
         .viewer-btn, .login-btn {
             background: var(--secondary);
             color: white;
@@ -119,7 +140,6 @@
             background: #2980b9;
         }
         
-        /* Gray button for admin login trigger */
         .admin-login-trigger-btn {
             background: var(--light);
             color: var(--dark);
@@ -236,6 +256,12 @@
             color: var(--secondary);
         }
 
+        .nav-right-cluster {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
         .navbar {
             display: flex;
             list-style: none;
@@ -265,6 +291,53 @@
         .navbar a i {
             font-size: 1rem;
         }
+
+        /* User Status and Logout Button Styles */
+        #user-info-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        #user-info-container .user-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 12px;
+            border-radius: var(--radius);
+        }
+
+        #user-info-container .user-status i {
+            font-size: 1.3rem;
+            color: var(--secondary);
+        }
+
+        #user-role-display {
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        
+        .logout-btn {
+            background: transparent;
+            border: 2px solid var(--accent);
+            color: var(--accent);
+            padding: 6px 12px;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .logout-btn:hover {
+            background: var(--accent);
+            color: white;
+        }
+
 
         /* Mobile Menu Button */
         .mobile-menu-btn {
@@ -893,9 +966,11 @@
             height: 100%;
             background: var(--primary);
             z-index: 1100;
-            padding: 20px;
+            padding-top: 20px;
             transition: var(--transition);
             overflow-y: auto;
+            display: flex;
+            flex-direction: column;
         }
 
         .mobile-nav.active {
@@ -906,11 +981,11 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding-bottom: 20px;
+            padding: 0 20px 20px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             margin-bottom: 20px;
         }
-
+        
         .close-menu {
             background: transparent;
             border: none;
@@ -921,6 +996,8 @@
 
         .mobile-nav-links {
             list-style: none;
+            padding: 0 20px;
+            flex-grow: 1;
         }
 
         .mobile-nav-links li {
@@ -943,6 +1020,23 @@
 
         .mobile-nav-links a i {
             margin-left: 10px;
+        }
+        
+        #mobile-user-info {
+            padding: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        #mobile-user-info .user-status {
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        #mobile-user-info .logout-btn {
+            width: 100%;
+            justify-content: center;
+            padding: 10px;
+            font-size: 1rem;
         }
 
         .overlay {
@@ -982,6 +1076,9 @@
             .navbar {
                 display: none;
             }
+            #user-info-container {
+                display: none; /* Hide desktop user info */
+            }
             
             .mobile-menu-btn {
                 display: block;
@@ -989,6 +1086,12 @@
             
             .hero {
                 height: 60vh;
+            }
+        }
+
+        @media (min-width: 993px) {
+            #mobile-user-info {
+                display: none; /* Hide mobile user info on desktop */
             }
         }
 
@@ -1105,6 +1208,10 @@
                     <label for="password">كلمة المرور</label>
                     <input type="password" id="password" class="form-control" required>
                 </div>
+                 <div class="form-group remember-me-group">
+                    <input type="checkbox" id="remember-me">
+                    <label for="remember-me">تذكرني دائماً</label>
+                </div>
                 <p id="login-error"></p>
                 <button type="submit" class="login-btn">دخول</button>
             </form>
@@ -1129,18 +1236,28 @@
                     <span>شركة العصر الذكي</span>
                 </div>
                 
+                <div class="nav-right-cluster">
+                     <ul class="navbar">
+                        <li><a href="#" class="nav-link active" data-section="home"><i class="fas fa-home"></i> الرئيسية</a></li>
+                        <li><a href="#" class="nav-link" data-section="maps"><i class="fas fa-map"></i> الخرائط</a></li>
+                        <li><a href="#" class="nav-link" data-section="offers"><i class="fas fa-percent"></i> العروض</a></li>
+                        <li><a href="#" class="nav-link" data-section="vlans"><i class="fas fa-network-wired"></i> الفيلانات</a></li>
+                        <li><a href="#" class="nav-link" data-section="materials"><i class="fas fa-microchip"></i> المواد</a></li>
+                        <li><a href="#" class="nav-link" data-section="contact"><i class="fas fa-phone"></i> اتصل بنا</a></li>
+                    </ul>
+                    <!-- User Info will be shown here after login -->
+                    <div id="user-info-container" style="display: none;">
+                        <div class="user-status">
+                           <i class="fas fa-user-circle"></i>
+                           <span id="user-role-display"></span>
+                        </div>
+                        <button class="logout-btn"><i class="fas fa-sign-out-alt"></i></button>
+                    </div>
+                </div>
+
                 <button class="mobile-menu-btn">
                     <i class="fas fa-bars"></i>
                 </button>
-                
-                <ul class="navbar">
-                    <li><a href="#" class="nav-link active" data-section="home"><i class="fas fa-home"></i> الرئيسية</a></li>
-                    <li><a href="#" class="nav-link" data-section="maps"><i class="fas fa-map"></i> الخرائط</a></li>
-                    <li><a href="#" class="nav-link" data-section="offers"><i class="fas fa-percent"></i> العروض</a></li>
-                    <li><a href="#" class="nav-link" data-section="vlans"><i class="fas fa-network-wired"></i> الفيلانات</a></li>
-                    <li><a href="#" class="nav-link" data-section="materials"><i class="fas fa-microchip"></i> المواد</a></li>
-                    <li><a href="#" class="nav-link" data-section="contact"><i class="fas fa-phone"></i> اتصل بنا</a></li>
-                </ul>
             </div>
         </header>
         
@@ -1165,6 +1282,11 @@
                 <li><a href="#" class="nav-link" data-section="materials"><i class="fas fa-microchip"></i> المواد</a></li>
                 <li><a href="#" class="nav-link" data-section="contact"><i class="fas fa-phone"></i> اتصل بنا</a></li>
             </ul>
+
+            <!-- Mobile User Info & Logout -->
+            <div id="mobile-user-info" style="display: none;">
+                <!-- Content injected via JS -->
+            </div>
         </div>
 
         <!-- Home/Hero Section -->
@@ -1185,11 +1307,11 @@
                         <div class="service-content"> <h3>خرائط الزونات والمناطق</h3> <p>استكشف خرائط الشبكة التفصيلية لجميع المناطق التي نغطيها بخدماتنا</p> <a href="#" class="service-link nav-link" data-section="maps">استعرض الخرائط <i class="fas fa-arrow-left"></i></a> </div>
                     </div>
                     <div class="service-card">
-                        <div class="service-img"> <img src="https://l.top4top.io/p_3447owpcv1.png" alt=""> </div>
+                        <div class="service-img"> <img src="https://f.top4top.io/p_3447hykcf2.jpeg" alt=""> </div>
                         <div class="service-content"> <h3>العروض والخصومات</h3> <p>اكتشف أحدث العروض والخصومات الحصرية على باقات الإنترنت والخدمات</p> <a href="#" class="service-link nav-link" data-section="offers">عرض العروض <i class="fas fa-arrow-left"></i></a> </div>
                     </div>
                     <div class="service-card">
-                        <div class="service-img"> <img src="https://k.top4top.io/p_34462ow971.png" alt=""> </div>
+                        <div class="service-img"> <img src="https://e.top4top.io/p_3447hafdo1.jpeg" alt=""> </div>
                         <div class="service-content"> <h3>الأجهزة والمواد</h3> <p>تصفح أحدث أجهزة الإنترنت والمواد التقنية بأسعار تنافسية وجودة عالية</p> <a href="#" class="service-link nav-link" data-section="materials">تصفح الأجهزة <i class="fas fa-arrow-left"></i></a> </div>
                     </div>
                 </div>
@@ -1206,13 +1328,15 @@
                 </div>
                 <div class="maps-container"></div>
             </div>
+
+
         </section>
 
         <!-- Offers Section -->
         <section id="offers" class="content-section"> <div class="container"> <h2 class="section-title">العروض المتاحة</h2> <div class="offers-form"> <div class="form-group"> <label for="areaNumber">أدخل رقم المنطقة:</label> <input type="text" id="areaNumber" class="form-control" placeholder="مثال: 44, 55, المجمع, سوبرسيل ..."> </div> <button id="showOffersBtn" class="btn">عرض العروض <i class="fas fa-arrow-left"></i></button> </div> <div id="offersResults" class="results-container"></div> </div> </section>
 
         <!-- VLANs Section -->
-        <section id="vlans" class="content-section"> <div class="container"> <h2 class="section-title">فيلانات المناطق</h2> <div class="vlan-container"> <h3 class="vlan-title">فيلانات جميع المناطق</h3> <div class="form-group"> <label for="vlanInput">أدخل رقم المنطقة:</label> <input type="text" id="vlanInput" class="form-control" placeholder="مثال: 162, 151, ..."> </div> <button id="showVlanBtn" class="btn">اضغط لعرض الفيلان <i class="fas fa-arrow-left"></i></button> <div id="vlanResult" class="vlan-result"></div> </div> </div> </section>
+        <section id="vlans" class="content-section"> <div class="container"> <h2 class="section-title">فيلانات المناطق</h2> <div class="vlan-container"> <h3 class="vlan-title">فيلانات جميع المناطق</h3> <div class="form-group"> <label for="vlanInput">أدخل رقم المنطقة:</label> <input type="text" id="vlanInput" class="form-control" placeholder="مثال: 162, 151, سوبرسيل, مجمع ..."> </div> <button id="showVlanBtn" class="btn">اضغط لعرض الفيلان <i class="fas fa-arrow-left"></i></button> <div id="vlanResult" class="vlan-result"></div> </div> </div> </section>
 
         <!-- Materials Section -->
         <section id="materials" class="content-section"> <div class="container"> <h2 class="section-title">الأجهزة والمواد</h2> <div class="categories"> <button class="category-btn active" data-category="routers">الراوترات</button> <button class="category-btn" data-category="onu">ONU</button> <button class="category-btn" data-category="ont">ONT</button> <button class="category-btn" data-category="other">المواد الأخرى</button> </div> <div class="materials-grid"></div> </div> </section>
@@ -1249,11 +1373,16 @@
             const loginForm = document.getElementById('login-form');
             const usernameInput = document.getElementById('username');
             const passwordInput = document.getElementById('password');
+            const rememberMeCheckbox = document.getElementById('remember-me');
             const loginError = document.getElementById('login-error');
             const viewerBtn = document.getElementById('viewer-btn');
             const showAdminLoginBtn = document.getElementById('show-admin-login-btn');
             const loginDivider = document.querySelector('.login-divider');
             const mainWrapper = document.querySelector('.main-wrapper');
+
+            const userInfoContainer = document.getElementById('user-info-container');
+            const userRoleDisplay = document.getElementById('user-role-display');
+            const mobileUserInfoContainer = document.getElementById('mobile-user-info');
 
             const alertModal = document.getElementById('alert-modal');
             const alertMessage = document.getElementById('alert-message');
@@ -1271,6 +1400,12 @@
             // --- State ---
             let userRole = null; // Can be 'admin' or 'viewer'
 
+            // --- Logout Logic ---
+            function logout() {
+                localStorage.removeItem('smartAgeLogin');
+                location.reload();
+            }
+
             // --- Login Logic ---
             loginForm.addEventListener('submit', function(e) {
                 e.preventDefault();
@@ -1279,6 +1414,11 @@
 
                 if (username === 'Ali.Taha' && password === '199827') {
                     userRole = 'admin';
+                    if (rememberMeCheckbox.checked) {
+                        localStorage.setItem('smartAgeLogin', JSON.stringify({ role: 'admin' }));
+                    } else {
+                        localStorage.removeItem('smartAgeLogin');
+                    }
                     startApp();
                 } else {
                     loginError.textContent = 'اسم المستخدم أو كلمة المرور غير صحيحة.';
@@ -1287,11 +1427,12 @@
 
             viewerBtn.addEventListener('click', function() {
                 userRole = 'viewer';
+                // Viewer login is not remembered, as requested
+                localStorage.removeItem('smartAgeLogin'); 
                 startApp();
             });
 
             showAdminLoginBtn.addEventListener('click', function() {
-                // Hide initial buttons and show the form
                 viewerBtn.style.display = 'none';
                 loginDivider.style.display = 'none';
                 this.style.display = 'none';
@@ -1307,9 +1448,47 @@
                     mainWrapper.style.animation = 'fadeIn 0.5s';
                 }, 500);
 
+                // Setup User Interface based on role
+                setupUIForRole();
+
                 // Initialize website features
                 initializeApp();
             }
+
+            function setupUIForRole() {
+                const roleText = userRole === 'admin' ? 'متابع' : 'قائد فريق';
+                
+                // --- Desktop UI ---
+                userRoleDisplay.textContent = roleText;
+                userInfoContainer.style.display = 'flex';
+
+                // --- Mobile UI ---
+                const mobileHTML = `
+                    <div class="user-status">
+                       <i class="fas fa-user-circle"></i>
+                       <span>${roleText}</span>
+                    </div>
+                    <button class="logout-btn mobile"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</button>
+                `;
+                mobileUserInfoContainer.innerHTML = mobileHTML;
+                mobileUserInfoContainer.style.display = 'block';
+
+
+                // Attach logout listeners
+                document.querySelectorAll('.logout-btn').forEach(btn => btn.addEventListener('click', logout));
+                
+                // Show mobile menu button only if user is logged in
+                mobileMenuBtn.style.display = 'block';
+            }
+
+
+            // --- Auto-Login Check ---
+            const rememberedUser = JSON.parse(localStorage.getItem('smartAgeLogin'));
+            if (rememberedUser && rememberedUser.role === 'admin') {
+                userRole = rememberedUser.role;
+                startApp(); // Bypass login overlay
+            }
+
 
             // --- Custom Alert ---
             function showCustomAlert(message) {
@@ -1331,16 +1510,14 @@
 
                         // Access control for 'offers' section
                         if (targetSectionId === 'offers' && userRole === 'viewer') {
-                            showCustomAlert('لا يمكنك رؤية العروض يرجى تدقيق العروض مع المتابع');
+                            showCustomAlert('لا يمكنك رؤية العروض يرجى تدقيقها مع المتابع');
                             return;
                         }
 
                         // Switch section
                         document.querySelector('.nav-link.active')?.classList.remove('active');
-                        document.querySelector(`.nav-link[data-section="${targetSectionId}"]`)?.classList.add('active');
-                        document.querySelector('.mobile-nav-links .nav-link.active')?.classList.remove('active');
-                        document.querySelector(`.mobile-nav-links .nav-link[data-section="${targetSectionId}"]`)?.classList.add('active');
-
+                         // Handle both desktop and mobile nav links
+                        document.querySelectorAll(`.nav-link[data-section="${targetSectionId}"]`).forEach(l => l.classList.add('active'));
 
                         contentSections.forEach(section => section.classList.remove('active'));
                         document.getElementById(targetSectionId).classList.add('active');
@@ -1412,17 +1589,16 @@
             function displayMaps(mapsToDisplay) {
                 mapsContainer.innerHTML = ''; // Clear existing
                 if (mapsToDisplay.length === 0) {
-                    mapsContainer.innerHTML = `<p style="text-align:center; color:#666;">لا توجد خرائط مطابقة لبحثك.</p>`;
+                    mapsContainer.innerHTML = `<p style="grid-column: 1 / -1; text-align:center; color:#666;">لا توجد خرائط مطابقة لبحثك.</p>`;
                     return;
                 }
                 mapsToDisplay.forEach((map, index) => {
                     const mapItem = document.createElement('a');
                     mapItem.className = 'map-item';
-                    // Use actual map data index if filtering, otherwise original index
                     const originalIndex = allMaps.findIndex(item => item.name === map.name); 
-                    mapItem.href = map.link; // Use link from the map object
+                    mapItem.href = map.link;
                     mapItem.target = "_blank";
-                    mapItem.innerHTML = `<div class="map-number">${originalIndex !== -1 ? originalIndex + 1 : ''}</div><div class="map-name">${map.name}</div>`;
+                    mapItem.innerHTML = `<div class="map-number">${originalIndex + 1}</div><div class="map-name">${map.name}</div>`;
                     mapsContainer.appendChild(mapItem);
                 });
             }
@@ -1430,19 +1606,19 @@
             // Initial display of all maps
             displayMaps(allMaps);
 
-            // Search functionality for maps
-            mapSearchBtn.addEventListener('click', () => {
+            // Search functionality
+            function searchMaps() {
                 const searchTerm = mapSearchInput.value.trim().toLowerCase();
                 const filteredMaps = allMaps.filter(map =>
                     map.name.toLowerCase().includes(searchTerm)
                 );
                 displayMaps(filteredMaps);
-            });
+            }
 
-            // Allow searching on 'Enter' key press
+            mapSearchBtn.addEventListener('click', searchMaps);
             mapSearchInput.addEventListener('keypress', e => {
                 if (e.key === 'Enter') {
-                    mapSearchBtn.click();
+                    searchMaps();
                 }
             });
         }
@@ -2296,105 +2472,7 @@
             const vlanResult = document.getElementById('vlanResult');
             const vlanMap = 
             {
-                "151": "210",
-                "235": "317",
-                "مجمع": "2 ",
-                "المجمع": "2 ",
-                "اهلي": "2 ",
-                "الاهلي": "2",
-                "الاهليات": "2",
-                "اهليات": "2 ",
-                "زراعي": "2",
-                "الزراعي": "2",
-                "1310": "114",
-                "1694": "112 ",
-                "1692": "115 ",
-                "140": "211 ",
-                "267": "213",
-                "1721": "315",
-                "1698": "716",
-                "148": "113",
-                "259": "117",
-                "1696": "612",
-                "264": "119",
-                "149": "117",
-                "1720": "310",
-                "265": "114",
-                "1697": "715",
-                "266": "115",
-                "144": "119",
-                "146": "118",
-                "137": "213",
-                "143": "313",
-                "136": "314",
-                "142": "214",
-                "138": "212",
-                "111": "310",
-                "179": "317",
-                "169": "216",
-                "166": "316",
-                "161": "115 ",
-                "162": "215",
-                "180": "218",
-                "171": "311",
-                "116": "319",
-                "139": "315",
-                "112": "312",
-                "167": "217",
-                "118": "410",
-                "119": "120",
-                "121": "318",
-                "311": "411",
-                "120": "412",
-                "99": "110",
-                "47": "113",
-                "46": "115",
-                "48": "117",
-                "164": "413",
-                "172": "416",
-                "134": "419",
-                "170": "418",
-                "181": "510",
-                "165": "511",
-                "1850": "118",
-                "53": "210",
-                "50": "119",
-                "49": "120",
-                "71": "114",
-                "72": "112",
-                68: 111,
-                69: 116,
-                "113": "411",
-                "1980": "211",
-                73: 212,
-                "182": "512",
-                "147": "417",
-                376: 218,
-                "163": "513",
-                "1747": "213",
-                "55": "215",
-                "51": "216",
-                "52": "214",
-                "152": "514",
-                "54": "217",
-                "173": "515",
-                "174": "516",
-                "175": "517",
-                "106": "611",
-                "183": "519",
-                "60": "219",
-                "61": "220",
-                "108": "616",
-                "117": "618",     
-                "107": "612",
-                "110": "614",    
-                "109": "617",
-                "122": "615",
-                "178": "518",
-                "176": "610",
-                "45": "312",
-                "44": "313",
-                "43": "311",
+                "151": "210", "235": "317", "مجمع": "2 ", "المجمع": "2 ", "اهلي": "2 ", "الاهلي": "2","الاهليات": "2", "اهليات": "2 ", "زراعي": "2", "الزراعي": "2", "1310": "114", "1694": "112 ", "1692": "115 ", "140": "211 ", "267": "213", "1721": "315", "1698": "716", "148": "113", "259": "117", "1696": "612", "264": "119", "149": "117", "1720": "310", "265": "114", "1697": "715", "266": "115", "144": "119", "146": "118", "137": "213", "143": "313", "136": "314", "142": "214", "138": "212", "111": "310", "179": "317", "169": "216", "166": "316", "161": "115 ", "162": "215", "180": "218", "171": "311", "116": "319", "139": "315", "112": "312", "167": "217", "118": "410", "119": "120", "121": "318", "311": "411", "120": "412", "99": "110", "47": "113", "46": "115", "48": "117", "164": "413", "172": "416", "134": "419", "170": "418", "181": "510", "165": "511", "1850": "118", "53": "210", "50": "119", "49": "120", "71": "114", "72": "112", "68": "111", "69": "116", "113": "411", "1980": "211", "73": "212", "182": "512", "147": "417", "376": "218", "163": "513", "1747": "213", "55": "215", "51": "216", "52": "214", "152": "514", "54": "217", "173": "515", "174": "516", "175": "517", "106": "611", "183": "519", "60": "219", "61": "220", "108": "616", "117": "618", "107": "612", "110": "614", "109": "617", "122": "615", "178": "518", "176": "610", "45": "312", "44": "313", "43": "311",
              };
             
             showVlanBtn.addEventListener('click', () => {
@@ -2411,327 +2489,41 @@
             const categoryBtns = document.querySelectorAll('.category-btn');
             const materials = {
                 routers: [
-                    {
-                        name: "راوتر TP-link Deco S7",
-                        price: "السعر : قطعة بـ65.000 د.ع | قطعتين بـ120.000 د.ع | ثلاث قطع بـ150.000 د.ع",
-                        image: "https://f.top4top.io/p_3446t1urf1.jpg",
-                        specs: [
-                            "Wifi : الجيل الخامس (Wifi 5)",
-                            "تغطية شاملة بتقنية (Mesh): يغطي حتى 560م² بدون انقطاع",
-                            "ثنائي التردد : (2.4GHz + 5GHz ) بسرعة تصل إلى 1300Mbps.",
-                            "منافذ LAN : لكل قطعة يوجد ثلاث منافذ LAN",
-                            "تحكم بالتطبيق  : إدارة الشبكة بسهولة عبر تطبيق Deco."
-                        ]
-                    },
-                    {
-                        name: "راوتر TP-Link Deco M4",
-                        price: "السعر : قطعة بـ55.000 د.ع | قطعتين بـ100.000 د.ع | ثلاث قطع بـ130.000 د.ع",
-                        image: "https://h.top4top.io/p_34461ghq210.jpg",
-                        specs: [
-                            "Wifi : الجيل الخامس (Wifi 5)",
-                            "تغطية قوية (Mesh) : يغطي حتى 370م².",
-                            "ثنائي التردد :  يدعم 2.4GHz و5GHz بسرعة تصل إلى 1200Mbps.",
-                            "منافذ LAN : لكل قطعة يوجد منفذين LAN",
-                            "تحكم بالتطبيق : إعداد ومراقبة الشبكة بسهولة من تطبيق Deco."
-                        ]
-                    },
-                    {
-                        name: "راوتر TP-link Deco E4",
-                        price: "السعر : قطعة بـ40.000 د.ع | قطعتين بـ100.000 د.ع | ثلاث قطع بـ130.000 د.ع",
-                        image: "https://g.top4top.io/p_3446z9fxr9.jpg",
-                        specs: [
-                            "Wifi : الجيل الخامس (Wifi 5)",
-                            "نظام (Mesh) بتغطية ممتازة : يغطي حتى 370م²",
-                            "ثنائي التردد : (2.4GHz  و 5GHz ) بسرعة تصل إلى 1200Mbps.",
-                            "اداء ثابت : مناسب للاستخدام اليومي الكثيف (جيد في الالعاب والبث المباشر لكن ليس بكثافة, الفئات الاعلى افضل)",
-                            "تحكم بالتطبيق : إعداد ومراقبة الشبكة بسهولة من تطبيق Deco."
-                        ]
-                    },
-                    {
-                        name: "راوتر شاومي xiaomi ax3200",
-                        price: "السعر : 90.000 د.ع",
-                        image: "https://d.top4top.io/p_3446a97k37.jpg",
-                        specs: [
-                            "Wifi : الجيل السادس (Wifi 6)",
-                            "معالج قوي : سرعة وأداء أعلى، استقرار أفضل للشبكة.",
-                            "ثنائي التردد : (2.4GHz + 5GHz ) بسرعة إجمالية تصل إلى (3202Mbps.)",
-                            "5 منافذ LAN : منفذ WAN و 4 منافذ LAN جميعها تدعم سرعة 1G",
-                            "استقرارية وثبات : مناسب جدًا للألعاب، البث المباشر بدقة 4K، والتصفح الكثيف.",
-                        ]
-                    },
-                    {
-                        name: "راوتر ريدمي Redmi AX3000",
-                        price: "السعر : 85,000 د.ع",
-                        image: "https://i.top4top.io/p_3446pzbpj1.jpg",
-                        specs: [
-                            "Wifi : الجيل السادس (Wifi 6)",
-                            "التغطية: ممتازة للمنازل المتوسطة إلى الكبيرة مع 4 هوائيات خارجية قوية",
-                            "السرعة: بسرعة تصل إلى 2976Mbps (574Mbps على 2.4GHz و2402Mbps على 5GHz).",
-                            "تحمّل الأجهزة: يدعم عدد كبير من الأجهزة بكفاءة عالية.",
-                            " للألعاب والبث: أداء رائع جدًا للبث بدقة 4K وألعاب أونلاين بدون لاكَ أو تقطيع."
-                        ]
-                    },
-                    {
-                        name: "راوتر TP-link AX55 (ax3000)",
-                        price: "السعر : 90.000 د.ع",
-                        image: "https://l.top4top.io/p_3446dtjox3.jpg",
-                        specs: [
-                            "Wifi : الجيل السادس (Wifi 6)",
-                            "التغطية: يغطي منازل متوسطة إلى كبيرة بفضل Beamforming و4 هوائيات قوية.",
-                            "السرعة: بسرعة تصل 2976Mbps (574Mbps على 2.4GHz و2402Mbps على 5GHz).",
-                            "تحمّل الأجهزة: يدعم عشرات الأجهزة بفضل MU-MIMO وOFDMA بدون تقطيع.",
-                            "للألعاب والبث: أداء ممتاز لألعاب الأونلاين والبث بدقة 4K بدون تأخير."
-                        ]
-                    },
-                    {
-                        name: "راوتر TP-link AX53 (نسخة محدثة)",
-                        price: "السعر : 85.000 د.ع",
-                        image: "https://k.top4top.io/p_34465byjq2.jpg",
-                        specs: [
-                            "Wifi : الجيل السادس (Wifi 6)",
-                            "التغطية: تغطية ممتازة للمنازل المتوسطة بفضل 4 هوائيات وBeamforming.",
-                            "السرعة: بسرعة تصل 2976Mbps (574Mbps على 2.4GHz و2402Mbps على 5GHz).",
-                            "تحمّل الأجهزة: يدعم أجهزة كثيرة في نفس الوقت بكفاءة عالية بفضل MU-MIMO وOFDMA.",
-                            "للألعاب والبث: أداء قوي جدًا للألعاب والبث بدقة 4K مع تأخير شبه معدوم."
-                        ]
-                    },
-                    {
-                        name: "راوتر ريدمي Redmi AC2100",
-                        price: "السعر : 75,000 د.ع",
-                        image: "https://c.top4top.io/p_3446i62nu6.jpg",
-                        specs: [
-                            "Wifi : الجيل الخامس (Wifi 5)",
-                            "التغطية: تغطي مساحة متوسطة إلى كبيرة بفضل 6 هوائيات خارجية قوية.",
-                            "السرعة: يدعم AC2100 بسرعة تصل إلى 2033Mbps (ممتاز للتصفح السريع).",
-                            "الألعاب والبث المباشر: يقدم أداء ثابت نسبيًا، لكن فيه تأخير بسيط مقارنة براوترات Wi-Fi 6.",
-                            " تحمل الأجهزة: يدعم عدد كبير من الاجهزة المتصلة بفضل MU-MIMO وتقنيات التوجيه الذكي."
-                        ]
-                    },
-                    {
-                        name: "راوتر TP-link AX23 (ax1800)",
-                        price: "السعر : 75.000 د.ع",
-                        image: "https://b.top4top.io/p_3446yghuj5.jpg",
-                        specs: [
-                            "Wifi : الجيل السادس (Wifi 6)",
-                            "التغطية: ممتاز للمنازل المتوسطة بفضل 4 هوائيات قوية وتقنية Beamforming.",
-                            "السرعة: Wi-Fi 6 بسرعة إجمالية تصل إلى 1775Mbps (574Mbps على 2.4GHz و1201Mbps على 5GHz).",
-                            "تحمّل الأجهزة: يدعم أجهزة متعددة بكفاءة عالية",
-                            "للألعاب والبث: يقدم أداء ثابت ومناسب للألعاب المتوسطة والبث بدقة 4K."
-                        ]
-                    },
-                    {
-                        name: "راوتر TP-link AX1500",
-                        price: "السعر : 55,000 د.ع",
-                        image: "https://a.top4top.io/p_34461uoip4.jpg",
-                        specs: [
-                            "Wifi : الجيل السادس (Wifi 6)",
-                            "التغطية: مناسب للمنازل الصغيرة إلى المتوسطة مع 4 هوائيات قوية",
-                            "السرعة: Wi-Fi 6 بسرعة إجمالية تصل إلى 1500Mbps (300Mbps على 2.4GHz و1201Mbps على 5GHz).",
-                            "تحمّل الأجهزة: يدعم أجهزة متعددة بكفاءة",
-                            "للألعاب والبث: أداء جيد جدًا للبث بدقة Full HD وألعاب أونلاين خفيفة بدون تقطيع."
-                        ]
-                    },
-                    {
-                        name: "راوتر شاومي Xiaomi 4A",
-                        price: "السعر : 35,000 د.ع",
-                        image: "https://h.top4top.io/p_3447m0cck1.jpeg",
-                        specs: [
-                            "Wifi : الجيل الخامس (Wifi 5)",
-                            "التغطية: مناسب للمنازل الصغيرة إلى المتوسطة مع 4 هوائيات خارجية قوية.",
-                            "السرعة: ثنائي التردد (Dual-Band) بسرعة إجمالية تصل إلى 1167Mbps (300Mbps على 2.4GHz و867Mbps على 5GHz).",
-                            "تحمّل الأجهزة: يدعم عدد جيد من الاجهزة المتصلة في نفس الوقت مع أداء مستقر.",
-                            "	للألعاب والبث: ممتاز للبث بدقة Full HD وتصفح سريع، مناسب للألعاب الخفيفة"
-                        ]
-                    },
-                    {
-                        name: "راوتر TP-link ac1200",
-                        price: "السعر : 45,000 د.ع",
-                        image: "https://j.top4top.io/p_3447qrbzg1.jpeg",
-                        specs: [
-                            "Wifi : الجيل الخامس (Wifi 5)",
-                            "التغطية: مناسب للشقق أو منازل صغيرة بفضل 4 هوائيات",
-                            "السرعة: يدعم AC1200 (300Mbps على 2.4GHz و867Mbps على 5GHz).",
-                            "تحمّل الأجهزة: يتحمّل عدد جيد من الأجهزة المنزلية لكن مو مثالي للشبكات الثقيلة.",
-                            "للألعاب والبث: مناسب للتصفح والبث بدقة Full HD، لكن مو مخصص للألعاب الثقيلة."
-                        ]
-                    },
+                    { name: "راوتر TP-link Deco S7", price: "السعر : قطعة بـ65.000 د.ع | قطعتين بـ120.000 د.ع | ثلاث قطع بـ150.000 د.ع", image: "https://f.top4top.io/p_3446t1urf1.jpg", specs: ["Wifi : الجيل الخامس (Wifi 5)", "تغطية شاملة بتقنية (Mesh): يغطي حتى 560م² بدون انقطاع", "ثنائي التردد : (2.4GHz + 5GHz ) بسرعة تصل إلى 1300Mbps.", "منافذ LAN : لكل قطعة يوجد ثلاث منافذ LAN", "تحكم بالتطبيق  : إدارة الشبكة بسهولة عبر تطبيق Deco."] },
+                    { name: "راوتر TP-Link Deco M4", price: "السعر : قطعة بـ55.000 د.ع | قطعتين بـ100.000 د.ع | ثلاث قطع بـ130.000 د.ع", image: "https://h.top4top.io/p_34461ghq210.jpg", specs: ["Wifi : الجيل الخامس (Wifi 5)", "تغطية قوية (Mesh) : يغطي حتى 370م².", "ثنائي التردد :  يدعم 2.4GHz و5GHz بسرعة تصل إلى 1200Mbps.", "منافذ LAN : لكل قطعة يوجد منفذين LAN", "تحكم بالتطبيق : إعداد ومراقبة الشبكة بسهولة من تطبيق Deco."] },
+                    { name: "راوتر TP-link Deco E4", price: "السعر : قطعة بـ40.000 د.ع | قطعتين بـ100.000 د.ع | ثلاث قطع بـ130.000 د.ع", image: "https://g.top4top.io/p_3446z9fxr9.jpg", specs: ["Wifi : الجيل الخامس (Wifi 5)", "نظام (Mesh) بتغطية ممتازة : يغطي حتى 370م²", "ثنائي التردد : (2.4GHz  و 5GHz ) بسرعة تصل إلى 1200Mbps.", "اداء ثابت : مناسب للاستخدام اليومي الكثيف (جيد في الالعاب والبث المباشر لكن ليس بكثافة, الفئات الاعلى افضل)", "تحكم بالتطبيق : إعداد ومراقبة الشبكة بسهولة من تطبيق Deco."] },
+                    { name: "راوتر شاومي xiaomi ax3200", price: "السعر : 90.000 د.ع", image: "https://d.top4top.io/p_3446a97k37.jpg", specs: ["Wifi : الجيل السادس (Wifi 6)", "معالج قوي : سرعة وأداء أعلى، استقرار أفضل للشبكة.", "ثنائي التردد : (2.4GHz + 5GHz ) بسرعة إجمالية تصل إلى (3202Mbps.)", "5 منافذ LAN : منفذ WAN و 4 منافذ LAN جميعها تدعم سرعة 1G", "استقرارية وثبات : مناسب جدًا للألعاب، البث المباشر بدقة 4K، والتصفح الكثيف.",] },
+                    { name: "راوتر ريدمي Redmi AX3000", price: "السعر : 85,000 د.ع", image: "https://i.top4top.io/p_3446pzbpj1.jpg", specs: ["Wifi : الجيل السادس (Wifi 6)", "التغطية: ممتازة للمنازل المتوسطة إلى الكبيرة مع 4 هوائيات خارجية قوية", "السرعة: بسرعة تصل إلى 2976Mbps (574Mbps على 2.4GHz و2402Mbps على 5GHz).", "تحمّل الأجهزة: يدعم عدد كبير من الأجهزة بكفاءة عالية.", " للألعاب والبث: أداء رائع جدًا للبث بدقة 4K وألعاب أونلاين بدون لاكَ أو تقطيع."] },
+                    { name: "راوتر TP-link AX55 (ax3000)", price: "السعر : 90.000 د.ع", image: "https://l.top4top.io/p_3446dtjox3.jpg", specs: ["Wifi : الجيل السادس (Wifi 6)", "التغطية: يغطي منازل متوسطة إلى كبيرة و4 هوائيات قوية.", "السرعة: بسرعة تصل 2976Mbps (574Mbps على 2.4GHz و2402Mbps على 5GHz).", "تحمّل الأجهزة: يدعم عشرات الأجهزة بفضل MU-MIMO وOFDMA بدون تقطيع.", "للألعاب والبث: أداء ممتاز لألعاب الأونلاين والبث بدقة 4K بدون تأخير."] },
+                    { name: "راوتر TP-link AX53 (نسخة محدثة)", price: "السعر : 85.000 د.ع", image: "https://k.top4top.io/p_34465byjq2.jpg", specs: ["Wifi : الجيل السادس (Wifi 6)", "التغطية: تغطية ممتازة للمنازل المتوسطة بفضل 4 هوائيات.", "السرعة: بسرعة تصل 2976Mbps (574Mbps على 2.4GHz و2402Mbps على 5GHz).", "تحمّل الأجهزة: يدعم أجهزة كثيرة في نفس الوقت بكفاءة عالية بفضل MU-MIMO وOFDMA.", "للألعاب والبث: أداء قوي جدًا للألعاب والبث بدقة 4K مع تأخير شبه معدوم."] },
+                    { name: "راوتر ريدمي Redmi AC2100", price: "السعر : 75,000 د.ع", image: "https://c.top4top.io/p_3446i62nu6.jpg", specs: ["Wifi : الجيل الخامس (Wifi 5)", "التغطية: تغطي مساحة متوسطة إلى كبيرة بفضل 6 هوائيات خارجية قوية.", "السرعة: يدعم AC2100 بسرعة تصل إلى 2033Mbps (ممتاز للتصفح السريع).", "الألعاب والبث المباشر: يقدم أداء ثابت نسبيًا، لكن فيه تأخير بسيط مقارنة براوترات Wi-Fi 6.", " تحمل الأجهزة: يدعم عدد كبير من الاجهزة المتصلة بفضل MU-MIMO وتقنيات التوجيه الذكي."] },
+                    { name: "راوتر TP-link AX23 (ax1800)", price: "السعر : 75.000 د.ع", image: "https://b.top4top.io/p_3446yghuj5.jpg", specs: ["Wifi : الجيل السادس (Wifi 6)", "التغطية: ممتاز للمنازل المتوسطة بفضل 4 هوائيات قوية.", "السرعة: Wi-Fi 6 بسرعة إجمالية تصل إلى 1775Mbps (574Mbps على 2.4GHz و1201Mbps على 5GHz).", "تحمّل الأجهزة: يدعم أجهزة متعددة بكفاءة عالية", "للألعاب والبث: يقدم أداء ثابت ومناسب للألعاب المتوسطة والبث بدقة 4K."] },
+                    { name: "راوتر TP-link AX1500", price: "السعر : 55,000 د.ع", image: "https://a.top4top.io/p_34461uoip4.jpg", specs: ["Wifi : الجيل السادس (Wifi 6)", "التغطية: مناسب للمنازل الصغيرة إلى المتوسطة مع 4 هوائيات قوية", "السرعة: Wi-Fi 6 بسرعة إجمالية تصل إلى 1500Mbps (300Mbps على 2.4GHz و1201Mbps على 5GHz).", "تحمّل الأجهزة: يدعم أجهزة متعددة بكفاءة", "للألعاب والبث: أداء جيد جدًا للبث بدقة Full HD وألعاب أونلاين خفيفة بدون تقطيع."] },
+                    { name: "راوتر شاومي Xiaomi 4A", price: "السعر : 35,000 د.ع", image: "https://h.top4top.io/p_3447m0cck1.jpeg", specs: ["Wifi : الجيل الخامس (Wifi 5)", "التغطية: مناسب للمنازل الصغيرة إلى المتوسطة مع 4 هوائيات خارجية قوية.", "السرعة: ثنائي التردد (Dual-Band) بسرعة إجمالية تصل إلى 1167Mbps (300Mbps على 2.4GHz و867Mbps على 5GHz).", "تحمّل الأجهزة: يدعم عدد جيد من الاجهزة المتصلة في نفس الوقت مع أداء مستقر.", "للألعاب والبث: ممتاز للبث بدقة Full HD وتصفح سريع، مناسب للألعاب الخفيفة"] },
+                    { name: "راوتر TP-link ac1200", price: "السعر : 45,000 د.ع", image: "https://j.top4top.io/p_3447qrbzg1.jpeg", specs: ["Wifi : الجيل الخامس (Wifi 5)", "التغطية: مناسب للشقق أو منازل صغيرة بفضل 4 هوائيات", "السرعة: يدعم AC1200 (300Mbps على 2.4GHz و867Mbps على 5GHz).", "تحمّل الأجهزة: يتحمّل عدد جيد من الأجهزة المنزلية لكن مو مثالي للشبكات الثقيلة.", "للألعاب والبث: مناسب للتصفح والبث بدقة Full HD، لكن مو مخصص للألعاب الثقيلة."] },
                 ],
                 onu: [
-                    {
-                        name: "جهاز ONU Huawei 1G",
-                        price: "السعر : 15.000 د.ع",
-                        image: "https://c.top4top.io/p_3446omb4b5.jpg",
-                        specs: [
-                            "دعم XPON/GPON",
-                            "2 منافذ LAN",
-                            "منافذ LAN تعدم سرعة تصل إلى 1 جيجابت/ثانية",
-                            "دعم IPv6",
-                        ]
-                    },
-                    {
-                        name: "جهاز ONU Huawei 100M",
-                        price: "السعر : 10.000 د.ع",
-                        image: "https://d.top4top.io/p_3446qxlso6.jpg",
-                        specs: [
-                            "دعم GPON",
-                            "4 منافذ LAN",
-                            "2 منافذ VoIP",
-                            "منافذ LAN تدعم سرعة تصل إلى 100 ميجابت/ثانية",
-                        ]
-                    },
-                    {
-                        name: "جهاز ONU Tenda 1G",
-                        price: "السعر : 10.000 د.ع",
-                        image: "https://e.top4top.io/p_34467btqy7.jpg",
-                        specs: [
-                            "دعم XPON",
-                            "منفذ LAN واحد",
-                            "منفذ LAN يدعم سرعة تصل الى 1 جيجابت/ثانية",
-                            "دعم IPv6",
-                        ]
-                    }
+                    { name: "جهاز ONU Huawei 1G", price: "السعر : 15.000 د.ع", image: "https://c.top4top.io/p_3446omb4b5.jpg", specs: ["دعم XPON/GPON", "2 منافذ LAN", "منافذ LAN تعدم سرعة تصل إلى 1 جيجابت/ثانية", "دعم IPv6",] },
+                    { name: "جهاز ONU Huawei 100M", price: "السعر : 10.000 د.ع", image: "https://d.top4top.io/p_3446qxlso6.jpg", specs: ["دعم GPON", "4 منافذ LAN", "2 منافذ VoIP", "منافذ LAN تدعم سرعة تصل إلى 100 ميجابت/ثانية",] },
+                    { name: "جهاز ONU Tenda 1G", price: "السعر : 10.000 د.ع", image: "https://e.top4top.io/p_34467btqy7.jpg", specs: ["دعم XPON", "منفذ LAN واحد", "منفذ LAN يدعم سرعة تصل الى 1 جيجابت/ثانية", "دعم IPv6",] }
                 ],
                 ont: [
-                    {
-                        name: "جهاز ONT V5 AC1200 (جديد)",
-                        price: "السعر : 45.000 د.ع",
-                        image: "https://b.top4top.io/p_3446vc0b04.jpg",
-                        specs: [
-                            "Wifi : الجيل الخامس (Wifi 5)",
-                            "التغطية: تغطية ممتازة للمنازل الصغيرة إلى المتوسطة مع 2 هوائيات خارجية.",
-                            "السرعة: يدعم AC1200 (300Mbps على 2.4GHz و867Mbps على 5GHz).",
-                            "تحمّل الأجهزة: يدعم عدد جيد من الأجهزة المنزلية مع أداء مستقر للاستخدام اليومي.",
-                            "للألعاب والبث: مناسب للبث ومشاهدة المحتوى بدقة Full HD، لكن ليس مخصص للألعاب الثقيلة."
-                        ]
-                    },
-                    {
-                        name: "جهاز ONT V5 AC1200 (مستعمل)",
-                        price: "السعر : 35.000 د.ع",
-                        image: "https://b.top4top.io/p_3446vc0b04.jpg",
-                        specs: [
-                            "Wifi : الجيل الخامس (Wifi 5)",
-                            "التغطية: تغطية ممتازة للمنازل الصغيرة إلى المتوسطة مع 2 هوائيات خارجية.",
-                            "السرعة: يدعم AC1200 (300Mbps على 2.4GHz و867Mbps على 5GHz).",
-                            "تحمّل الأجهزة: يدعم عدد جيد من الأجهزة المنزلية مع أداء مستقر للاستخدام اليومي.",
-                            "للألعاب والبث: مناسب للبث ومشاهدة المحتوى بدقة Full HD، لكن ليس مخصص للألعاب الثقيلة."
-                        ]
-                    },
-                    {
-                        name: "جهاز ONT V6 AC1200 (جديد)",
-                        price: "السعر : 55.000 د.ع",
-                        image: "https://l.top4top.io/p_3446xtv7f1.jpg",
-                        specs: [
-                            "Wifi : الجيل الخامس (Wifi 5)",
-                            "التغطية: تغطية ممتازة للمنازل المتوسطة ودعم ثنائي التردد.",
-                            "السرعة: يدعم AC1200 (300Mbps على 2.4GHz و867Mbps على 5GHz).",
-                            "تحمّل الأجهزة: يدعم أجهزة متعددة بثبات جيد بفضل المعالج المدمج وتقنيات QoS.",
-                            "للألعاب والبث: مناسب للبث بدقة Full HD والألعاب الخفيفة، لكنه غير مخصص للجيمرز المحترفين."
-                        ]
-                    },
-                    {
-                        name: "جهاز ONT V6 AC1200 (مستعمل)",
-                        price: "السعر : 35.000 د.ع",
-                        image: "https://l.top4top.io/p_3446xtv7f1.jpg",
-                        specs: [
-                            "Wifi : الجيل الخامس (Wifi 5)",
-                            "التغطية: تغطية ممتازة للمنازل المتوسطة ودعم ثنائي التردد.",
-                            "السرعة: يدعم AC1200 (300Mbps على 2.4GHz و867Mbps على 5GHz).",
-                            "تحمّل الأجهزة: يدعم أجهزة متعددة بثبات جيد بفضل المعالج المدمج وتقنيات QoS.",
-                            "للألعاب والبث: مناسب للبث بدقة Full HD والألعاب الخفيفة، لكنه غير مخصص للجيمرز المحترفين."
-                        ]
-                    },
-                    {
-                        name: "جهاز ONT Sa1456c (حنين)",
-                        price: "السعر : 20.000 د.ع",
-                        image: "https://j.top4top.io/p_3446ncs9e1.jpg",
-                        specs: [
-                            "Wifi : الجيل الرابع (Wifi 4)",
-                            "التغطية: تغطية مناسبة للمنازل الصغيرة إلى المتوسطة بهوائيات داخلية",
-                            "السرعة: يدعم Wi-Fi بسرعات بسيطة الى متوسطة",
-                            "تحمّل الأجهزة: جيد للاستخدام اليومي، يدعم عدد بسيط من الأجهزة بشكل مستقر",
-                            "للألعاب والبث: أدائه جيد للألعاب الخفيفة والبث المباشر بجودة متوسطة، لكنه غير موجه للألعاب الثقيلة أو الاستخدام الاحترافي."
-                        ]
-                    },
+                    { name: "جهاز ONT V5 AC1200 (جديد)", price: "السعر : 45.000 د.ع", image: "https://b.top4top.io/p_3446vc0b04.jpg", specs: ["Wifi : الجيل الخامس (Wifi 5)", "التغطية: تغطية ممتازة للمنازل الصغيرة إلى المتوسطة مع 2 هوائيات خارجية.", "السرعة: يدعم AC1200 (300Mbps على 2.4GHz و867Mbps على 5GHz).", "تحمّل الأجهزة: يدعم عدد جيد من الأجهزة المنزلية مع أداء مستقر للاستخدام اليومي.", "للألعاب والبث: مناسب للبث ومشاهدة المحتوى بدقة Full HD، لكن ليس مخصص للألعاب الثقيلة."] },
+                    { name: "جهاز ONT V5 AC1200 (مستعمل)", price: "السعر : 35.000 د.ع", image: "https://b.top4top.io/p_3446vc0b04.jpg", specs: ["Wifi : الجيل الخامس (Wifi 5)", "التغطية: تغطية ممتازة للمنازل الصغيرة إلى المتوسطة مع 2 هوائيات خارجية.", "السرعة: يدعم AC1200 (300Mbps على 2.4GHz و867Mbps على 5GHz).", "تحمّل الأجهزة: يدعم عدد جيد من الأجهزة المنزلية مع أداء مستقر للاستخدام اليومي.", "للألعاب والبث: مناسب للبث ومشاهدة المحتوى بدقة Full HD، لكن ليس مخصص للألعاب الثقيلة."] },
+                    { name: "جهاز ONT V6 AC1200 (جديد)", price: "السعر : 55.000 د.ع", image: "https://l.top4top.io/p_3446xtv7f1.jpg", specs: ["Wifi : الجيل الخامس (Wifi 5)", "التغطية: تغطية ممتازة للمنازل المتوسطة ودعم ثنائي التردد.", "السرعة: يدعم AC1200 (300Mbps على 2.4GHz و867Mbps على 5GHz).", "تحمّل الأجهزة: يدعم أجهزة متعددة بثبات جيد بفضل المعالج المدمج وتقنيات QoS.", "للألعاب والبث: مناسب للبث بدقة Full HD والألعاب الخفيفة، لكنه غير مخصص للجيمرز المحترفين."] },
+                    { name: "جهاز ONT V6 AC1200 (مستعمل)", price: "السعر : 35.000 د.ع", image: "https://l.top4top.io/p_3446xtv7f1.jpg", specs: ["Wifi : الجيل الخامس (Wifi 5)", "التغطية: تغطية ممتازة للمنازل المتوسطة ودعم ثنائي التردد.", "السرعة: يدعم AC1200 (300Mbps على 2.4GHz و867Mbps على 5GHz).", "تحمّل الأجهزة: يدعم أجهزة متعددة بثبات جيد بفضل المعالج المدمج وتقنيات QoS.", "للألعاب والبث: مناسب للبث بدقة Full HD والألعاب الخفيفة، لكنه غير مخصص للجيمرز المحترفين."] },
+                    { name: "جهاز ONT Sa1456c (حنين)", price: "السعر : 20.000 د.ع", image: "https://j.top4top.io/p_3446ncs9e1.jpg", specs: ["Wifi : الجيل الرابع (Wifi 4)", "التغطية: تغطية مناسبة للمنازل الصغيرة إلى المتوسطة بهوائيات داخلية", "السرعة: يدعم Wi-Fi بسرعات بسيطة الى متوسطة", "تحمّل الأجهزة: جيد للاستخدام اليومي، يدعم عدد بسيط من الأجهزة بشكل مستقر", "للألعاب والبث: أدائه جيد للألعاب الخفيفة والبث المباشر بجودة متوسطة، لكنه غير موجه للألعاب الثقيلة أو الاستخدام الاحترافي."] },
                 ],
                 other: [
-                    {
-                        name: "UPS",
-                        price: "السعر : 25.000 د.ع",
-                        image: "https://f.top4top.io/p_3446zuaqh9.jpg",
-                        specs: [
-                            "سعة البطارية: ليثيوم 8800 mAh تقدّر تتكرّر حتى 300 دورة شحن ",
-                            "الطاقة الخارجة: 18 W، مخرج USB 5V وDC خيارات متعددة: 5V/9V/12V بتيار 1–2A، إضافة لمخرج PoE 15/24V",
-                            "مدى التوافق: يدعم تشغيل أجهزة مثل راوتر، مودم، كاميرا مراقبة، VoIP ونظام PoE بدون انقطاع",
-                            "الحماية الذكية: فيه حماية ضد الشحن الزائد، التفريغ الزائد، ماس كهربائي وتغيّر الجهد",
-                        ]
-                    },
-                    {
-                        name: "CBOX",
-                        price: "السعر : 75.000 د.ع",
-                        image: "https://f.top4top.io/p_3446ks3kd1.jpg",
-                        specs: [
-                            "الفيديو والترفيه : يدعم تشغيل فيديو بدقة 4K عبر Smart YouTube مع إمكانية تثبيت تطبيقات من متجر Play .",
-                            "الاتصال : Wifi 2.4 + منفذ إيثرنت + HDMI + دعم Miracast, DLNA, AirPlay",
-                            "لا يوجد تقطيع ويحتوي على 90 قناة مشفرة منها باقة beIN Sport كاملة وأفلام ومسلسلات OSN ومجموعة متنوعة من القنوات المشفرة ويمكن زيادتها حسب التحديث",
-                            "النظام والمعالج :  يعمل على Android 9 بمعالج رباعي النواة مسؤوليته الاستجابة السريعة وتحليل البيانات بصورة ممتازة",
-                        ]
-                    },
-                    {
-                        name: "TV-BOX",
-                        price: "السعر : 25.000 د.ع",
-                        image: "https://k.top4top.io/p_344675uc71.jpg",
-                        specs: [
-                            "الفيديو والترفيه : يدعم تشغيل الفيديو بدقة 1080/HDR عبر YouTube مع إمكانية تثبيت تطبيقات من متجر Play.",
-                            "الاتصال : Wifi 2.4 + منفذ إيثرنت + HDMI",
-                            "النظام:  يعمل بنظام  (Android) يدعم أغلب التطبيقات الأساسية مثل YouTube وNetflix (بجودة محدودة).",
-                            "المعالج : رباعي النواة أدائه مناسب للتشغيل الخفيف.",
-                        ]
-                    },
-                    {
-                        name: "كيبل ضوئي 120 متر او اقل",
-                        price: "السعر : 10.000 د.ع",
-                        image: "https://l.top4top.io/p_3446yjj1x1.jpg",
-                        specs: [
-                            "مسلح بثلاث طبقات معدنية",
-                            "مقاوم للحرارة والضروف الخارجية",
-                        ]
-                    },
-                    {
-                        name: "كيبل ضوئي 150M/200m",
-                        price: "السعر : 15.000 د.ع",
-                        image: "https://l.top4top.io/p_3446yjj1x1.jpg",
-                        specs: [
-                            "مسلح بثلاث طبقات معدنية",
-                            "مقاوم للحرارة والضروف الخارجية",
-                        ]
-                    },
-                    {
-                        name: "فيش ضوئي (APC/UPC)",
-                        price: "السعر : 1.000 د.ع",
-                        image: "https://f.top4top.io/p_34467z4u78.jpg",
-                        specs: [
-                            "مصنوعة بجودة عالية",
-                            "مقاومة للحرارة والضروف الخارجية",
-                        ]
-                    },
-                    {
-                        name: "كيبل UTP 20M",
-                        price: "السعر : 10.000 د.ع",
-                        image: "https://g.top4top.io/p_3446etjbc10.png",
-                        specs: [
-                            "مصنوعة بجودة عالية",
-                            "مقاومة للحرارة والضروف الخارجية",
-                        ]
-                    },
-                    {
-                        name: "كيبل UTP 40M",
-                        price: "السعر : 20.000 د.ع",
-                        image: "https://h.top4top.io/p_3446ggygm1.png",
-                        specs: [
-                            "مصنوعة بجودة عالية",
-                            "مقاومة للحرارة والضروف الخارجية",
-                        ]
-                    },
+                    { name: "UPS", price: "السعر : 25.000 د.ع", image: "https://f.top4top.io/p_3446zuaqh9.jpg", specs: ["سعة البطارية: ليثيوم 8800 mAh تقدّر تتكرّر حتى 300 دورة شحن ", "الطاقة الخارجة: 18 W، مخرج USB 5V وDC خيارات متعددة: 5V/9V/12V بتيار 1–2A، إضافة لمخرج PoE 15/24V", "مدى التوافق: يدعم تشغيل أجهزة مثل راوتر، مودم، كاميرا مراقبة، VoIP ونظام PoE بدون انقطاع", "الحماية الذكية: فيه حماية ضد الشحن الزائد، التفريغ الزائد، ماس كهربائي وتغيّر الجهد",] },
+                    { name: "CBOX", price: "السعر : 75.000 د.ع", image: "https://f.top4top.io/p_3446ks3kd1.jpg", specs: ["الفيديو والترفيه : يدعم تشغيل فيديو بدقة 4K عبر Smart YouTube مع إمكانية تثبيت تطبيقات من متجر Play .", "الاتصال : Wifi 2.4 + منفذ إيثرنت + HDMI + دعم Miracast, DLNA, AirPlay", "لا يوجد تقطيع ويحتوي على 90 قناة مشفرة منها باقة beIN Sport كاملة وأفلام ومسلسلات OSN ومجموعة متنوعة من القنوات المشفرة ويمكن زيادتها حسب التحديث", "النظام والمعالج :  يعمل على Android 9 بمعالج رباعي النواة مسؤوليته الاستجابة السريعة وتحليل البيانات بصورة ممتازة",] },
+                    { name: "TV-BOX", price: "السعر : 25.000 د.ع", image: "https://k.top4top.io/p_344675uc71.jpg", specs: ["الفيديو والترفيه : يدعم تشغيل الفيديو بدقة 1080/HDR عبر YouTube مع إمكانية تثبيت تطبيقات من متجر Play.", "الاتصال : Wifi 2.4 + منفذ إيثرنت + HDMI", "النظام:  يعمل بنظام  (Android) يدعم أغلب التطبيقات الأساسية مثل YouTube وNetflix (بجودة محدودة).", "المعالج : رباعي النواة أدائه مناسب للتشغيل الخفيف.",] },
+                    { name: "كيبل ضوئي 120 متر او اقل", price: "السعر : 10.000 د.ع", image: "https://l.top4top.io/p_3446yjj1x1.jpg", specs: ["مسلح بثلاث طبقات معدنية", "مقاوم للحرارة والضروف الخارجية",] },
+                    { name: "كيبل ضوئي 150M/200m", price: "السعر : 15.000 د.ع", image: "https://l.top4top.io/p_3446yjj1x1.jpg", specs: ["مسلح بثلاث طبقات معدنية", "مقاوم للحرارة والضروف الخارجية",] },
+                    { name: "فيش ضوئي (APC/UPC)", price: "السعر : 1.000 د.ع", image: "https://f.top4top.io/p_34467z4u78.jpg", specs: ["مصنوعة بجودة عالية", "مقاومة للحرارة والضروف الخارجية",] },
+                    { name: "كيبل UTP 20M", price: "السعر : 10.000 د.ع", image: "https://g.top4top.io/p_3447nelng3.jpeg", specs: ["مصنوعة بجودة عالية", "مقاومة للحرارة والضروف الخارجية",] },
+                    { name: "كيبل UTP 30M", price: "السعر : 15.000 د.ع", image: "https://h.top4top.io/p_3447xppge4.jpeg", specs: ["مصنوعة بجودة عالية", "مقاومة للحرارة والضروف الخارجية",] },
+                    { name: "كيبل UTP 40M", price: "السعر : 20.000 د.ع", image: "https://i.top4top.io/p_3447qtoki5.jpeg", specs: ["مصنوعة بجودة عالية", "مقاومة للحرارة والضروف الخارجية",] },
                 ]
             };
             
@@ -2740,7 +2532,7 @@
                 materials[category].forEach(item => {
                     const card = document.createElement('div');
                     card.className = 'material-card';
-                    card.innerHTML = `<div class="material-img"> <div class="zoom-icon"><i class="fas fa-search-plus"></i></div> <img src="${item.image}" alt="${item.name}"> </div> <div class="material-content"> <h3>${item.name}</h3> <div class="material-price">${item.price}</div> <ul class="material-specs"> ${item.specs.map(spec => `<li>${spec}</li>`).join('')} </ul> </div>`;
+                    card.innerHTML = `<div class="material-img"> <div class="zoom-icon"><i class="fas fa-search-plus"></i></div> <img src="${item.image}" alt="${item.name}" onerror="this.onerror=null;this.src='https://placehold.co/400x200/2c3e50/ecf0f1?text=Image+Not+Found';"> </div> <div class="material-content"> <h3>${item.name}</h3> <div class="material-price">${item.price}</div> <ul class="material-specs"> ${item.specs.map(spec => `<li>${spec}</li>`).join('')} </ul> </div>`;
                     card.querySelector('.material-img').addEventListener('click', () => openImageLightbox(item.image, item.name));
                     materialsGrid.appendChild(card);
                 });
