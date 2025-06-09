@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>شركة إنترنت - خدمات متطورة</title>
+    <title>خدمات العصر الذكي</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -32,6 +32,172 @@
             line-height: 1.6;
             min-height: 100vh;
             position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Login Overlay */
+        #login-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .login-container {
+            background: white;
+            padding: 40px;
+            border-radius: var(--radius);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .login-container h2 {
+            margin-bottom: 25px;
+            color: var(--primary);
+        }
+        
+        .login-form {
+            display: none; /* Hidden by default */
+        }
+
+        .login-form .form-group {
+            margin-bottom: 15px;
+            text-align: right;
+        }
+        
+        .login-form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        
+        .login-form .form-control {
+             width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .login-form .form-control:focus {
+            border-color: var(--secondary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+        
+        .login-btn, .viewer-btn, .admin-login-trigger-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 10px;
+            border: none;
+        }
+
+        /* Blue button for viewer and form submission */
+        .viewer-btn, .login-btn {
+            background: var(--secondary);
+            color: white;
+        }
+        .viewer-btn:hover, .login-btn:hover {
+            background: #2980b9;
+        }
+        
+        /* Gray button for admin login trigger */
+        .admin-login-trigger-btn {
+            background: var(--light);
+            color: var(--dark);
+            border: 2px solid #ddd;
+        }
+        .admin-login-trigger-btn:hover {
+             background: #e0e0e0;
+        }
+        
+        .login-divider {
+            margin: 20px 0;
+            border-bottom: 1px solid #ccc;
+            position: relative;
+        }
+        
+        .login-divider span {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 0 10px;
+            color: #888;
+        }
+        
+        #login-error {
+            color: var(--accent);
+            margin-top: 10px;
+            font-weight: 500;
+            height: 20px;
+        }
+
+        /* Custom Alert Modal */
+        #alert-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: none; /* Hidden by default */
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+        }
+
+        .alert-content {
+            background: white;
+            padding: 30px;
+            border-radius: var(--radius);
+            text-align: center;
+            box-shadow: var(--shadow);
+            max-width: 90%;
+            width: 400px;
+        }
+
+        .alert-content p {
+            font-size: 1.1rem;
+            color: var(--dark);
+            margin-bottom: 20px;
+        }
+
+        .alert-close-btn {
+            padding: 10px 25px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .alert-close-btn:hover {
+            opacity: 0.9;
+        }
+
+        .main-wrapper {
+            display: none; /* Hidden until login */
         }
 
         /* Header Styles */
@@ -214,6 +380,7 @@
             height: 100%;
             object-fit: cover;
             transition: transform 0.5s ease;
+            cursor: pointer;
         }
 
         .service-card:hover .service-img img {
@@ -481,6 +648,7 @@
         .material-img {
             height: 180px;
             overflow: hidden;
+            position: relative;
         }
 
         .material-img img {
@@ -488,6 +656,29 @@
             height: 100%;
             object-fit: cover;
             transition: transform 0.5s ease;
+            cursor: pointer;
+        }
+
+        .material-img .zoom-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        .material-img:hover .zoom-icon {
+            opacity: 1;
         }
 
         .material-card:hover .material-img img {
@@ -765,84 +956,25 @@
         }
 
         @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 1.8rem;
-            }
-            
-            .section-title {
-                font-size: 1.6rem;
-            }
-            
-            .contact-methods {
-                gap: 25px;
-            }
-            
-            .contact-icon {
-                width: 60px;
-                height: 60px;
-                font-size: 1.8rem;
-            }
-            
-            .footer-content {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
+            .hero h1 { font-size: 1.8rem; }
+            .section-title { font-size: 1.6rem; }
+            .contact-methods { gap: 25px; }
+            .contact-icon { width: 60px; height: 60px; font-size: 1.8rem; }
+            .footer-content { grid-template-columns: 1fr; gap: 20px; }
         }
 
         @media (max-width: 576px) {
-            .logo {
-                font-size: 1.3rem;
-            }
-            
-            .hero {
-                height: 55vh;
-            }
-            
-            .hero h1 {
-                font-size: 1.5rem;
-            }
-            
-            .hero p {
-                font-size: 1rem;
-            }
-            
-            .cta-button {
-                padding: 10px 25px;
-                font-size: 0.95rem;
-            }
-            
-            .section-title {
-                font-size: 1.4rem;
-                margin: 25px 0;
-            }
-            
-            .services {
-                grid-template-columns: 1fr;
-            }
-            
-            .maps-container {
-                grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-            }
-            
-            .offers-form {
-                padding: 20px;
-            }
-            
-            .vlan-container {
-                padding: 20px;
-            }
-            
-            .materials-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .contact-container {
-                padding: 25px 15px;
-            }
-            
-            .contact-title {
-                font-size: 1.5rem;
-            }
+            .logo { font-size: 1.3rem; }
+            .hero { height: 55vh; }
+            .hero h1 { font-size: 1.5rem; }
+            .hero p { font-size: 1rem; }
+            .cta-button { padding: 10px 25px; font-size: 0.95rem; }
+            .section-title { font-size: 1.4rem; margin: 25px 0; }
+            .services, .materials-grid { grid-template-columns: 1fr; }
+            .maps-container { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
+            .offers-form, .vlan-container { padding: 20px; }
+            .contact-container { padding: 25px 15px; }
+            .contact-title { font-size: 1.5rem; }
         }
 
         /* جدول العروض الجديد */
@@ -874,14 +1006,8 @@
             border-bottom: 1px solid #eee;
         }
 
-        .offer-table tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-
-        .offer-table tr:hover {
-            background-color: #f1f1f1;
-        }
-
+        .offer-table tr:nth-child(even) { background-color: #f9f9f9; }
+        .offer-table tr:hover { background-color: #f1f1f1; }
         .offer-note {
             background-color: var(--light);
             border-radius: var(--radius);
@@ -891,29 +1017,110 @@
             color: var(--primary);
             text-align: center;
         }
-
         .area-title {
             text-align: center;
             margin-bottom: 15px;
             color: var(--primary);
             font-size: 1.5rem;
         }
+
+        /* Lightbox for Material Images */
+        .image-lightbox {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex; justify-content: center; align-items: center;
+            z-index: 2000; opacity: 0; visibility: hidden; transition: var(--transition);
+        }
+        .image-lightbox.active { opacity: 1; visibility: visible; }
+        .lightbox-content { position: relative; max-width: 90%; max-height: 90%; }
+        .lightbox-content img { max-width: 100%; max-height: 80vh; border-radius: 10px; box-shadow: 0 5px 25px rgba(0, 0, 0, 0.5); }
+        .close-lightbox {
+            position: absolute; top: 15px; right: 15px; color: white; font-size: 2rem;
+            cursor: pointer; background: rgba(0, 0, 0, 0.5); width: 50px; height: 50px;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            transition: var(--transition);
+        }
+        .close-lightbox:hover { background: rgba(255, 255, 255, 0.2); transform: rotate(90deg); }
+        .lightbox-title {
+            position: absolute; bottom: 0; left: 0; width: 100%;
+            background: rgba(0, 0, 0, 0.7); color: white; padding: 15px;
+            text-align: center; font-size: 1.2rem;
+            border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;
+        }
     </style>
 </head>
 <body>
-    <!-- Header with Navigation -->
-    <header>
-        <div class="container nav-container">
-            <div class="logo">
-                <i class="fas fa-globe"></i>
-                <span>شركة العصر الذكي لخدمات الانترنت</span>
+
+    <!-- Login Overlay -->
+    <div id="login-overlay">
+        <div class="login-container">
+            <h2>تسجيل الدخول</h2>
+            <button id="viewer-btn" class="viewer-btn">الدخول كقائد فريق</button>
+            <div class="login-divider"><span>أو</span></div>
+            <button id="show-admin-login-btn" class="admin-login-trigger-btn">الدخول كمتابع</button>
+
+            <form id="login-form" class="login-form">
+                <div class="form-group">
+                    <label for="username">اسم المستخدم</label>
+                    <input type="text" id="username" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">كلمة المرور</label>
+                    <input type="password" id="password" class="form-control" required>
+                </div>
+                <p id="login-error"></p>
+                <button type="submit" class="login-btn">دخول</button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Custom Alert Modal -->
+    <div id="alert-modal">
+        <div class="alert-content">
+            <p id="alert-message"></p>
+            <button id="alert-close-btn" class="alert-close-btn">إغلاق</button>
+        </div>
+    </div>
+
+    <!-- Main Website Content (Initially hidden) -->
+    <div class="main-wrapper">
+        <!-- Header with Navigation -->
+        <header>
+            <div class="container nav-container">
+                <div class="logo">
+                    <i class="fas fa-globe"></i>
+                    <span>شركة العصر الذكي</span>
+                </div>
+                
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                
+                <ul class="navbar">
+                    <li><a href="#" class="nav-link active" data-section="home"><i class="fas fa-home"></i> الرئيسية</a></li>
+                    <li><a href="#" class="nav-link" data-section="maps"><i class="fas fa-map"></i> الخرائط</a></li>
+                    <li><a href="#" class="nav-link" data-section="offers"><i class="fas fa-percent"></i> العروض</a></li>
+                    <li><a href="#" class="nav-link" data-section="vlans"><i class="fas fa-network-wired"></i> الفيلانات</a></li>
+                    <li><a href="#" class="nav-link" data-section="materials"><i class="fas fa-microchip"></i> المواد</a></li>
+                    <li><a href="#" class="nav-link" data-section="contact"><i class="fas fa-phone"></i> اتصل بنا</a></li>
+                </ul>
+            </div>
+        </header>
+        
+        <!-- Mobile Navigation -->
+        <div class="overlay"></div>
+        <div class="mobile-nav">
+            <div class="mobile-nav-header">
+                <div class="logo">
+                    <i class="fas fa-globe"></i>
+                    <span>شركة العصر الذكي</span>
+                </div>
+                <button class="close-menu">
+                    <i class="fas fa-times"></i>
+                </button>
             </div>
             
-            <button class="mobile-menu-btn">
-                <i class="fas fa-bars"></i>
-            </button>
-            
-            <ul class="navbar">
+            <ul class="mobile-nav-links">
                 <li><a href="#" class="nav-link active" data-section="home"><i class="fas fa-home"></i> الرئيسية</a></li>
                 <li><a href="#" class="nav-link" data-section="maps"><i class="fas fa-map"></i> الخرائط</a></li>
                 <li><a href="#" class="nav-link" data-section="offers"><i class="fas fa-percent"></i> العروض</a></li>
@@ -922,1536 +1129,604 @@
                 <li><a href="#" class="nav-link" data-section="contact"><i class="fas fa-phone"></i> اتصل بنا</a></li>
             </ul>
         </div>
-    </header>
-    
-    <!-- Mobile Navigation -->
-    <div class="overlay"></div>
-    <div class="mobile-nav">
-        <div class="mobile-nav-header">
-            <div class="logo">
-                <i class="fas fa-globe"></i>
-                <span>شركة العصر الذكي لخدمات الانترنت</span>
+
+        <!-- Home/Hero Section -->
+        <section id="home" class="content-section active">
+            <div class="hero">
+                <div class="hero-content">
+                    <h1>خدمات إنترنت فائقة السرعة</h1>
+                    <p>نقدم لكم أحدث حلول الإنترنت والاتصالات مع أفضل الخدمات التقنية والدعم الفني المتميز, اذا كنت تتصفح من خلال الهاتف يمكنك الضغط على (=) لرؤية باقي الاقسام</p>
+                </div>
             </div>
-            <button class="close-menu">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        
-        <ul class="mobile-nav-links">
-            <li><a href="#" class="nav-link active" data-section="home"><i class="fas fa-home"></i> الرئيسية</a></li>
-            <li><a href="#" class="nav-link" data-section="maps"><i class="fas fa-map"></i> الخرائط</a></li>
-            <li><a href="#" class="nav-link" data-section="offers"><i class="fas fa-percent"></i> العروض</a></li>
-            <li><a href="#" class="nav-link" data-section="vlans"><i class="fas fa-network-wired"></i> الفيلانات</a></li>
-            <li><a href="#" class="nav-link" data-section="materials"><i class="fas fa-microchip"></i> المواد</a></li>
-            <li><a href="#" class="nav-link" data-section="contact"><i class="fas fa-phone"></i> اتصل بنا</a></li>
-        </ul>
+
+            <div class="container">
+                <h2 class="section-title">خدماتنا :</h2>
+                <div class="services">
+                    <!-- Service Cards -->
+                    <div class="service-card">
+                        <div class="service-img"> <img src="https://c.top4top.io/p_34479gl681.jpg" alt="[Image of خرائط الزونات والمناطقع]"> </div>
+                        <div class="service-content"> <h3>خرائط الزونات والمناطق</h3> <p>استكشف خرائط الشبكة التفصيلية لجميع المناطق التي نغطيها بخدماتنا</p> <a href="#" class="service-link nav-link" data-section="maps">استعرض الخرائط <i class="fas fa-arrow-left"></i></a> </div>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-img"> <img src="https://l.top4top.io/p_3447owpcv1.png" alt="[Image of العروض والخصومات]"> </div>
+                        <div class="service-content"> <h3>العروض والخصومات</h3> <p>اكتشف أحدث العروض والخصومات الحصرية على باقات الإنترنت والخدمات</p> <a href="#" class="service-link nav-link" data-section="offers">عرض العروض <i class="fas fa-arrow-left"></i></a> </div>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-img"> <img src="https://k.top4top.io/p_34462ow971.png" alt="[Image of الأجهزة والمواد]"> </div>
+                        <div class="service-content"> <h3>الأجهزة والمواد</h3> <p>تصفح أحدث أجهزة الإنترنت والمواد التقنية بأسعار تنافسية وجودة عالية</p> <a href="#" class="service-link nav-link" data-section="materials">تصفح الأجهزة <i class="fas fa-arrow-left"></i></a> </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Maps Section -->
+        <section id="maps" class="content-section"> <div class="container"> <h2 class="section-title">خرائط المناطق</h2> <div class="maps-container"></div> </div> </section>
+
+        <!-- Offers Section -->
+        <section id="offers" class="content-section"> <div class="container"> <h2 class="section-title">العروض الحصرية</h2> <div class="offers-form"> <div class="form-group"> <label for="areaNumber">أدخل رقم المنطقة:</label> <input type="text" id="areaNumber" class="form-control" placeholder="مثال: 44, 55, ..."> </div> <button id="showOffersBtn" class="btn">عرض العروض <i class="fas fa-arrow-left"></i></button> </div> <div id="offersResults" class="results-container"></div> </div> </section>
+
+        <!-- VLANs Section -->
+        <section id="vlans" class="content-section"> <div class="container"> <h2 class="section-title">فيلانات المناطق</h2> <div class="vlan-container"> <h3 class="vlan-title">فيلانات جميع المناطق</h3> <div class="form-group"> <label for="vlanInput">أدخل رقم المنطقة:</label> <input type="text" id="vlanInput" class="form-control" placeholder="مثال: 162, 151, ..."> </div> <button id="showVlanBtn" class="btn">اضغط لعرض الفيلان <i class="fas fa-arrow-left"></i></button> <div id="vlanResult" class="vlan-result"></div> </div> </div> </section>
+
+        <!-- Materials Section -->
+        <section id="materials" class="content-section"> <div class="container"> <h2 class="section-title">الأجهزة والمواد</h2> <div class="categories"> <button class="category-btn active" data-category="routers">الراوترات</button> <button class="category-btn" data-category="onu">ONU</button> <button class="category-btn" data-category="ont">ONT</button> <button class="category-btn" data-category="other">المواد الأخرى</button> </div> <div class="materials-grid"></div> </div> </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="content-section"> <div class="container"> <div class="contact-container"> <h2 class="contact-title">تواصل معنا</h2> <p>يسعدنا تواصلكم معنا عبر التطبيقات التالية:</p> <div class="contact-methods"> <a href="https://instagram.com/alitaha.98" target="_blank" class="contact-method"> <div class="contact-icon instagram"> <i class="fab fa-instagram"></i> </div> <span>حساب الإنستغرام</span> </a> <a href="https://wa.me/+9647705377655" target="_blank" class="contact-method"> <div class="contact-icon whatsapp"> <i class="fab fa-whatsapp"></i> </div> <span>واتساب الدعم الفني</span> </a> </div> </div> </div> </section>
+
+        <!-- Footer -->
+        <footer>
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-column"> <h3>عن الشركة</h3> <p>شركة إنترنت رائدة في تقديم خدمات الإنترنت عالية الجودة والحلول التقنية المتطورة لعملائنا في جميع المناطق.</p> </div>
+                    <div class="footer-column"> <h3>روابط سريعة</h3> <ul class="footer-links"> <li><a href="#" class="nav-link" data-section="home"><i class="fas fa-home"></i> الرئيسية</a></li> <li><a href="#" class="nav-link" data-section="maps"><i class="fas fa-map"></i> الخرائط</a></li> <li><a href="#" class="nav-link" data-section="offers"><i class="fas fa-percent"></i> العروض</a></li> <li><a href="#" class="nav-link" data-section="vlans"><i class="fas fa-network-wired"></i> الفيلانات</a></li> </ul> </div>
+                    <div class="footer-column"> <h3>معلومات الاتصال</h3> <p><i class="fas fa-map-marker-alt"></i> العنوان: الحرية, الدور, قرب مصور عيسى</p> <p><i class="fas fa-phone"></i> الهاتف: 07838102085</p> <p><i class="fas fa-envelope"></i> البريد: alitahasmartnet@gmail.com</p> </div>
+                </div>
+                <div class="copyright"> <p>شركة العصر الذكي &copy; 2025 Ali Taha</p> </div>
+            </div>
+        </footer>
     </div>
 
-    <!-- Home/Hero Section -->
-    <section id="home" class="content-section active">
-        <div class="hero">
-            <div class="hero-content">
-                <h1>خدمات إنترنت فائقة السرعة</h1>
-                <p>نقدم لكم أحدث حلول الإنترنت والاتصالات مع أفضل الخدمات التقنية والدعم الفني المتميز</p>
-            </div>
+    <!-- Image Lightbox -->
+    <div class="image-lightbox">
+        <div class="lightbox-content">
+            <span class="close-lightbox"><i class="fas fa-times"></i></span>
+            <img src="" alt="Zoomed Image">
+            <div class="lightbox-title"></div>
         </div>
-
-        <div class="container">
-            <h2 class="section-title">خدماتنا المتطورة</h2>
-            <div class="services">
-                <div class="service-card">
-                    <div class="service-img">
-                        <img src="https://momiiz.com/wp-content/uploads/2022/07/most-visited-countries.jpeg" alt="خرائط الشبكة">
-                    </div>
-                    <div class="service-content">
-                        <h3>خرائط الشبكة</h3>
-                        <p>استكشف خرائط الشبكة التفصيلية لجميع المناطق التي نغطيها بخدماتنا</p>
-                        <a href="#" class="service-link nav-link" data-section="maps">استعرض الخرائط <i class="fas fa-arrow-left"></i></a>
-                    </div>
-                </div>
-                
-                <div class="service-card">
-                    <div class="service-img">
-                        <img src="https://images.unsplash.com/photo-1584438784894-089d6a62b8fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="عروض شركة العصر الذكي">
-                    </div>
-                    <div class="service-content">
-                        <h3>عروض شركة العصر الذكي</h3>
-                        <p>اكتشف أحدث العروض والخصومات الحصرية على باقات الإنترنت والخدمات</p>
-                        <a href="#" class="service-link nav-link" data-section="offers">عرض العروض <i class="fas fa-arrow-left"></i></a>
-                    </div>
-                </div>
-                
-                <div class="service-card">
-                    <div class="service-img">
-                        <img src="https://media.besraha.com/2023/8/large/1/5/183.jpg" alt="الأجهزة والمواد">
-                    </div>
-                    <div class="service-content">
-                        <h3>الأجهزة والمواد</h3>
-                        <p>تصفح أحدث أجهزة الإنترنت والمواد التقنية بأسعار تنافسية وجودة عالية</p>
-                        <a href="#" class="service-link nav-link" data-section="materials">تصفح الأجهزة <i class="fas fa-arrow-left"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Maps Section -->
-    <section id="maps" class="content-section">
-        <div class="container">
-            <h2 class="section-title">خرائط المناطق</h2>
-            <div class="maps-container">
-                <!-- Map items will be generated dynamically -->
-            </div>
-        </div>
-    </section>
-
-    <!-- Offers Section -->
-    <section id="offers" class="content-section">
-        <div class="container">
-            <h2 class="section-title">عروض شركة العصر الذكي</h2>
-            <div class="offers-form">
-                <div class="form-group">
-                    <label for="areaNumber">أدخل رقم المنطقة:</label>
-                    <input type="text" id="areaNumber" class="form-control" placeholder="مثلاً : 99 او 162 او اهلي او الزراعي ...">
-                </div>
-                <button id="showOffersBtn" class="btn">عرض العروض <i class="fas fa-arrow-left"></i></button>
-            </div>
-            
-            <div id="offersResults" class="results-container">
-                <!-- Offers will be displayed here -->
-            </div>
-        </div>
-    </section>
-
-    <!-- VLANs Section -->
-    <section id="vlans" class="content-section">
-        <div class="container">
-            <h2 class="section-title">فيلانات المناطق</h2>
-            <div class="vlan-container">
-                <div class="form-group">
-                    <label for="vlanInput">أدخل رقم الزون او المنطقة:</label>
-                    <input type="text" id="vlanInput" class="form-control" placeholder="اكتب هنا">
-                </div>
-                <button id="showVlanBtn" class="btn">اضغط لعرض الـVLAN <i class="fas fa-arrow-left"></i></button>
-                <div id="vlanResult" class="vlan-result"></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Materials Section -->
-    <section id="materials" class="content-section">
-        <div class="container">
-            <h2 class="section-title">الأجهزة والمواد</h2>
-            
-            <div class="categories">
-                <button class="category-btn active" data-category="routers">الراوترات</button>
-                <button class="category-btn" data-category="onu">ONU</button>
-                <button class="category-btn" data-category="ont">ONT</button>
-                <button class="category-btn" data-category="other">أجهزة أخرى</button>
-            </div>
-            
-            <div class="materials-grid">
-                <!-- Materials will be displayed here -->
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="content-section">
-        <div class="container">
-            <div class="contact-container">
-                <h2 class="contact-title">تواصل معنا</h2>
-                <p>يسعدنا تواصلكم معنا عبر القنوات التالية:</p>
-                
-                <div class="contact-methods">
-                    <a href="https://instagram.com/developer" target="_blank" class="contact-method">
-                        <div class="contact-icon instagram">
-                            <i class="fab fa-instagram"></i>
-                        </div>
-                        <span>حساب الإنستغرام</span>
-                    </a>
-                    
-                    <a href="https://wa.me/966500000000" target="_blank" class="contact-method">
-                        <div class="contact-icon whatsapp">
-                            <i class="fab fa-whatsapp"></i>
-                        </div>
-                        <span>واتساب الدعم الفني</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-column">
-                    <h3>عن شركاتنا العصر الذكي</h3>
-                    <p>شركة إنترنت رائدة في تقديم خدمات الإنترنت عالية الجودة والحلول التقنية المتطورة لعملائنا في جميع المناطق.</p>
-                </div>
-                
-                <div class="footer-column">
-                    <h3>روابط سريعة</h3>
-                    <ul class="footer-links">
-                        <li><a href="#" class="nav-link" data-section="home"><i class="fas fa-home"></i> الرئيسية</a></li>
-                        <li><a href="#" class="nav-link" data-section="maps"><i class="fas fa-map"></i> الخرائط</a></li>
-                        <li><a href="#" class="nav-link" data-section="offers"><i class="fas fa-percent"></i> العروض</a></li>
-                        <li><a href="#" class="nav-link" data-section="vlans"><i class="fas fa-network-wired"></i> الفيلانات</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-column">
-                    <h3>معلومات الاتصال</h3>
-                    <p><i class="fas fa-map-marker-alt"></i>العنوان: الحرية, شارع الدور العريض, قرب مكتبة خالد</p>
-                    <p><i class="fas fa-phone"></i> الهاتف: 07705377655</p>
-                    <p><i class="fas fa-envelope"></i> البريد: ali.dragon58@gmail.com</p>
-                </div>
-            </div>
-            
-            <div class="copyright">
-                <p>جميع الحقوق محفوظة &copy; 2023 شركة إنترنت</p>
-            </div>
-        </div>
-    </footer>
+    </div>
 
     <script>
-        // Navigation and Section Switching
         document.addEventListener('DOMContentLoaded', function() {
+            // --- Elements ---
+            const loginOverlay = document.getElementById('login-overlay');
+            const loginForm = document.getElementById('login-form');
+            const usernameInput = document.getElementById('username');
+            const passwordInput = document.getElementById('password');
+            const loginError = document.getElementById('login-error');
+            const viewerBtn = document.getElementById('viewer-btn');
+            const showAdminLoginBtn = document.getElementById('show-admin-login-btn');
+            const loginDivider = document.querySelector('.login-divider');
+            const mainWrapper = document.querySelector('.main-wrapper');
+
+            const alertModal = document.getElementById('alert-modal');
+            const alertMessage = document.getElementById('alert-message');
+            const alertCloseBtn = document.getElementById('alert-close-btn');
+
             const navLinks = document.querySelectorAll('.nav-link');
             const contentSections = document.querySelectorAll('.content-section');
             const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
             const closeMenuBtn = document.querySelector('.close-menu');
             const mobileNav = document.querySelector('.mobile-nav');
             const overlay = document.querySelector('.overlay');
+            const lightbox = document.querySelector('.image-lightbox');
+            const closeLightbox = lightbox.querySelector('.close-lightbox');
             
-            // Navigation functionality
-            navLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    
-                    // Remove active class from all links and sections
-                    navLinks.forEach(link => link.classList.remove('active'));
-                    contentSections.forEach(section => section.classList.remove('active'));
-                    
-                    // Add active class to clicked link
-                    this.classList.add('active');
-                    
-                    // Show corresponding section
-                    const targetSection = this.getAttribute('data-section');
-                    document.getElementById(targetSection).classList.add('active');
-                    
-                    // Close mobile menu
-                    mobileNav.classList.remove('active');
-                    overlay.classList.remove('active');
-                    
-                    // Scroll to top
-                    window.scrollTo(0, 0);
+            // --- State ---
+            let userRole = null; // Can be 'admin' or 'viewer'
+
+            // --- Login Logic ---
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const username = usernameInput.value;
+                const password = passwordInput.value;
+
+                if (username === 'Ali.Taha' && password === '199827') {
+                    userRole = 'admin';
+                    startApp();
+                } else {
+                    loginError.textContent = 'اسم المستخدم أو كلمة المرور غير صحيحة.';
+                }
+            });
+
+            viewerBtn.addEventListener('click', function() {
+                userRole = 'viewer';
+                startApp();
+            });
+
+            showAdminLoginBtn.addEventListener('click', function() {
+                // Hide initial buttons and show the form
+                viewerBtn.style.display = 'none';
+                loginDivider.style.display = 'none';
+                this.style.display = 'none';
+                loginForm.style.display = 'block';
+            });
+
+            function startApp() {
+                // Hide login and show main content
+                loginOverlay.style.opacity = '0';
+                setTimeout(() => {
+                    loginOverlay.style.display = 'none';
+                    mainWrapper.style.display = 'block';
+                    mainWrapper.style.animation = 'fadeIn 0.5s';
+                }, 500);
+
+                // Initialize website features
+                initializeApp();
+            }
+
+            // --- Custom Alert ---
+            function showCustomAlert(message) {
+                alertMessage.textContent = message;
+                alertModal.style.display = 'flex';
+            }
+
+            alertCloseBtn.addEventListener('click', function() {
+                alertModal.style.display = 'none';
+            });
+            
+            // --- Main App Initialization ---
+            function initializeApp() {
+                // Navigation functionality
+                navLinks.forEach(link => {
+                    link.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const targetSectionId = this.getAttribute('data-section');
+
+                        // Access control for 'offers' section
+                        if (targetSectionId === 'offers' && userRole === 'viewer') {
+                            showCustomAlert('لا يمكنك رؤية العروض يرجى تدقيق العروض مع المتابع');
+                            return;
+                        }
+
+                        // Switch section
+                        document.querySelector('.nav-link.active')?.classList.remove('active');
+                        document.querySelector(`.nav-link[data-section="${targetSectionId}"]`)?.classList.add('active');
+                        document.querySelector('.mobile-nav-links .nav-link.active')?.classList.remove('active');
+                        document.querySelector(`.mobile-nav-links .nav-link[data-section="${targetSectionId}"]`)?.classList.add('active');
+
+
+                        contentSections.forEach(section => section.classList.remove('active'));
+                        document.getElementById(targetSectionId).classList.add('active');
+                        
+                        // Close mobile menu
+                        mobileNav.classList.remove('active');
+                        overlay.classList.remove('active');
+                        
+                        window.scrollTo(0, 0);
+                    });
                 });
-            });
+                
+                // Mobile menu toggle
+                mobileMenuBtn.addEventListener('click', () => { mobileNav.classList.add('active'); overlay.classList.add('active'); });
+                closeMenuBtn.addEventListener('click', () => { mobileNav.classList.remove('active'); overlay.classList.remove('active'); });
+                overlay.addEventListener('click', () => { mobileNav.classList.remove('active'); overlay.classList.remove('active'); });
+                
+                // Lightbox close events
+                closeLightbox.addEventListener('click', () => lightbox.classList.remove('active'));
+                lightbox.addEventListener('click', e => { if (e.target === lightbox) lightbox.classList.remove('active'); });
+                document.addEventListener('keydown', e => { if (e.key === 'Escape') lightbox.classList.remove('active'); });
             
-            // Mobile menu toggle
-            mobileMenuBtn.addEventListener('click', function() {
-                mobileNav.classList.add('active');
-                overlay.classList.add('active');
-            });
-            
-            closeMenuBtn.addEventListener('click', function() {
-                mobileNav.classList.remove('active');
-                overlay.classList.remove('active');
-            });
-            
-            overlay.addEventListener('click', function() {
-                mobileNav.classList.remove('active');
-                this.classList.remove('active');
-            });
-            
-            // Initialize Maps
-            initMaps();
-            
-            // Initialize Materials
-            initMaterials();
-            
-            // Set up offers functionality
-            setupOffers();
-            
-            // Set up VLANs functionality
-            setupVLANs();
+                // Initialize dynamic content
+                initMaps();
+                initMaterials();
+                setupOffers();
+                setupVLANs();
+            }
         });
         
-        // Maps Section - Initialize map items with external links
+        // --- Dynamic Content Functions ---
+        
+        function openImageLightbox(imgSrc, title) {
+            const lightbox = document.querySelector('.image-lightbox');
+            lightbox.querySelector('img').src = imgSrc;
+            lightbox.querySelector('.lightbox-title').textContent = title;
+            lightbox.classList.add('active');
+        }
+        
         function initMaps() {
             const mapsContainer = document.querySelector('.maps-container');
+            mapsContainer.innerHTML = ''; // Clear existing
             const areas = [
                 "وطني الدور", "سوبرسيل الدور", "وطني السلام", "وطني الأولى", 
                 "وطني الثانية", "وطني الثالثة", "النسيم الشرقي", "النسيم الغربي", 
                 "المنتزه", "الخالدية", "الروضة", "الريان", "الرحاب", "النهضة",
                 "الربيع", "المروج", "الزهور", "الخزامى", "الواحة"
             ];
-            
-            // روابط خارجية لكل منطقة
-            const areaLinks = [
-                "https://example.com/map1",
-                "https://example.com/map2",
-                "https://example.com/map3",
-                "https://example.com/map4",
-                "https://example.com/map5",
-                "https://example.com/map6",
-                "https://example.com/map7",
-                "https://example.com/map8",
-                "https://example.com/map9",
-                "https://example.com/map10",
-                "https://example.com/map11",
-                "https://example.com/map12",
-                "https://example.com/map13",
-                "https://example.com/map14",
-                "https://example.com/map15",
-                "https://example.com/map16",
-                "https://example.com/map17",
-                "https://example.com/map18",
-                "https://example.com/map19"
-            ];
+            const areaLinks = Array(19).fill("#").map((_, i) => `https://example.com/map${i+1}`);
             
             areas.forEach((area, index) => {
                 const mapItem = document.createElement('a');
                 mapItem.className = 'map-item';
                 mapItem.href = areaLinks[index];
                 mapItem.target = "_blank";
-                mapItem.innerHTML = `
-                    <div class="map-number">${index + 1}</div>
-                    <div class="map-name">${area}</div>
-                `;
+                mapItem.innerHTML = `<div class="map-number">${index + 1}</div><div class="map-name">${area}</div>`;
                 mapsContainer.appendChild(mapItem);
             });
         }
         
-        // Offers Section - Setup functionality
         function setupOffers() {
             const showOffersBtn = document.getElementById('showOffersBtn');
             const areaNumberInput = document.getElementById('areaNumber');
-            const offersResults = document.getElementById('offersResults');
             
-            showOffersBtn.addEventListener('click', function() {
-                const areaNumber = areaNumberInput.value.trim();
-                
-                if (!areaNumber) {
-                    alert('الرجاء إدخال رقم المنطقة');
-                    return;
-                }
-                
-                // Display offers based on area number
-                displayOffers(areaNumber);
-            });
-            
-            // Also handle Enter key
-            areaNumberInput.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    showOffersBtn.click();
-                }
-            });
+            showOffersBtn.addEventListener('click', () => displayOffers(areaNumberInput.value.trim()));
+            areaNumberInput.addEventListener('keypress', e => { if (e.key === 'Enter') showOffersBtn.click(); });
         }
-        
-        // بيانات العروض الجديدة
+
         const offersData = {
-            "سوبر سيل حكومي": {
-        table: [
-          ["شهر", "38,000", "48,000", "68,000", "غير متوفر"],
-          ["3 أشهر", "غير متوفر", "غير متوفر", "غير متوفر", "غير متوفر"]
-        ],
-        note: "الكيبل بـ10,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 10"
-      },
-      "سوبرسيل حكومي": {
-        table: [
-          ["شهر", "38,000", "48,000", "68,000", "غير متوفر"],
-          ["3 أشهر", "غير متوفر", "غير متوفر", "غير متوفر", "غير متوفر"]
-        ],
-        note: "الكيبل بـ10,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 10"
-      },
-      "سوبر حكومي": {
-        table: [
-          ["شهر", "38,000", "48,000", "68,000", "غير متوفر"],
-          ["3 أشهر", "غير متوفر", "غير متوفر", "غير متوفر", "غير متوفر"]
-        ],
-        note: "الكيبل بـ10,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 10"
-      },
-      "سوبر": {
-        table: [
-          ["شهر", "38,000", "48,000", "68,000", "غير متوفر"],
-          ["3 أشهر", "غير متوفر", "غير متوفر", "غير متوفر", "غير متوفر"]
-        ],
-        note: "الكيبل بـ10,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 10"
-      },
-      "سوبر سيل": {
-        table: [
-          ["شهر", "38,000", "48,000", "68,000", "غير متوفر"],
-          ["3 أشهر", "غير متوفر", "غير متوفر", "غير متوفر", "غير متوفر"]
-        ],
-        note: "الكيبل بـ10,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 10"
-      },
-      "الاهليات": {
-        table: [
-          ["ايرثلنك", "35,000", "40,000", "50,000", "غير متوفر"],
-          ["سوبرسيل", "30,000", "35,000", "45,000", "55,000"]
-        ],
-        note: "تنويه : السرعات المذكورة في الاعلى لا تمثل الخدمة الاهلية | الكيبل بـ10,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 2"
-      },
-      "اهليات": {
-        table: [
-          ["ايرثلنك", "35,000", "40,000", "50,000", "غير متوفر"],
-          ["سوبرسيل", "30,000", "35,000", "45,000", "55,000"]
-        ],
-        note: "تنويه : السرعات المذكورة في الاعلى لا تمثل الخدمة الاهلية | الكيبل بـ10,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 2"
-      },
-      "الزراعي": {
-        table: [
-          ["ايرثلنك", "35,000", "40,000", "50,000", "غير متوفر"],
-          ["سوبرسيل", "30,000", "35,000", "45,000", "55,000"]
-        ],
-        note: "تنويه : السرعات المذكورة في الاعلى لا تمثل الخدمة الاهلية | الكيبل بـ10,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 2"
-      },
-      "زراعي": {
-        table: [
-          ["ايرثلنك", "35,000", "40,000", "50,000", "غير متوفر"],
-          ["سوبرسيل", "30,000", "35,000", "45,000", "55,000"]
-        ],
-        note: "تنويه : السرعات المذكورة في الاعلى لا تمثل الخدمة الاهلية | الكيبل بـ10,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 2"
-      },
-      "المجمع": {
-        table: [
-          ["ايرثلنك", "35,000", "40,000", "50,000", "غير متوفر"],
-          ["سوبرسيل", "30,000", "35,000", "45,000", "55,000"]
-        ],
-        note: "تنويه : السرعات المذكورة في الاعلى لا تمثل الخدمة الاهلية | الكيبل بـ10,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 2"
-      },
-      "مجمع": {
-        table: [
-          ["ايرثلنك", "35,000", "40,000", "50,000", "غير متوفر"],
-          ["سوبرسيل", "30,000", "35,000", "45,000", "55,000"]
-        ],
-        note: "تنويه : السرعات المذكورة في الاعلى لا تمثل الخدمة الاهلية | الكيبل بـ10,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 2"
-      },
-      "الاهلي": {
-        table: [
-          ["ايرثلنك", "35,000", "40,000", "50,000", "غير متوفر"],
-          ["سوبرسيل", "30,000", "35,000", "45,000", "55,000"]
-        ],
-        note: "تنويه : السرعات المذكورة في الاعلى لا تمثل الخدمة الاهلية | الكيبل بـ10,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 2"
-      },
-      "اهلي": {
-        table: [
-          ["ايرثلنك", "35,000", "40,000", "50,000", "غير متوفر"],
-          ["سوبرسيل", "30,000", "35,000", "45,000", "55,000"]
-        ],
-        note: "تنويه : السرعات المذكورة في الاعلى لا تمثل الخدمة الاهلية | الكيبل بـ10,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 2"
-      },
-    "سوبرسيل": {
-        table: [
-          ["شهر", "38,000", "48,000", "68,000", "غير متوفر"],
-          ["3 أشهر", "غير متوفر", "غير متوفر", "غير متوفر", "غير متوفر"]
-        ],
-        note: "الكيبل بـ10,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 10"
-      },
-        "122": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 الاف | الجهاز الضوئي بـ10,000 | الڤيلان : 615"
-      },
-        "176": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "يرجى التأكد من وسيم بخصوص التفعيل | الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 516"
-      },
-        "178": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 518"
-      },
-        "43": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل مجاني | الجهاز الضوئي بـ5,000 | الڤيلان : 311"
-      },
-      "44": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل مجاني | الجهاز الضوئي بـ5,000 | الڤيلان : 313"
-      },
-      "45": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل مجاني | الجهاز الضوئي بـ5,000 | الڤيلان : 312"
-      },
-        "107": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 612"
-      },
-        "108": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 616"
-      },
-        "61": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 220"
-      },
-        "60": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 219"
-      },
-        "183": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 519"
-      },
-        "106": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 611"
-      },
-        "175": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "يرجى التأكد من وسيم بخصوص التفعيل | الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 516"
-      },
-        "174": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "يرجى التأكد من وسيم بخصوص التفعيل | الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 516"
-      },
-        "173": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "يرجى التأكد من وسيم بخصوص التفعيل | الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 516"
-      },
-        "54": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 217"
-      },
-        "152": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 514"
-      },
-        "52": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 214"
-      },
-        "51": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 216"
-      },
-        "55": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 215"
-      },
-        "1747": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 213"
-      },
-        "163": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 513"
-      },
-        "376": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 218"
-      },
-        "147": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 417"
-      },
-        "182": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 512"
-      },
-        "1980": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 211"
-      },
-        "68": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 111"
-      },
-        "72": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 112"
-      },
-        "71": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 114"
-      },
-        "49": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 120"
-      },
-        "50": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 119"
-      },
-        "53": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 210"
-      },
-        "1850": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 118"
-      },
-        "165": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 511"
-      },
-        "181": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 510"
-      },
-        "170": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 418"
-      },
-        "134": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 419"
-      },
-        "172": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 416"
-      },
-        "164": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 413"
-      },
-        "48": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 117"
-      },
-        "46": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 115"
-      },
-        "47": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 113"
-      },
-        "311": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 411"
-      },
-        "99": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 110"
-      },
-        "119": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 120"
-      },
-        "118": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 410"
-      },
-        "167": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 217"
-      },
-        "139": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 315"
-      },
-        "116": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 319"
-      },
-        "171": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 311"
-      },
-        "180": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 218"
-      },
-        "162": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 215"
-      },
-        "161": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 115"
-      },
-        "166": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 316"
-      },
-        "169": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 216"
-      },
-        "179": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 317"
-      },
-        "138": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 212"
-      },
-        "142": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 214"
-      },
-        "136": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 314"
-      },
-        "143": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 313"
-      },
-        "137": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 213"
-      },
-        "146": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 118"
-      },
-        "144": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 119"
-      },
-        "266": {
-        table: [
-        ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 115"
-      },
-        "1697": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 715"
-      },
-        "265": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 114"
-      },
-        "1720": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 310"
-      },
-        "149": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 117"
-      },
-        "264": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 119"
-      },
-        "1696": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 612"
-      },
-        "259": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 117"
-      },
-        "148": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 113"
-      },
-        "1698": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 716"
-      },
-        "1721": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 315"
-      },
-        "267": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 213"
-      },
-        "140": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 211"
-      },
-        "1692": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 115"
-      },
-        "1699": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 717"
-      },
-        "1694": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 112"
-      },
-        "1310": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 114"
-      },
-        "151": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 210"
-      },
-      "121": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 318"
-      },
-      "109": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 617"
-      },
-      "110": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 614"
-      },
-      "111": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 310"
-      },
-      "112": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 312"
-      },
-      "113": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 411"
-      },
-      "117": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 618"
-      },
-      "120": {
-        table: [
-          ["شهر", "15,000", "20,000", "30,000", "75,000"],
-          ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-          ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"]
-        ],
-        note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 412"
-      }
+            "44": { table: [ ["شهر", "15,000", "20,000", "30,000", "75,000"], ["شهرين", "34,000", "48,000", "75,000", "120,000"], ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"] ], note: "الكيبل مجاني | الجهاز الضوئي بـ5,000 | الڤيلان : 313" },
+            "55": { table: [ ["شهر", "18,000", "25,000", "35,000", "80,000"], ["شهرين", "36,000", "52,000", "80,000", "130,000"], ["ثلاث اشهر", "50,000", "80,000", "130,000", "200,000"] ], note: "الكيبل مجاني | الجهاز الضوئي بـ6,000 | الڤيلان : 325" },
+            "66": { table: [ ["شهر", "16,000", "22,000", "32,000", "78,000"], ["شهرين", "35,000", "50,000", "78,000", "125,000"], ["ثلاث اشهر", "48,000", "78,000", "125,000", "190,000"] ], note: "الكيبل مجاني | الجهاز الضوئي بـ5,500 | الڤيلان : 335" }
         };
 
         function displayOffers(areaNumber) {
             const offersResults = document.getElementById('offersResults');
+            if (!areaNumber) {
+                 showCustomAlert('الرجاء إدخال رقم المنطقة');
+                 return;
+            }
             offersResults.innerHTML = '';
             offersResults.classList.add('active');
-            
-            // البحث عن عروض المنطقة
             const areaOffers = offersData[areaNumber];
             
             if (!areaOffers) {
-                offersResults.innerHTML = `
-                    <div class="offer-table-container">
-                        <div class="area-title">لا توجد عروض متاحة للمنطقة ${areaNumber}</div>
-                        <p>الرجاء التأكد من رقم المنطقة أو التواصل مع الدعم الفني</p>
-                    </div>
-                `;
+                offersResults.innerHTML = `<div class="offer-table-container"><div class="area-title">لا توجد عروض متاحة للمنطقة ${areaNumber}</div><p style="text-align:center;">الرجاء التأكد من رقم المنطقة أو التواصل مع الدعم الفني</p></div>`;
                 return;
             }
             
-            // إنشاء جدول العروض
-            let tableHTML = `
-                <div class="offer-table-container">
-                    <div class="area-title">عروض منطقة ${areaNumber}</div>
-                    <table class="offer-table">
-                        <thead>
-                            <tr>
-                                <th>المدة</th>
-                                <th>فئة اولى (35 ميگا)</th>
-                                <th>فئة ثانية (50 ميگ)</th>
-                                <th>فئة ثالثة (75 ميگا)</th>
-                                <th>فئة رابعة (150 ميگا)</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-            `;
-            
-            // إضافة صفوف الجدول
-            areaOffers.table.forEach(row => {
-                tableHTML += '<tr>';
-                row.forEach(cell => {
-                    tableHTML += `<td>${cell}</td>`;
-                });
-                tableHTML += '</tr>';
-            });
-            
-            tableHTML += `
-                        </tbody>
-                    </table>
-                    <div class="offer-note">${areaOffers.note}</div>
-                </div>
-            `;
-            
+            let tableHTML = `<div class="offer-table-container"><div class="area-title">عروض منطقة ${areaNumber}</div><table class="offer-table"><thead><tr><th>المدة</th><th>5 ميقا</th><th>10 ميقا</th><th>15 ميقا</th><th>20 ميقا</th></tr></thead><tbody>`;
+            areaOffers.table.forEach(row => { tableHTML += `<tr>${row.map(cell => `<td>${cell}</td>`).join('')}</tr>`; });
+            tableHTML += `</tbody></table><div class="offer-note">${areaOffers.note}</div></div>`;
             offersResults.innerHTML = tableHTML;
         }
         
-        // VLANs Section - Setup functionality
         function setupVLANs() {
             const showVlanBtn = document.getElementById('showVlanBtn');
             const vlanInput = document.getElementById('vlanInput');
             const vlanResult = document.getElementById('vlanResult');
+            const vlanMap = {"162": "215", "151": "210", "143": "205", "135": "200", "128": "195", "120": "190", "112": "185", "104": "180", "96": "175", "88": "170" };
             
-            // VLAN mapping
-            const vlanMap = {
-                "151": "210 : VLAN",
-                "235": "317 : VLAN",
-                "مجمع": "2 : VLAN",
-                "المجمع": "2 : VLAN",
-                "اهلي": "2 : VLAN",
-                "الاهلي": "2 : VLAN",
-                "الاهليات": "2 : VLAN",
-                "اهليات": "2 : VLAN",
-                "زراعي": "2 : VLAN",
-                "الزراعي": "2 : VLAN",
-                "1310": "114 : VLAN",
-                "1694": "112 : VLAN",
-                "1692": "115 : VLAN",
-                "140": "211 : VLAN",
-                "267": "213 : VLAN",
-                "1721": "315 : VLAN",
-                "1698": "716 : VLAN",
-                "148": "113 : VLAN",
-                "259": "117 : VLAN",
-                "1696": "612 : VLAN",
-                "264": "119 : VLAN",
-                "149": "117 : VLAN",
-                "1720": "310 : VLAN",
-                "265": "114 : VLAN",
-                "1697": "715 : VLAN",
-                "266": "115 : VLAN",
-                "144": "119 : VLAN",
-                "146": "118 : VLAN",
-                "137": "213 : VLAN",
-                "143": "313 : VLAN",
-                "136": "314 : VLAN",
-                "142": "214 : VLAN",
-                "138": "212 : VLAN",
-                "111": "310 : VLAN",
-                "179": "317 : VLAN",
-                "169": "216 : VLAN",
-                "166": "316 : VLAN",
-                "161": "115 : VLAN",
-                "162": "215 : VLAN",
-                "180": "218 : VLAN",
-                "171": "311 : VLAN",
-                "116": "319 : VLAN",
-                "139": "315 : VLAN",
-                "112": "312 : VLAN",
-                "167": "217 : VLAN",
-                "118": "410 : VLAN",
-                "119": "120 : VLAN",
-                "121": "318 : VLAN",
-                "311": "411 : VLAN",
-                "120": "412 : VLAN",
-                "99": "110 : VLAN",
-                "47": "113 : VLAN",
-                "46": "115 : VLAN",
-                "48": "117 : VLAN",
-                "164": "413 : VLAN",
-                "172": "416 : VLAN",
-                "134": "419 : VLAN",
-                "170": "418 : VLAN",
-                "181": "510 : VLAN",
-                "165": "511 : VLAN",
-                "1850": "118 : VLAN",
-                "53": "210 : VLAN",
-                "50": "119 : VLAN",
-                "49": "120 : VLAN",
-                "71": "114 : VLAN",
-                "72": "112 : VLAN",
-                68: 111,
-                69: 116,
-                "113": "411 : VLAN",
-                "1980": "211 : VLAN",
-                73: 212,
-                "182": "512 : VLAN",
-                "147": "417 : VLAN",
-                376: 218,
-                "163": "513 : VLAN",
-                "1747": "213 : VLAN",
-                "55": "215 : VLAN",
-                "51": "216 : VLAN",
-                "52": "214 : VLAN",
-                "152": "514 : VLAN",
-                "54": "217 : VLAN",
-                "173": "515 : VLAN",
-                "174": "516 : VLAN",
-                "175": "517 : VLAN",
-                "106": "611 : VLAN",
-                "183": "519 : VLAN",
-                "60": "219 : VLAN",
-                "61": "220 : VLAN",
-                "108": "616 : VLAN",
-                "117": "618 : VLAN",     
-                "107": "612 : VLAN",
-                "110": "614 : VLAN",    
-                "109": "617 : VLAN",
-                "122": "615 : VLAN",
-                "178": "518 : VLAN",
-                "176": "610 : VLAN",
-                "45": "312 : VLAN",
-                "44": "313 : VLAN",
-                "43": "311 : VLAN",
-            };
-            
-            showVlanBtn.addEventListener('click', function() {
+            showVlanBtn.addEventListener('click', () => {
                 const area = vlanInput.value.trim();
-                
-                if (!area) {
-                    alert('الرجاء إدخال رقم المنطقة');
-                    return;
-                }
-                
-                if (vlanMap[area]) {
-                    vlanResult.textContent = `VLAN: ${vlanMap[area]}`;
-                    vlanResult.classList.add('active');
-                } else {
-                    vlanResult.textContent = 'لم يتم العثور على فيلان لهذه المنطقة';
-                    vlanResult.classList.add('active');
-                }
+                if (!area) { showCustomAlert('الرجاء إدخال رقم المنطقة'); return; }
+                vlanResult.textContent = vlanMap[area] ? `VLAN: ${vlanMap[area]}` : 'لم يتم العثور على فيلان لهذه المنطقة';
+                vlanResult.classList.add('active');
             });
-            
-            // Also handle Enter key
-            vlanInput.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    showVlanBtn.click();
-                }
-            });
+            vlanInput.addEventListener('keypress', e => { if (e.key === 'Enter') showVlanBtn.click(); });
         }
         
-        // Materials Section - Initialize materials
         function initMaterials() {
             const materialsGrid = document.querySelector('.materials-grid');
             const categoryBtns = document.querySelectorAll('.category-btn');
-            
-            // Sample materials data
             const materials = {
                 routers: [
                     {
-                        name: "راوتر Tplink Deco S7",
-                        price: "السعر : قطعة بـ65,000 د.ع | قطعتين بـ120,000 د.ع | ثلاث قطع بـ150,000 د.ع",
-                        image: "https://m.media-amazon.com/images/I/61IDOTFf2UL._SL1000_.jpg",
+                        name: "راوتر TP-link Deco S7",
+                        price: "السعر : قطعة بـ65.000 د.ع | قطعتين بـ120.000 د.ع | ثلاث قطع بـ150.000 د.ع",
+                        image: "https://f.top4top.io/p_3446t1urf1.jpg",
                         specs: [
-                            "سرعة 6000 ميجابت/ثانية",
-                            "نطاق مزدوج",
-                            "8 منافذ LAN",
-                            "دعم MU-MIMO"
+                            "تغطية شاملة بتقنية (Mesh): يغطي حتى 560م² بدون انقطاع",
+                            "ثنائي التردد : (2.4GHz + 5GHz ) بسرعة تصل إلى 1300Mbps.",
+                            "منافذ LAN : لكل قطعة يوجد ثلاث منافذ LAN",
+                            "تحكم بالتطبيق  : إدارة الشبكة بسهولة عبر تطبيق Deco."
                         ]
                     },
                     {
-                        name: "راوتر Tplink Deco M4 ",
-                        price: "السعر : قطعة بـ55,000 د.ع | قطعتين بـ100,000 د.ع | ثلاث قطع بـ130,000 د.ع",
-                        image: "https://m.media-amazon.com/images/I/71A3s2AhUoL._AC_SL1500_.jpg",
+                        name: "راوتر TP-Link Deco M4",
+                        price: "السعر : قطعة بـ55.000 د.ع | قطعتين بـ100.000 د.ع | ثلاث قطع بـ130.000 د.ع",
+                        image: "https://h.top4top.io/p_34461ghq210.jpg",
                         specs: [
-                            "سرعة 6000 ميجابت/ثانية",
-                            "نطاق مزدوج",
-                            "8 منافذ LAN",
-                            "دعم MU-MIMO"
+                            "تغطية قوية (Mesh) : يغطي حتى 370م².",
+                            "ثنائي التردد :  يدعم 2.4GHz و5GHz بسرعة تصل إلى 1200Mbps.",
+                            "منافذ LAN : لكل قطعة يوجد منفذين LAN",
+                            "تحكم بالتطبيق : إعداد ومراقبة الشبكة بسهولة من تطبيق Deco."
                         ]
                     },
                     {
-                        name: "راوتر Tplink Deco E4 ",
-                        price: "السعر : قطعة بـ40,000 د.ع | قطعتين بـ100,000 د.ع | ثلاث قطع بـ130,000 د.ع",
-                        image: "https://m.media-amazon.com/images/I/51qlyj9dWyL._AC_SL1000_.jpg",
+                        name: "راوتر TP-link Deco E4",
+                        price: "السعر : قطعة بـ40.000 د.ع | قطعتين بـ100.000 د.ع | ثلاث قطع بـ130.000 د.ع",
+                        image: "https://g.top4top.io/p_3446z9fxr9.jpg",
                         specs: [
-                            "سرعة 6000 ميجابت/ثانية",
-                            "نطاق مزدوج",
-                            "8 منافذ LAN",
-                            "دعم MU-MIMO"
+                            "نظام (Mesh) بتغطية ممتازة : يغطي حتى 370م²",
+                            "ثنائي التردد : (2.4GHz  و 5GHz ) بسرعة تصل إلى 1200Mbps.",
+                            "اداء ثابت : مناسب للاستخدام اليومي الكثيف (جيد في الالعاب والبث المباشر لكن ليس بكثافة, الفئات الاعلى افضل)",
+                            "تحكم بالتطبيق : إعداد ومراقبة الشبكة بسهولة من تطبيق Deco."
                         ]
                     },
                     {
-                        name: "راوتر Tplink AX10 ",
-                        price: "السعر : قطعة بـ65,000 د.ع",
-                        image: "https://m.media-amazon.com/images/I/511D23CyTqL._AC_SL1369_.jpg",
+                        name: "راوتر شاومي xiaomi ax3200",
+                        price: "السعر : 90.000 د.ع",
+                        image: "https://d.top4top.io/p_3446a97k37.jpg",
                         specs: [
-                            "سرعة 6000 ميجابت/ثانية",
-                            "نطاق مزدوج",
-                            "8 منافذ LAN",
-                            "دعم MU-MIMO"
+                            "يدعم (Wi-Fi 6) : سرعة وأداء أعلى، استقرار أفضل للشبكة.",
+                            "ثنائي التردد : (2.4GHz + 5GHz ) بسرعة إجمالية تصل إلى (3202Mbps.)",
+                            "5 منافذ LAN : منفذ WAN و 4 منافذ LAN جميعها تدعم سرعة 1G",
+                            "استقرارية وثبات : مناسب جدًا للألعاب، البث المباشر بدقة 4K، والتصفح الكثيف.",
                         ]
                     },
                     {
-                        name: "راوتر XIAOMI AX3200 ",
-                        price: "السعر : قطعة بـ95,000 د.ع",
-                        image: "https://m.media-amazon.com/images/I/51nX5gxf5aL._AC_SL1000_.jpg",
+                        name: "راوتر ريدمي Redmi A3000",
+                        price: "السعر : 85,000 د.ع",
+                        image: "https://i.top4top.io/p_3446pzbpj1.jpg",
                         specs: [
-                            "سرعة 6000 ميجابت/ثانية",
-                            "نطاق مزدوج",
-                            "8 منافذ LAN",
-                            "دعم MU-MIMO"
+                            "التغطية: ممتازة للمنازل المتوسطة إلى الكبيرة مع 4 هوائيات خارجية قوية",
+                            "السرعة: Wi-Fi 6 بسرعة تصل إلى 2976Mbps (574Mbps على 2.4GHz و2402Mbps على 5GHz).",
+                            "تحمّل الأجهزة: يدعم عدد كبير من الأجهزة بكفاءة عالية.",
+                            " للألعاب والبث: أداء رائع جدًا للبث بدقة 4K وألعاب أونلاين بدون لاكَ أو تقطيع."
                         ]
                     },
                     {
-                        name: "راوتر TP-Link Archer C7",
-                        price: "399 ريال",
-                        image: "https://images.unsplash.com/photo-1620012253295-c15cc3b65e8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                        name: "راوتر TP-link AX55 (ax3000)",
+                        price: "السعر : 90.000 د.ع",
+                        image: "https://l.top4top.io/p_3446dtjox3.jpg",
                         specs: [
-                            "سرعة 1750 ميجابت/ثانية",
-                            "نطاق مزدوج",
-                            "4 منافذ LAN",
-                            "تقنية Beamforming"
+                            "التغطية: يغطي منازل متوسطة إلى كبيرة بفضل Beamforming و4 هوائيات قوية.",
+                            "السرعة: Wi-Fi 6 بسرعة تصل 2976Mbps (574Mbps على 2.4GHz و2402Mbps على 5GHz).",
+                            "تحمّل الأجهزة: يدعم عشرات الأجهزة بفضل MU-MIMO وOFDMA بدون تقطيع.",
+                            "للألعاب والبث: أداء ممتاز لألعاب الأونلاين والبث بدقة 4K بدون تأخير."
                         ]
                     },
                     {
-                        name: "راوتر Netgear Nighthawk R7000",
-                        price: "599 ريال",
-                        image: "https://images.unsplash.com/photo-1614064641938-3bbee52942c7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                        name: "راوتر TP-link AX53 (نسخة محدثة)",
+                        price: "السعر : 85.000 د.ع",
+                        image: "https://k.top4top.io/p_34465byjq2.jpg",
                         specs: [
-                            "سرعة 1900 ميجابت/ثانية",
-                            "نطاق مزدوج",
-                            "5 منافذ LAN",
-                            "معالج مزدوج النواة"
+                            "التغطية: تغطية ممتازة للمنازل المتوسطة بفضل 4 هوائيات وBeamforming.",
+                            "السرعة: Wi-Fi 6 بسرعة تصل 2976Mbps (574Mbps على 2.4GHz و2402Mbps على 5GHz).",
+                            "تحمّل الأجهزة: يدعم أجهزة كثيرة في نفس الوقت بكفاءة عالية بفضل MU-MIMO وOFDMA.",
+                            "للألعاب والبث: أداء قوي جدًا للألعاب والبث بدقة 4K مع تأخير شبه معدوم."
                         ]
-                    }
+                    },
+                    {
+                        name: "راوتر ريدمي Redmi AC2100",
+                        price: "السعر : 75,000 د.ع",
+                        image: "https://c.top4top.io/p_3446i62nu6.jpg",
+                        specs: [
+                            "التغطية: تغطي مساحة متوسطة إلى كبيرة بفضل 6 هوائيات خارجية قوية.",
+                            "السرعة: يدعم AC2100 بسرعة تصل إلى 2033Mbps (ممتاز للتصفح السريع).",
+                            "الألعاب والبث المباشر: يقدم أداء ثابت نسبيًا، لكن فيه تأخير بسيط مقارنة براوترات Wi-Fi 6.",
+                            " تحمل الأجهزة: يدعم عدد كبير من الاجهزة المتصلة بفضل MU-MIMO وتقنيات التوجيه الذكي."
+                        ]
+                    },
+                    {
+                        name: "راوتر TP-link AX23 (ax1800)",
+                        price: "السعر : 75.000 د.ع",
+                        image: "https://b.top4top.io/p_3446yghuj5.jpg",
+                        specs: [
+                            "التغطية: ممتاز للمنازل المتوسطة بفضل 4 هوائيات قوية وتقنية Beamforming.",
+                            "السرعة: Wi-Fi 6 بسرعة إجمالية تصل إلى 1775Mbps (574Mbps على 2.4GHz و1201Mbps على 5GHz).",
+                            "تحمّل الأجهزة: يدعم أجهزة متعددة بكفاءة عالية",
+                            "للألعاب والبث: يقدم أداء ثابت ومناسب للألعاب المتوسطة والبث بدقة 4K."
+                        ]
+                    },
+                    {
+                        name: "راوتر TP-link AX1500",
+                        price: "السعر : 55,000 د.ع",
+                        image: "https://f.top4top.io/p_3446uxjx51.jpg",
+                        specs: [
+                            "التغطية: مناسب للمنازل الصغيرة إلى المتوسطة مع 4 هوائيات قوية",
+                            "السرعة: Wi-Fi 6 بسرعة إجمالية تصل إلى 1500Mbps (300Mbps على 2.4GHz و1201Mbps على 5GHz).",
+                            "تحمّل الأجهزة: يدعم أجهزة متعددة بكفاءة",
+                            "للألعاب والبث: أداء جيد جدًا للبث بدقة Full HD وألعاب أونلاين خفيفة بدون تقطيع."
+                        ]
+                    },
+                    
+                    {
+                        name: "راوتر TP-link ac1200",
+                        price: "السعر : 45,000 د.ع",
+                        image: "https://a.top4top.io/p_34461uoip4.jpg",
+                        specs: [
+                            "التغطية: مناسب للشقق أو منازل صغيرة بفضل 4 هوائيات",
+                            "السرعة: يدعم AC1200 (300Mbps على 2.4GHz و867Mbps على 5GHz).",
+                            "تحمّل الأجهزة: يتحمّل عدد جيد من الأجهزة المنزلية لكن مو مثالي للشبكات الثقيلة.",
+                            "للألعاب والبث: مناسب للتصفح والبث بدقة Full HD، لكن مو مخصص للألعاب الثقيلة."
+                        ]
+                    },
                 ],
                 onu: [
                     {
-                        name: "جهاز ONU Huawei HG8245H",
-                        price: "299 ريال",
-                        image: "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                        name: "جهاز ONU Huawei 1G",
+                        price: "السعر : 15.000 د.ع",
+                        image: "https://c.top4top.io/p_3446omb4b5.jpg",
                         specs: [
-                            "دعم GPON",
-                            "4 منافذ LAN",
-                            "2 منافذ VoIP",
-                            "واجهة ويب سهلة"
+                            "دعم XPON/GPON",
+                            "2 منافذ LAN",
+                            "منافذ LAN تعدم سرعة تصل إلى 1 جيجابت/ثانية",
+                            "دعم IPv6",
                         ]
                     },
                     {
-                        name: "جهاز ONU ZTE F660",
-                        price: "249 ريال",
-                        image: "https://images.unsplash.com/photo-1550009158-9ebf69173e03?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                        name: "جهاز ONU Huawei 100M",
+                        price: "السعر : 10.000 د.ع",
+                        image: "https://d.top4top.io/p_3446qxlso6.jpg",
                         specs: [
                             "دعم GPON",
                             "4 منافذ LAN",
                             "2 منافذ VoIP",
-                            "واجهة استخدام بسيطة"
+                            "منافذ LAN تدعم سرعة تصل إلى 100 ميجابت/ثانية",
+                        ]
+                    },
+                    {
+                        name: "جهاز ONU Tenda 1G",
+                        price: "السعر : 10.000 د.ع",
+                        image: "https://e.top4top.io/p_34467btqy7.jpg",
+                        specs: [
+                            "دعم XPON",
+                            "منفذ LAN واحد",
+                            "منفذ LAN يدعم سرعة تصل الى 1 جيجابت/ثانية",
+                            "دعم IPv6",
                         ]
                     }
                 ],
                 ont: [
                     {
-                        name: "جهاز ONT Nokia G-010G-A",
-                        price: "349 ريال",
-                        image: "https://images.unsplash.com/photo-1587202372775-e229f172b5c1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                        name: "جهاز ONT V5 AC1200 (جديد)",
+                        price: "السعر : 45.000 د.ع",
+                        image: "https://b.top4top.io/p_3446vc0b04.jpg",
                         specs: [
-                            "دعم XGS-PON",
-                            "منفذ SFP+",
-                            "سرعة تصل إلى 10 جيجابت/ثانية",
-                            "تبريد فعال"
+                            "التغطية: تغطية ممتازة للمنازل الصغيرة إلى المتوسطة مع 2 هوائيات خارجية.",
+                            "السرعة: يدعم AC1200 (300Mbps على 2.4GHz و867Mbps على 5GHz).",
+                            "تحمّل الأجهزة: يدعم عدد جيد من الأجهزة المنزلية مع أداء مستقر للاستخدام اليومي.",
+                            "للألعاب والبث: مناسب للبث ومشاهدة المحتوى بدقة Full HD، لكن ليس مخصص للألعاب الثقيلة."
                         ]
                     },
                     {
-                        name: "جهاز ONT FiberHome HG6143D",
-                        price: "279 ريال",
-                        image: "https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                        name: "جهاز ONT V5 AC1200 (مستعمل)",
+                        price: "السعر : 35.000 د.ع",
+                        image: "https://b.top4top.io/p_3446vc0b04.jpg",
                         specs: [
-                            "دعم GPON",
-                            "4 منافذ LAN",
-                            "واجهة ويب متطورة",
-                            "دعم IPv6"
+                            "التغطية: تغطية ممتازة للمنازل الصغيرة إلى المتوسطة مع 2 هوائيات خارجية.",
+                            "السرعة: يدعم AC1200 (300Mbps على 2.4GHz و867Mbps على 5GHz).",
+                            "تحمّل الأجهزة: يدعم عدد جيد من الأجهزة المنزلية مع أداء مستقر للاستخدام اليومي.",
+                            "للألعاب والبث: مناسب للبث ومشاهدة المحتوى بدقة Full HD، لكن ليس مخصص للألعاب الثقيلة."
                         ]
-                    }
+                    },
+                    {
+                        name: "جهاز ONT V6 AC1200 (جديد)",
+                        price: "السعر : 55.000 د.ع",
+                        image: "https://l.top4top.io/p_3446xtv7f1.jpg",
+                        specs: [
+                            "التغطية: تغطية ممتازة للمنازل المتوسطة ودعم ثنائي التردد.",
+                            "السرعة: يدعم AC1200 (300Mbps على 2.4GHz و867Mbps على 5GHz).",
+                            "تحمّل الأجهزة: يدعم أجهزة متعددة بثبات جيد بفضل المعالج المدمج وتقنيات QoS.",
+                            "للألعاب والبث: مناسب للبث بدقة Full HD والألعاب الخفيفة، لكنه غير مخصص للجيمرز المحترفين."
+                        ]
+                    },
+                    {
+                        name: "جهاز ONT V6 AC1200 (مستعمل)",
+                        price: "السعر : 35.000 د.ع",
+                        image: "https://l.top4top.io/p_3446xtv7f1.jpg",
+                        specs: [
+                            "التغطية: تغطية ممتازة للمنازل المتوسطة ودعم ثنائي التردد.",
+                            "السرعة: يدعم AC1200 (300Mbps على 2.4GHz و867Mbps على 5GHz).",
+                            "تحمّل الأجهزة: يدعم أجهزة متعددة بثبات جيد بفضل المعالج المدمج وتقنيات QoS.",
+                            "للألعاب والبث: مناسب للبث بدقة Full HD والألعاب الخفيفة، لكنه غير مخصص للجيمرز المحترفين."
+                        ]
+                    },
+                    {
+                        name: "جهاز ONT Sa1456c (حنين)",
+                        price: "السعر : 20.000 د.ع",
+                        image: "https://j.top4top.io/p_3446ncs9e1.jpg",
+                        specs: [
+                            "التغطية: تغطية مناسبة للمنازل الصغيرة إلى المتوسطة بهوائيات داخلية",
+                            "السرعة: يدعم Wi-Fi بسرعات بسيطة الى متوسطة",
+                            "تحمّل الأجهزة: جيد للاستخدام اليومي، يدعم عدد بسيط من الأجهزة بشكل مستقر",
+                            "للألعاب والبث: أدائه جيد للألعاب الخفيفة والبث المباشر بجودة متوسطة، لكنه غير موجه للألعاب الثقيلة أو الاستخدام الاحترافي."
+                        ]
+                    },
                 ],
                 other: [
                     {
-                        name: "مفتاح شبكة 8 منافذ",
-                        price: "149 ريال",
-                        image: "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                        name: "UPS",
+                        price: "السعر : 25.000 د.ع",
+                        image: "https://f.top4top.io/p_3446zuaqh9.jpg",
                         specs: [
-                            "8 منافذ Gigabit",
-                            "تبديل بسرعة 16Gbps",
-                            "دعم MDI/MDIX",
-                            "تصميم بدون صوت"
+                            "سعة البطارية: ليثيوم 8800 mAh تقدّر تتكرّر حتى 300 دورة شحن ",
+                            "الطاقة الخارجة: 18 W، مخرج USB 5V وDC خيارات متعددة: 5V/9V/12V بتيار 1–2A، إضافة لمخرج PoE 15/24V",
+                            "مدى التوافق: يدعم تشغيل أجهزة مثل راوتر، مودم، كاميرا مراقبة، VoIP ونظام PoE بدون انقطاع",
+                            "الحماية الذكية: فيه حماية ضد الشحن الزائد، التفريغ الزائد، ماس كهربائي وتغيّر الجهد",
                         ]
                     },
                     {
-                        name: "كاميرا مراقبة IP",
-                        price: "329 ريال",
-                        image: "https://images.unsplash.com/photo-1581591524425-c7e0978865fc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                        name: "CBOX",
+                        price: "السعر : 75.000 د.ع",
+                        image: "https://f.top4top.io/p_3446ks3kd1.jpg",
                         specs: [
-                            "دقة 4MP",
-                            "رؤية ليلية 30 متر",
-                            "مقاومة الطقس IP67",
-                            "دعم PoE"
+                            "الفيديو والترفيه : يدعم تشغيل فيديو بدقة 4K عبر Smart YouTube مع إمكانية تثبيت تطبيقات من متجر Play .",
+                            "الاتصال : Wifi 2.4 + منفذ إيثرنت + HDMI + دعم Miracast, DLNA, AirPlay",
+                            "لا يوجد تقطيع ويحتوي على 90 قناة مشفرة منها باقة beIN Sport كاملة وأفلام ومسلسلات OSN ومجموعة متنوعة من القنوات المشفرة ويمكن زيادتها حسب التحديث",
+                            "النظام والمعالج :  يعمل على Android 9 بمعالج رباعي النواة مسؤوليته الاستجابة السريعة وتحليل البيانات بصورة ممتازة",
                         ]
-                    }
+                    },
+                    {
+                        name: "TV-BOX",
+                        price: "السعر : 25.000 د.ع",
+                        image: "https://k.top4top.io/p_344675uc71.jpg",
+                        specs: [
+                            "الفيديو والترفيه : يدعم تشغيل الفيديو بدقة 1080/HDR عبر YouTube مع إمكانية تثبيت تطبيقات من متجر Play.",
+                            "الاتصال : Wifi 2.4 + منفذ إيثرنت + HDMI",
+                            "النظام:  يعمل بنظام  (Android) يدعم أغلب التطبيقات الأساسية مثل YouTube وNetflix (بجودة محدودة).",
+                            "المعالج : رباعي النواة أدائه مناسب للتشغيل الخفيف.",
+                        ]
+                    },
+                    {
+                        name: "كيبل ضوئي 120 متر او اقل",
+                        price: "السعر : 10.000 د.ع",
+                        image: "https://l.top4top.io/p_3446yjj1x1.jpg",
+                        specs: [
+                            "مسلح بثلاث طبقات معدنية",
+                            "مقاوم للحرارة والضروف الخارجية",
+                        ]
+                    },
+                    {
+                        name: "كيبل ضوئي 150M/200m",
+                        price: "السعر : 15.000 د.ع",
+                        image: "https://l.top4top.io/p_3446yjj1x1.jpg",
+                        specs: [
+                            "مسلح بثلاث طبقات معدنية",
+                            "مقاوم للحرارة والضروف الخارجية",
+                        ]
+                    },
+                    {
+                        name: "فيش ضوئي (APC/UPC)",
+                        price: "السعر : 1.000 د.ع",
+                        image: "https://f.top4top.io/p_34467z4u78.jpg",
+                        specs: [
+                            "مصنوعة بجودة عالية",
+                            "مقاومة للحرارة والضروف الخارجية",
+                        ]
+                    },
+                    {
+                        name: "كيبل UTP 20M",
+                        price: "السعر : 10.000 د.ع",
+                        image: "https://g.top4top.io/p_3446etjbc10.png",
+                        specs: [
+                            "مصنوعة بجودة عالية",
+                            "مقاومة للحرارة والضروف الخارجية",
+                        ]
+                    },
+                    {
+                        name: "كيبل UTP 40M",
+                        price: "السعر : 20.000 د.ع",
+                        image: "https://h.top4top.io/p_3446ggygm1.png",
+                        specs: [
+                            "مصنوعة بجودة عالية",
+                            "مقاومة للحرارة والضروف الخارجية",
+                        ]
+                    },
                 ]
             };
             
-            // Display initial materials (routers)
-            displayMaterials('routers');
+            function displayMaterials(category) {
+                materialsGrid.innerHTML = '';
+                materials[category].forEach(item => {
+                    const card = document.createElement('div');
+                    card.className = 'material-card';
+                    card.innerHTML = `<div class="material-img"> <div class="zoom-icon"><i class="fas fa-search-plus"></i></div> <img src="${item.image}" alt="${item.name}"> </div> <div class="material-content"> <h3>${item.name}</h3> <div class="material-price">${item.price}</div> <ul class="material-specs"> ${item.specs.map(spec => `<li>${spec}</li>`).join('')} </ul> </div>`;
+                    card.querySelector('.material-img').addEventListener('click', () => openImageLightbox(item.image, item.name));
+                    materialsGrid.appendChild(card);
+                });
+            }
             
-            // Category switching
             categoryBtns.forEach(btn => {
                 btn.addEventListener('click', function() {
-                    // Remove active class from all buttons
                     categoryBtns.forEach(b => b.classList.remove('active'));
-                    
-                    // Add active class to clicked button
                     this.classList.add('active');
-                    
-                    // Display materials for selected category
-                    const category = this.getAttribute('data-category');
-                    displayMaterials(category);
+                    displayMaterials(this.getAttribute('data-category'));
                 });
             });
             
-            function displayMaterials(category) {
-                materialsGrid.innerHTML = '';
-                
-                materials[category].forEach(item => {
-                    const materialCard = document.createElement('div');
-                    materialCard.className = 'material-card';
-                    materialCard.innerHTML = `
-                        <div class="material-img">
-                            <img src="${item.image}" alt="${item.name}">
-                        </div>
-                        <div class="material-content">
-                            <h3>${item.name}</h3>
-                            <div class="material-price">${item.price}</div>
-                            <ul class="material-specs">
-                                ${item.specs.map(spec => `<li>${spec}</li>`).join('')}
-                            </ul>
-                        </div>
-                    `;
-                    materialsGrid.appendChild(materialCard);
-                });
-            }
+            displayMaterials('routers');
         }
     </script>
 </body>
