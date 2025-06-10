@@ -500,39 +500,39 @@
         /* Maps Section */
         .maps-search-container {
             margin-bottom: 20px;
-            display: flex;
-            gap: 10px;
-            align-items: center;
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto 25px;
         }
 
-        .maps-search-container input {
-            flex-grow: 1;
-            padding: 10px;
+        .search-box {
+            position: relative;
+            width: 100%;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 45px 12px 15px;
             border: 2px solid #ddd;
             border-radius: var(--radius);
             font-size: 1rem;
             transition: var(--transition);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
         }
 
-        .maps-search-container input:focus {
+        .search-box input:focus {
             border-color: var(--secondary);
             outline: none;
             box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
         }
 
-        .maps-search-container button {
-            background: var(--secondary);
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: var(--radius);
-            cursor: pointer;
-            transition: var(--transition);
-            font-size: 1rem;
-        }
-
-        .maps-search-container button:hover {
-            background: #2980b9;
+        .search-icon {
+            position: absolute;
+            top: 50%;
+            right: 15px;
+            transform: translateY(-50%);
+            color: #777;
+            pointer-events: none;
         }
 
         .maps-container {
@@ -1323,13 +1323,13 @@
             <div class="container">
                 <h2 class="section-title">خرائط المناطق</h2>
                 <div class="maps-search-container">
-                    <input type="text" id="mapSearchInput" placeholder="ابحث عن خريطة المنطقة...">
-                    <button id="mapSearchBtn"><i class="fas fa-search"></i> بحث</button>
+                    <div class="search-box">
+                        <input type="text" id="mapSearchInput" placeholder="ابحث عن خريطة المنطقة...">
+                        <i class="fas fa-search search-icon"></i>
+                    </div>
                 </div>
                 <div class="maps-container"></div>
             </div>
-
-
         </section>
 
         <!-- Offers Section -->
@@ -1583,7 +1583,6 @@
         function initMaps() {
             const mapsContainer = document.querySelector('.maps-container');
             const mapSearchInput = document.getElementById('mapSearchInput');
-            const mapSearchBtn = document.getElementById('mapSearchBtn');
 
             // Function to display maps
             function displayMaps(mapsToDisplay) {
@@ -1606,20 +1605,13 @@
             // Initial display of all maps
             displayMaps(allMaps);
 
-            // Search functionality
-            function searchMaps() {
-                const searchTerm = mapSearchInput.value.trim().toLowerCase();
+            // Search functionality on input
+            mapSearchInput.addEventListener('input', function() {
+                const searchTerm = this.value.trim().toLowerCase();
                 const filteredMaps = allMaps.filter(map =>
                     map.name.toLowerCase().includes(searchTerm)
                 );
                 displayMaps(filteredMaps);
-            }
-
-            mapSearchBtn.addEventListener('click', searchMaps);
-            mapSearchInput.addEventListener('keypress', e => {
-                if (e.key === 'Enter') {
-                    searchMaps();
-                }
             });
         }
         
