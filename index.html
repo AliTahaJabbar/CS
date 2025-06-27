@@ -71,8 +71,43 @@
         color: var(--primary);
       }
 
+      .login-options button {
+        display: block;
+        width: 100%;
+        padding: 15px;
+        margin-bottom: 15px;
+        border-radius: var(--radius);
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition);
+        border: none;
+      }
+
+      .login-options .team-leader-btn {
+        background: var(--secondary);
+        color: white;
+      }
+      .login-options .team-leader-btn:hover {
+        background: #2980b9;
+      }
+
+      .login-options .follower-btn,
+      .login-options .admin-btn {
+        background: var(--light);
+        color: var(--dark);
+        border: 2px solid #ddd;
+      }
+      .login-options .follower-btn:hover,
+      .login-options .admin-btn:hover {
+        background: #e0e0e0;
+      }
+
       .login-form {
         display: none; /* Hidden by default */
+        margin-top: 20px;
+        border-top: 1px solid #eee;
+        padding-top: 20px;
       }
 
       .login-form .form-group {
@@ -123,9 +158,7 @@
         cursor: pointer;
       }
 
-      .login-btn,
-      .viewer-btn,
-      .admin-login-trigger-btn {
+      .login-submit-btn {
         display: block;
         width: 100%;
         padding: 12px;
@@ -136,41 +169,11 @@
         transition: var(--transition);
         margin-top: 10px;
         border: none;
-      }
-
-      .viewer-btn,
-      .login-btn {
         background: var(--secondary);
         color: white;
       }
-      .viewer-btn:hover,
-      .login-btn:hover {
+      .login-submit-btn:hover {
         background: #2980b9;
-      }
-
-      .admin-login-trigger-btn {
-        background: var(--light);
-        color: var(--dark);
-        border: 2px solid #ddd;
-      }
-      .admin-login-trigger-btn:hover {
-        background: #e0e0e0;
-      }
-
-      .login-divider {
-        margin: 20px 0;
-        border-bottom: 1px solid #ccc;
-        position: relative;
-      }
-
-      .login-divider span {
-        position: absolute;
-        top: -12px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: white;
-        padding: 0 10px;
-        color: #888;
       }
 
       #login-error {
@@ -180,7 +183,7 @@
         height: 20px;
       }
 
-      /* Custom Alert Modal */
+      /* Custom Alert Modal (for messages) */
       #alert-modal {
         position: fixed;
         top: 0;
@@ -224,11 +227,157 @@
         opacity: 0.9;
       }
 
+      /* Custom Confirm Modal (for admin actions) */
+      #confirm-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        display: none; /* Hidden by default */
+        justify-content: center;
+        align-items: center;
+        z-index: 10001;
+      }
+
+      .confirm-content {
+        background: white;
+        padding: 30px;
+        border-radius: var(--radius);
+        text-align: center;
+        box-shadow: var(--shadow);
+        max-width: 90%;
+        width: 400px;
+      }
+
+      .confirm-content p {
+        font-size: 1.1rem;
+        color: var(--dark);
+        margin-bottom: 20px;
+      }
+
+      .confirm-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+      }
+
+      .confirm-btn,
+      .cancel-btn {
+        padding: 10px 25px;
+        border-radius: var(--radius);
+        cursor: pointer;
+        transition: var(--transition);
+        border: none;
+        font-weight: 600;
+      }
+
+      .confirm-btn {
+        background: var(--accent);
+        color: white;
+      }
+      .confirm-btn:hover {
+        opacity: 0.9;
+      }
+
+      .cancel-btn {
+        background: #ccc;
+        color: var(--dark);
+      }
+      .cancel-btn:hover {
+        background: #bbb;
+      }
+
+      /* Custom Edit Modal (for detailed editing) */
+      #edit-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 10002;
+        overflow-y: auto; /* Allow scrolling if content is long */
+      }
+
+      .edit-modal-content {
+        background: white;
+        padding: 30px;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        max-width: 90%;
+        width: 600px;
+        max-height: 90vh; /* Limit height for scrollability */
+        overflow-y: auto; /* Allow scrolling inside the modal */
+        text-align: right; /* RTL for form elements */
+      }
+
+      .edit-modal-content h3 {
+        margin-bottom: 20px;
+        color: var(--primary);
+        text-align: center;
+      }
+
+      .edit-modal-content .form-group {
+        margin-bottom: 15px;
+      }
+
+      .edit-modal-content label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        color: var(--primary);
+      }
+
+      .edit-modal-content input[type="text"],
+      .edit-modal-content input[type="url"],
+      .edit-modal-content textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: var(--radius);
+        font-size: 1rem;
+      }
+
+      .edit-modal-content textarea {
+        min-height: 80px;
+        resize: vertical;
+      }
+
+      .edit-modal-actions {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 25px;
+      }
+
+      .edit-modal-actions .btn {
+        flex: 1;
+        max-width: 150px;
+      }
+      .edit-modal-actions .btn.save {
+        background: var(--success);
+      }
+      .edit-modal-actions .btn.save:hover {
+        background: #27ae60;
+      }
+      .edit-modal-actions .btn.cancel {
+        background: #ccc;
+        color: var(--dark);
+      }
+      .edit-modal-actions .btn.cancel:hover {
+        background: #bbb;
+      }
+
+      /* General website styles (unchanged) */
       .main-wrapper {
         display: none; /* Hidden until login */
       }
 
-      /* Header Styles */
       header {
         background: linear-gradient(90deg, var(--primary) 0%, #1a2530 100%);
         color: white;
@@ -256,19 +405,19 @@
         display: flex;
         align-items: center;
         gap: 10px;
-        font-size: 1.5rem; /* Base font size for the company name */
+        font-size: 1.5rem;
         font-weight: bold;
       }
 
       .logo img {
-        height: 40px; /* Set a fixed height for the logo image */
-        width: auto; /* Maintain aspect ratio */
-        vertical-align: middle; /* Align image with text baseline */
+        height: 40px;
+        width: auto;
+        vertical-align: middle;
       }
 
       .logo span {
-        font-size: 1.5rem; /* Ensure consistency with .logo font-size */
-        line-height: 1.2; /* Adjust line height for better alignment */
+        font-size: 1.5rem;
+        line-height: 1.2;
       }
 
       .logo i {
@@ -573,6 +722,7 @@
         display: block;
         text-decoration: none;
         color: inherit;
+        position: relative; /* For edit/delete buttons */
       }
 
       .map-item:hover {
@@ -591,6 +741,47 @@
         padding: 15px 10px;
         font-size: 0.95rem;
         font-weight: 500;
+      }
+      .map-actions {
+        position: absolute;
+        bottom: 5px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 5px;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+      .map-item:hover .map-actions {
+        opacity: 1;
+      }
+      .map-actions button {
+        background: rgba(0, 0, 0, 0.6);
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 5px 8px;
+        font-size: 0.8rem;
+        cursor: pointer;
+      }
+      .map-actions button:hover {
+        background: rgba(0, 0, 0, 0.8);
+      }
+      .add-new-button {
+        display: block;
+        width: fit-content;
+        margin: 20px auto;
+        padding: 10px 20px;
+        background: var(--success);
+        color: white;
+        border: none;
+        border-radius: var(--radius);
+        cursor: pointer;
+        transition: var(--transition);
+        font-weight: 600;
+      }
+      .add-new-button:hover {
+        background: #27ae60;
       }
 
       /* Offers Section */
@@ -724,11 +915,34 @@
         background: var(--light);
         border-radius: var(--radius);
         display: none;
+        position: relative; /* For edit/delete buttons */
       }
 
       .vlan-result.active {
         display: block;
         animation: fadeIn 0.5s ease;
+      }
+      .vlan-actions {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        display: none; /* Hidden by default, shown for admin */
+        gap: 5px;
+      }
+      .vlan-result.active .vlan-actions.admin-visible {
+        display: flex;
+      }
+      .vlan-actions button {
+        background: rgba(0, 0, 0, 0.6);
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 5px 8px;
+        font-size: 0.8rem;
+        cursor: pointer;
+      }
+      .vlan-actions button:hover {
+        background: rgba(0, 0, 0, 0.8);
       }
 
       /* Materials Section */
@@ -770,6 +984,7 @@
         overflow: hidden;
         box-shadow: var(--shadow);
         transition: var(--transition);
+        position: relative; /* For edit/delete buttons */
       }
 
       .material-card:hover {
@@ -842,6 +1057,31 @@
       .material-specs li {
         margin-bottom: 6px;
         list-style-position: inside;
+      }
+      .material-actions {
+        position: absolute;
+        top: 10px;
+        left: 10px; /* Changed from right to left for RTL */
+        display: flex;
+        gap: 5px;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        z-index: 3;
+      }
+      .material-card:hover .material-actions {
+        opacity: 1;
+      }
+      .material-actions button {
+        background: rgba(0, 0, 0, 0.6);
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 5px 8px;
+        font-size: 0.8rem;
+        cursor: pointer;
+      }
+      .material-actions button:hover {
+        background: rgba(0, 0, 0, 0.8);
       }
 
       /* Contact Section */
@@ -1197,6 +1437,7 @@
         padding: 20px;
         margin-top: 20px;
         overflow-x: auto;
+        position: relative; /* For the "Add New Offer" button */
       }
 
       .offer-table {
@@ -1216,6 +1457,14 @@
       .offer-table td {
         padding: 12px;
         border-bottom: 1px solid #eee;
+        position: relative; /* For inline editing */
+      }
+      .offer-table td input {
+        width: calc(100% - 16px); /* Adjust for padding */
+        padding: 8px;
+        margin: -4px; /* Counteract table cell padding */
+        border: 1px solid #ddd;
+        border-radius: 5px;
       }
 
       .offer-table tr:nth-child(even) {
@@ -1238,6 +1487,36 @@
         margin-bottom: 15px;
         color: var(--primary);
         font-size: 1.5rem;
+      }
+      .offer-edit-buttons {
+        display: flex;
+        gap: 5px;
+        justify-content: center;
+        margin-top: 5px;
+      }
+      .offer-edit-buttons button {
+        padding: 5px 10px;
+        border-radius: 5px;
+        border: none;
+        cursor: pointer;
+        font-size: 0.85rem;
+        transition: background-color 0.2s;
+      }
+      .offer-edit-buttons .save-btn {
+        background-color: var(--success);
+        color: white;
+      }
+      .offer-edit-buttons .cancel-btn {
+        background-color: #ccc;
+        color: var(--dark);
+      }
+      .offer-edit-buttons .edit-btn {
+        background-color: var(--secondary);
+        color: white;
+      }
+      .offer-edit-buttons .delete-btn {
+        background-color: var(--accent);
+        color: white;
       }
 
       /* Lightbox for Material Images */
@@ -1311,11 +1590,17 @@
     <div id="login-overlay">
       <div class="login-container">
         <h2>تسجيل الدخول</h2>
-        <button id="viewer-btn" class="viewer-btn">الدخول كقائد فريق</button>
-        <div class="login-divider"><span>أو</span></div>
-        <button id="show-admin-login-btn" class="admin-login-trigger-btn">
-          الدخول كمتابع
-        </button>
+        <div class="login-options">
+          <button id="team-leader-btn" class="team-leader-btn">
+            الدخول كقائد فريق
+          </button>
+          <button id="show-follower-login-btn" class="follower-btn">
+            الدخول كمتابع
+          </button>
+          <button id="show-admin-login-btn" class="admin-btn">
+            الدخول كمسؤول
+          </button>
+        </div>
 
         <form id="login-form" class="login-form">
           <div class="form-group">
@@ -1336,7 +1621,7 @@
             <label for="remember-me">تذكرني دائماً</label>
           </div>
           <p id="login-error"></p>
-          <button type="submit" class="login-btn">دخول</button>
+          <button type="submit" class="login-submit-btn">دخول</button>
         </form>
       </div>
     </div>
@@ -1346,6 +1631,35 @@
       <div class="alert-content">
         <p id="alert-message"></p>
         <button id="alert-close-btn" class="alert-close-btn">إغلاق</button>
+      </div>
+    </div>
+
+    <!-- Custom Confirm Modal -->
+    <div id="confirm-modal">
+      <div class="confirm-content">
+        <p id="confirm-message"></p>
+        <div class="confirm-buttons">
+          <button id="confirm-yes-btn" class="confirm-btn">نعم</button>
+          <button id="confirm-no-btn" class="cancel-btn">لا</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Custom Edit Modal (for materials, maps, VLANs add/edit) -->
+    <div id="edit-modal">
+      <div class="edit-modal-content">
+        <h3 id="edit-modal-title"></h3>
+        <form id="edit-form">
+          <!-- Form fields will be dynamically injected here -->
+        </form>
+        <div class="edit-modal-actions">
+          <button type="button" class="btn save" id="edit-save-btn">
+            حفظ
+          </button>
+          <button type="button" class="btn cancel" id="edit-cancel-btn">
+            إلغاء
+          </button>
+        </div>
       </div>
     </div>
 
@@ -1404,7 +1718,7 @@
                 <span id="user-role-display"></span>
               </div>
               <button class="logout-btn">
-                <i class="fas fa-sign-out-alt"></i>
+                <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
               </button>
             </div>
           </div>
@@ -1550,6 +1864,11 @@
               <i class="fas fa-search search-icon"></i>
             </div>
           </div>
+          <div id="add-map-button-container" style="text-align: center;">
+            <button id="add-new-map-btn" class="add-new-button" style="display: none;">
+                إضافة خريطة جديدة <i class="fas fa-plus"></i>
+            </button>
+          </div>
           <div class="maps-container"></div>
         </div>
       </section>
@@ -1600,6 +1919,9 @@
             <button id="showVlanBtn" class="btn">
               اضغط لعرض الفيلان <i class="fas fa-arrow-left"></i>
             </button>
+            <button id="add-new-vlan-btn" class="add-new-button" style="display: none; margin-top: 20px;">
+                إضافة فيلان جديد <i class="fas fa-plus"></i>
+            </button>
             <div id="vlanResult" class="vlan-result"></div>
           </div>
         </div>
@@ -1617,6 +1939,9 @@
             <button class="category-btn" data-category="ont">ONT</button>
             <button class="category-btn" data-category="other">
               المواد الأخرى
+            </button>
+            <button id="add-new-material-btn" class="add-new-button" style="display: none; margin-top: 10px;">
+                إضافة مادة جديدة <i class="fas fa-plus"></i>
             </button>
           </div>
           <div class="materials-grid"></div>
@@ -1722,23 +2047,22 @@
 
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        // --- Elements ---
+        // --- عناصر الواجهة ---
         const loginOverlay = document.getElementById("login-overlay");
+        const loginOptions = document.querySelector(".login-options");
+        const teamLeaderBtn = document.getElementById("team-leader-btn");
+        const showFollowerLoginBtn = document.getElementById(
+          "show-follower-login-btn"
+        );
+        const showAdminLoginBtn = document.getElementById("show-admin-login-btn"); // تم تغيير الاسم ليكون أوضح
         const loginForm = document.getElementById("login-form");
         const usernameInput = document.getElementById("username");
         const passwordInput = document.getElementById("password");
-        const rememberMeCheckbox = document.getElementById("remember-me");
+        const loginSubmitBtn = document.querySelector(".login-submit-btn");
         const loginError = document.getElementById("login-error");
-        const viewerBtn = document.getElementById("viewer-btn");
-        const showAdminLoginBtn = document.getElementById(
-          "show-admin-login-btn"
-        );
-        const loginDivider = document.querySelector(".login-divider");
         const mainWrapper = document.querySelector(".main-wrapper");
 
-        const userInfoContainer = document.getElementById(
-          "user-info-container"
-        );
+        const userInfoContainer = document.getElementById("user-info-container");
         const userRoleDisplay = document.getElementById("user-role-display");
         const mobileUserInfoContainer =
           document.getElementById("mobile-user-info");
@@ -1746,6 +2070,17 @@
         const alertModal = document.getElementById("alert-modal");
         const alertMessage = document.getElementById("alert-message");
         const alertCloseBtn = document.getElementById("alert-close-btn");
+
+        const confirmModal = document.getElementById("confirm-modal");
+        const confirmMessage = document.getElementById("confirm-message");
+        const confirmYesBtn = document.getElementById("confirm-yes-btn");
+        const confirmNoBtn = document.getElementById("confirm-no-btn");
+
+        const editModal = document.getElementById("edit-modal");
+        const editModalTitle = document.getElementById("edit-modal-title");
+        const editForm = document.getElementById("edit-form");
+        const editSaveBtn = document.getElementById("edit-save-btn");
+        const editCancelBtn = document.getElementById("edit-cancel-btn");
 
         const navLinks = document.querySelectorAll(".nav-link");
         const contentSections = document.querySelectorAll(".content-section");
@@ -1756,113 +2091,21 @@
         const lightbox = document.querySelector(".image-lightbox");
         const closeLightbox = lightbox.querySelector(".close-lightbox");
 
-        // --- State ---
-        let userRole = null; // Can be 'admin' or 'viewer'
+        // --- بيانات الاعتماد والثوابت ---
+        const ADMIN_USERNAME = "Ali.Taha";
+        const ADMIN_PASSWORD = "268450";
+        const FOLLOWER_USERNAME = "متابع";
+        const FOLLOWER_PASSWORD = "101001000";
 
-        // --- Logout Logic ---
-        function logout() {
-          localStorage.removeItem("smartAgeLogin"); // Remove saved login state
-          location.reload(); // Reload the page to show login screen
-        }
+        // --- حالة التطبيق ---
+        let userRole = null; // يمكن أن تكون 'admin', 'follower', 'teamLeader'
+        let currentEditTarget = null; // لتتبع العنصر الذي يتم تعديله
+        let currentEditCategory = null; // لتتبع الفئة التي يتم تعديلها في المواد
+        let currentEditIndex = -1; // لتتبع فهرس العنصر في المصفوفات (للمواد)
 
-        // --- Login Logic ---
-        loginForm.addEventListener("submit", function (e) {
-          e.preventDefault();
-          const username = usernameInput.value;
-          const password = passwordInput.value;
+        // --- وظائف المساعدة العامة ---
 
-          if (username === "Ali.Taha" && password === "199827") {
-            userRole = "admin";
-            // Always remember admin login
-            localStorage.setItem(
-              "smartAgeLogin",
-              JSON.stringify({ role: "admin" })
-            );
-            startApp();
-          } else {
-            loginError.textContent = "اسم المستخدم أو كلمة المرور غير صحيحة.";
-          }
-        });
-
-        viewerBtn.addEventListener("click", function () {
-          userRole = "viewer";
-          // Viewer login is not remembered, as requested, but we save it to manage state
-          localStorage.setItem(
-            "smartAgeLogin",
-            JSON.stringify({ role: "viewer" })
-          );
-          startApp();
-        });
-
-        showAdminLoginBtn.addEventListener("click", function () {
-          viewerBtn.style.display = "none";
-          loginDivider.style.display = "none";
-          this.style.display = "none";
-          loginForm.style.display = "block";
-        });
-
-        function startApp() {
-          // Hide login and show main content
-          loginOverlay.style.opacity = "0";
-          setTimeout(() => {
-            loginOverlay.style.display = "none";
-            mainWrapper.style.display = "block";
-            mainWrapper.style.animation = "fadeIn 0.5s";
-          }, 500);
-
-          // Setup User Interface based on role
-          setupUIForRole();
-
-          // Initialize website features
-          initializeApp();
-        }
-
-        function setupUIForRole() {
-          const roleText = userRole === "admin" ? "متابع" : "قائد فريق";
-
-          // --- Desktop UI ---
-          userRoleDisplay.textContent = roleText;
-          userInfoContainer.style.display = "flex";
-
-          // --- Mobile UI ---
-          const mobileHTML = `
-                    <div class="user-status">
-                       <i class="fas fa-user-circle"></i>
-                       <span>${roleText}</span>
-                    </div>
-                    <button class="logout-btn mobile"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</button>
-                `;
-          mobileUserInfoContainer.innerHTML = mobileHTML;
-          mobileUserInfoContainer.style.display = "block";
-
-          // Attach logout listeners
-          document
-            .querySelectorAll(".logout-btn")
-            .forEach((btn) => btn.addEventListener("click", logout));
-
-          // Show mobile menu button only if user is logged in
-          mobileMenuBtn.style.display = "block";
-        }
-
-        // --- Auto-Login Check on Load ---
-        const rememberedUser = JSON.parse(
-          localStorage.getItem("smartAgeLogin")
-        );
-        if (
-          rememberedUser &&
-          (rememberedUser.role === "admin" || rememberedUser.role === "viewer")
-        ) {
-          userRole = rememberedUser.role; // Set the user role from localStorage
-          startApp(); // Bypass login overlay
-        } else {
-          // If no remembered user, ensure login overlay is visible by default
-          loginOverlay.style.display = "flex";
-          loginOverlay.style.opacity = "1";
-          // Hide main content until login
-          mainWrapper.style.display = "none";
-        }
-
-        // --- Custom Alert ---
+        // دالة لعرض رسائل تنبيه مخصصة بدلاً من alert()
         function showCustomAlert(message) {
           alertMessage.textContent = message;
           alertModal.style.display = "flex";
@@ -1872,25 +2115,1641 @@
           alertModal.style.display = "none";
         });
 
-        // --- Main App Initialization ---
+        // دالة لعرض مربع تأكيد مخصص بدلاً من confirm()
+        function showCustomConfirm(message) {
+          return new Promise((resolve) => {
+            confirmMessage.textContent = message;
+            confirmModal.style.display = "flex";
+
+            const onConfirm = () => {
+              confirmModal.style.display = "none";
+              confirmYesBtn.removeEventListener("click", onConfirm);
+              confirmNoBtn.removeEventListener("click", onCancel);
+              resolve(true);
+            };
+
+            const onCancel = () => {
+              confirmModal.style.display = "none";
+              confirmYesBtn.removeEventListener("click", onConfirm);
+              confirmNoBtn.removeEventListener("click", onCancel);
+              resolve(false);
+            };
+
+            confirmYesBtn.addEventListener("click", onConfirm);
+            confirmNoBtn.addEventListener("click", onCancel);
+          });
+        }
+
+        // دالة لفتح lightbox الصور
+        function openImageLightbox(imgSrc, title) {
+          lightbox.querySelector("img").src = imgSrc;
+          lightbox.querySelector(".lightbox-title").textContent = title;
+          lightbox.classList.add("active");
+        }
+
+        closeLightbox.addEventListener("click", () =>
+          lightbox.classList.remove("active")
+        );
+        lightbox.addEventListener("click", (e) => {
+          if (e.target === lightbox) lightbox.classList.remove("active");
+        });
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape") lightbox.classList.remove("active");
+        });
+
+        // --- تحميل وحفظ البيانات (الاستمرارية) ---
+        // البيانات الافتراضية
+        const defaultData = {
+          offers: {
+            "سوبر سيل حكومي": {
+              table: [
+                ["شهر", "38,000", "48,000", "68,000", "غير متوفر"],
+                ["3 أشهر", "غير متوفر", "غير متوفر", "غير متوفر", "غير متوفر"],
+              ],
+              note: "السرعات المذكورة تشمل اشتراكات الوطني فقط | الكيبل بـ10,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 10",
+            },
+            "سوبرسيل حكومي": {
+              table: [
+                ["شهر", "38,000", "48,000", "68,000", "غير متوفر"],
+                ["3 أشهر", "غير متوفر", "غير متوفر", "غير متوفر", "غير متوفر"],
+              ],
+              note: "السرعات المذكورة تشمل اشتراكات الوطني فقط | الكيبل بـ10,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 10",
+            },
+            "سوبر حكومي": {
+              table: [
+                ["شهر", "38,000", "48,000", "68,000", "غير متوفر"],
+                ["3 أشهر", "غير متوفر", "غير متوفر", "غير متوفر", "غير متوفر"],
+              ],
+              note: "السرعات المذكورة تشمل اشتراكات الوطني فقط | الكيبل بـ10,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 10",
+            },
+            سوبر: {
+              table: [
+                ["شهر", "38,000", "48,000", "68,000", "غير متوفر"],
+                ["3 أشهر", "غير متوفر", "غير متوفر", "غير متوفر", "غير متوفر"],
+              ],
+              note: "السرعات المذكورة تشمل اشتراكات الوطني فقط | الكيبل بـ10,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 10",
+            },
+            "سوبر سيل": {
+              table: [
+                ["شهر", "38,000", "48,000", "68,000", "غير متوفر"],
+                ["3 أشهر", "غير متوفر", "غير متوفر", "غير متوفر", "غير متوفر"],
+              ],
+              note: "السرعات المذكورة تشمل اشتراكات الوطني فقط | الكيبل بـ10,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 10",
+            },
+            الاهليات: {
+              table: [
+                ["ايرثلنك", "35,000", "40,000", "50,000", "غير متوفر"],
+                ["سوبرسيل", "30,000", "35,000", "45,000", "55,000"],
+                ["هالة", "30,000", "35,000", "50,000", "غير متوفر"],
+              ],
+              note: "السرعات المذكورة تشمل اشتراكات الوطني فقط | الكيبل بـ10,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 2",
+            },
+            اهليات: {
+              table: [
+                ["ايرثلنك", "35,000", "40,000", "50,000", "غير متوفر"],
+                ["سوبرسيل", "30,000", "35,000", "45,000", "55,000"],
+                ["هالة", "30,000", "35,000", "50,000", "غير متوفر"],
+              ],
+              note: "السرعات المذكورة تشمل اشتراكات الوطني فقط | الكيبل بـ10,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 2",
+            },
+            الزراعي: {
+              table: [
+                ["ايرثلنك", "35,000", "40,000", "50,000", "غير متوفر"],
+                ["سوبرسيل", "30,000", "35,000", "45,000", "55,000"],
+                ["هالة", "30,000", "35,000", "50,000", "غير متوفر"],
+              ],
+              note: "السرعات المذكورة تشمل اشتراكات الوطني فقط | الكيبل بـ10,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 2",
+            },
+            زراعي: {
+              table: [
+                ["ايرثلنك", "35,000", "40,000", "50,000", "غير متوفر"],
+                ["سوبرسيل", "30,000", "35,000", "45,000", "55,000"],
+                ["هالة", "30,000", "35,000", "50,000", "غير متوفر"],
+              ],
+              note: "السرعات المذكورة تشمل اشتراكات الوطني فقط | الكيبل بـ10,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 2",
+            },
+            المجمع: {
+              table: [
+                ["ايرثلنك", "35,000", "40,000", "50,000", "غير متوفر"],
+                ["سوبرسيل", "30,000", "35,000", "45,000", "55,000"],
+                ["هالة", "30,000", "35,000", "50,000", "غير متوفر"],
+              ],
+              note: "السرعات المذكورة تشمل اشتراكات الوطني فقط | الكيبل بـ10,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 2",
+            },
+            مجمع: {
+              table: [
+                ["ايرثلنك", "35,000", "40,000", "50,000", "غير متوفر"],
+                ["سوبرسيل", "30,000", "35,000", "45,000", "55,000"],
+                ["هالة", "30,000", "35,000", "50,000", "غير متوفر"],
+              ],
+              note: "السرعات المذكورة تشمل اشتراكات الوطني فقط | الكيبل بـ10,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 2",
+            },
+            الاهلي: {
+              table: [
+                ["ايرثلنك", "35,000", "40,000", "50,000", "غير متوفر"],
+                ["سوبرسيل", "30,000", "35,000", "45,000", "55,000"],
+                ["هالة", "30,000", "35,000", "50,000", "غير متوفر"],
+              ],
+              note: "السرعات المذكورة تشمل اشتراكات الوطني فقط | الكيبل بـ10,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 2",
+            },
+            اهلي: {
+              table: [
+                ["ايرثلنك", "35,000", "40,000", "50,000", "غير متوفر"],
+                ["سوبرسيل", "30,000", "35,000", "45,000", "55,000"],
+                ["هالة", "30,000", "35,000", "50,000", "غير متوفر"],
+              ],
+              note: "السرعات المذكورة تشمل اشتراكات الوطني فقط | الكيبل بـ10,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 2",
+            },
+            سوبرسيل: {
+              table: [
+                ["شهر", "38,000", "48,000", "68,000", "غير متوفر"],
+                ["3 أشهر", "غير متوفر", "غير متوفر", "غير متوفر", "غير متوفر"],
+              ],
+              note: "السرعات المذكورة تشمل اشتراكات الوطني فقط | الكيبل بـ10,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 10",
+            },
+            122: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 الاف | الجهاز الضوئي بـ10,000 | الڤيلان : 615",
+            },
+            176: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "يرجى التأكد من وسيم بخصوص التفعيل | الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 516",
+            },
+            178: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل مجاني | الجهاز الضوئي بـ5,000 | الڤيلان : 518",
+            },
+            43: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "صفحة كاظم : الكيبل بـ5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 311",
+            },
+            44: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "صفحة كاظم : الكيبل بـ5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 313",
+            },
+            45: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "صفحة كاظم : الكيبل بـ5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 312",
+            },
+            107: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل مجاني | الجهاز الضوئي بـ5,000 | الڤيلان : 612",
+            },
+            108: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 616",
+            },
+            61: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "صفحة كاظم : الكيبل مجاني | الجهاز الضوئي بـ5,000 | الڤيلان : 220",
+            },
+            60: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "صفحة كاظم : الكيبل مجاني | الجهاز الضوئي بـ5,000 | الڤيلان : 219",
+            },
+            183: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 519",
+            },
+            106: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل مجاني | الجهاز الضوئي بـ5,000 | الڤيلان : 611",
+            },
+            175: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "يرجى التأكد من وسيم بخصوص التفعيل | الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 516",
+            },
+            174: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "يرجى التأكد من وسيم بخصوص التفعيل | الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 516",
+            },
+            173: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "يرجى التأكد من وسيم بخصوص التفعيل | الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 516",
+            },
+            54: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 217",
+            },
+            152: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 514",
+            },
+
+            52: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 214",
+            },
+            51: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل مجاني | الجهاز الضوئي بـ5,000 | الڤيلان : 216",
+            },
+            55: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 215",
+            },
+            1747: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 213",
+            },
+            163: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 513",
+            },
+            376: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 218",
+            },
+            147: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 417",
+            },
+            182: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 512",
+            },
+            1980: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 211",
+            },
+            68: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 111",
+            },
+            72: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 112",
+            },
+            71: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 114",
+            },
+            49: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 120",
+            },
+            50: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 119",
+            },
+            53: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 210",
+            },
+            1850: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 118",
+            },
+            165: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 511",
+            },
+            181: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل مجاني | الجهاز الضوئي بـ5,000 | الڤيلان : 510",
+            },
+            170: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل مجاني | الجهاز الضوئي بـ5,000 | الڤيلان : 418",
+            },
+            134: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 419",
+            },
+            172: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 416",
+            },
+            164: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 413",
+            },
+            48: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 117",
+            },
+            46: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 115",
+            },
+            47: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 113",
+            },
+            311: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 411",
+            },
+            99: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 110",
+            },
+            119: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل مجاني | الجهاز الضوئي بـ5,000 | الڤيلان : 120",
+            },
+            118: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل مجاني | الجهاز الضوئي بـ5,000 | الڤيلان : 410",
+            },
+            167: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 217",
+            },
+            139: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 315",
+            },
+            116: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل مجاني | الجهاز الضوئي بـ5,000 | الڤيلان : 319",
+            },
+            171: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 311",
+            },
+            247: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل مجاني | الجهاز الضوئي بـ5,000 | الڤيلان : 311",
+            },
+            245: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل مجاني | الجهاز الضوئي بـ5,000 | الڤيلان : 311",
+            },
+            244: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل مجاني | الجهاز الضوئي بـ5,000 | الڤيلان : 311",
+            },
+            237: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل مجاني | الجهاز الضوئي بـ5,000 | الڤيلان : 311",
+            },
+            235: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل مجاني | الجهاز الضوئي بـ5,000 | الڤيلان : 311",
+            },
+            180: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 218",
+            },
+            162: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل مجاني | الجهاز الضوئي بـ5,000 | الڤيلان : 215",
+            },
+            161: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 115",
+            },
+            166: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 316",
+            },
+            169: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 216",
+            },
+            179: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 317",
+            },
+            138: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 212",
+            },
+            142: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 214",
+            },
+            136: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 314",
+            },
+            143: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 313",
+            },
+            137: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 213",
+            },
+            146: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 118",
+            },
+            144: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 119",
+            },
+            266: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 115",
+            },
+            1697: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 715",
+            },
+            265: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 114",
+            },
+            1720: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 310",
+            },
+            149: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 117",
+            },
+            264: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 119",
+            },
+            1696: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 612",
+            },
+            259: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 117",
+            },
+            148: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 113",
+            },
+            1698: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 716",
+            },
+            1721: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 315",
+            },
+            267: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 213",
+            },
+            140: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 211",
+            },
+            1692: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 115",
+            },
+            1699: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 717",
+            },
+            1694: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 112",
+            },
+            1310: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 114",
+            },
+            151: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 210",
+            },
+            121: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل مجاني | الجهاز الضوئي بـ5,000 | الڤيلان : 318",
+            },
+            109: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل مجاني | الجهاز الضوئي بـ5,000 | الڤيلان : 617",
+            },
+            110: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 614",
+            },
+            111: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 310",
+            },
+            112: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 312",
+            },
+            113: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 411",
+            },
+            117: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل مجاني | الجهاز الضوئي بـ5,000 | الڤيلان : 618",
+            },
+            120: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 412",
+            },
+            مصعب: {
+              table: [
+                ["شهر", "15,000", "20,000", "30,000", "75,000"],
+                ["شهرين", "34,000", "48,000", "75,000", "120,000"],
+                ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
+              ],
+              note: "الكيبل 10,000 | الجهاز الضوئي بـ10,000",
+            },
+          },
+          maps: [
+            {
+              name: "وطني الدور",
+              link: "https://www.google.com/maps/d/edit?mid=1ZLaIWvkNGXWzXBtS2qn3QnuICsF4MLw",
+            },
+            {
+              name: "سوبرسيل الدور",
+              link: "https://www.google.com/maps/d/edit?mid=1UN4s5AvKMz8ZR3GrcPT0z865V2bUc30",
+            },
+            {
+              name: "وطني السلام",
+              link: "https://www.google.com/maps/d/edit?mid=12kyZLeaAIV0OkrVTqy99mKI-y-K7uYk",
+            },
+            {
+              name: "وطني حي العدل",
+              link: "https://www.google.com/maps/d/edit?mid=1cWV-pjm6j9L1MSURZp17WWSW3ExtoPc",
+            },
+            {
+              name: "وطني الاولى",
+              link: "https://www.google.com/maps/d/edit?mid=15jUIVVmvhdU_uogd-D8Nr9D5wmMBmFI",
+            },
+            {
+              name: "وطني الثانية",
+              link: "https://www.google.com/maps/d/edit?mid=1oOLbfyayvFBdWWOGpBK-xT1kXx0iw1g",
+            },
+            {
+              name: "وطني الثالثة",
+              link: "https://www.google.com/maps/d/edit?mid=1MEAolkaQxsmBkfsg71jx3XmvVnM-kzU",
+            },
+            {
+              name: "وطني ربيع ودباش",
+              link: "https://www.google.com/maps/d/edit?mid=18WceMP3GnyxvWb3AZM4aMRhe9mXs3pc",
+            },
+            {
+              name: "وطني البستان",
+              link: "https://www.google.com/maps/d/edit?mid=1JAbPhFOgkJgDbmUFpdl2kH7CVrihPbI",
+            },
+            {
+              name: "وطني الدولعي",
+              link: "https://www.google.com/maps/d/edit?mid=1H4WbY05i6KOeHPFYQdlGAH8EsZvo13M",
+            },
+            {
+              name: "وطني جكوك",
+              link: "https://www.google.com/maps/d/edit?mid=1tAYfNZ-l5-tTSLMDj1qyQxDdxG8BTIY",
+            },
+            {
+              name: "سوبرسيل الدولعي + الثانية",
+              link: "https://www.google.com/maps/d/edit?mid=1uLoAocxwVs-bn78wNgCG1G4CriTO_dI",
+            },
+            {
+              name: "وطني السيدية",
+              link: "https://www.google.com/maps/d/edit?mid=1eTMFXgQn7QYRw1DzB28ECUB22qHbba0",
+            },
+            {
+              name: "وطني حي العامل",
+              link: "https://www.google.com/maps/d/edit?mid=13NvhiIX_lPuUHMcmvejLPFvJCs9fbM8",
+            },
+            {
+              name: "الزراعي",
+              link: "https://www.google.com/maps/d/edit?mid=19AlClkHNP-2VJ3Yu2LPjftkl1Y8TdX8&ll",
+            },
+            {
+              name: "الزراعي 2",
+              link: "https://www.google.com/maps/d/edit?mid=1ixmnNvPz62U1OxsZdHhbfycnmxQwgMs",
+            },
+            {
+              name: "المجمع",
+              link: "https://www.google.com/maps/d/edit?mid=1J9zPGaDYaeUyP3EGqGZxS4njfX-hVsM&ll",
+            },
+            {
+              name: "الثانية اهلي",
+              link: "https://www.google.com/maps/d/edit?mid=15YRfrZL8meLKOYDPb19r-EfYENopqwA&ll",
+            },
+            {
+              name: "السفارات",
+              link: "https://www.google.com/maps/d/edit?hl=ar&mid=1K6gK8HH8u1XFfbPRx5cRe9NrVYGPzOM&ll",
+            },
+          ],
+          vlans: {
+            151: "210",
+            235: "317",
+            مجمع: "2",
+            المجمع: "2",
+            اهلي: "2",
+            الاهلي: "2",
+            الاهليات: "2",
+            اهليات: "2",
+            زراعي: "2",
+            الزراعي: "2",
+            1310: "114",
+            1694: "112 ",
+            1692: "115 ",
+            140: "211 ",
+            267: "213",
+            1721: "315",
+            1698: "716",
+            148: "113",
+            259: "117",
+            1696: "612",
+            264: "119",
+            149: "117",
+            1720: "310",
+            265: "114",
+            1697: "715",
+            266: "115",
+            144: "119",
+            146: "118",
+            137: "213",
+            143: "313",
+            136: "314",
+            142: "214",
+            138: "212",
+            111: "310",
+            179: "317",
+            169: "216",
+            166: "316",
+            161: "115 ",
+            162: "215",
+            180: "218",
+            171: "311",
+            116: "319",
+            139: "315",
+            112: "312",
+            167: "217",
+            118: "410",
+            119: "120",
+            121: "318",
+            311: "411",
+            120: "412",
+            99: "110",
+            47: "113",
+            46: "115",
+            48: "117",
+            164: "413",
+            172: "416",
+            134: "419",
+            170: "418",
+            181: "510",
+            165: "511",
+            1850: "118",
+            53: "210",
+            50: "119",
+            49: "120",
+            71: "114",
+            72: "112",
+            68: "111",
+            69: "116",
+            113: "411",
+            1980: "211",
+            73: "212",
+            182: "512",
+            147: "417",
+            376: "218",
+            163: "513",
+            1747: "213",
+            55: "215",
+            51: "216",
+            52: "214",
+            152: "514",
+            54: "217",
+            173: "515",
+            174: "516",
+            175: "517",
+            106: "611",
+            183: "519",
+            60: "219",
+            61: "220",
+            108: "616",
+            117: "618",
+            107: "612",
+            110: "614",
+            109: "617",
+            122: "615",
+            178: "518",
+            176: "610",
+            45: "312",
+            44: "313",
+            43: "311",
+          },
+          materials: {
+            routers: [
+              {
+                name: "راوتر TP-link Deco S7",
+                price:
+                  "السعر : قطعة بـ65.000 د.ع | قطعتين بـ110.000 د.ع | ثلاث قطع بـ150.000 د.ع",
+                image: "https://f.top4top.io/p_3446t1urf1.jpg",
+                specs: [
+                  "Wifi : الجيل الخامس (Wifi 5)",
+                  "تغطية شاملة بتقنية (Mesh): يغطي حتى 560م² بدون انقطاع",
+                  "ثنائي التردد : (2.4GHz + 5GHz ) بسرعة تصل إلى 1300Mbps.",
+                  "منافذ LAN : لكل قطعة يوجد ثلاث منافذ LAN",
+                  "تحكم بالتطبيق  : إدارة الشبكة بسهولة عبر تطبيق Deco.",
+                ],
+              },
+              {
+                name: "راوتر TP-Link Deco M4",
+                price:
+                  "السعر : قطعة بـ55.000 د.ع | قطعتين بـ100.000 د.ع | ثلاث قطع بـ130.000 د.ع",
+                image: "https://h.top4top.io/p_34461ghq210.jpg",
+                specs: [
+                  "Wifi : الجيل الخامس (Wifi 5)",
+                  "تغطية قوية (Mesh) : يغطي حتى 370م².",
+                  "ثنائي التردد :  يدعم 2.4GHz و5GHz بسرعة تصل إلى 1200Mbps.",
+                  "منافذ LAN : لكل قطعة يوجد منفذين LAN",
+                  "تحكم بالتطبيق : إعداد ومراقبة الشبكة بسهولة من تطبيق Deco.",
+                ],
+              },
+              {
+                name: "راوتر TP-link Deco E4",
+                price:
+                  "السعر : قطعة بـ45.000 د.ع | قطعتين بـ100.000 د.ع | ثلاث قطع بـ130.000 د.ع",
+                image: "https://g.top4top.io/p_3446z9fxr9.jpg",
+                specs: [
+                  "Wifi : الجيل الخامس (Wifi 5)",
+                  "نظام (Mesh) بتغطية ممتازة : يغطي حتى 370م²",
+                  "ثنائي التردد : (2.4GHz  و 5GHz ) بسرعة تصل إلى 1200Mbps.",
+                  "اداء ثابت : مناسب للاستخدام اليومي الكثيف (جيد في الالعاب والبث المباشر لكن ليس بكثافة, الفئات الاعلى افضل)",
+                  "تحكم بالتطبيق : إعداد ومراقبة الشبكة بسهولة من تطبيق Deco.",
+                ],
+              },
+              {
+                name: "راوتر شاومي xiaomi ax3200",
+                price: "السعر : 90.000 د.ع",
+                image: "https://d.top4top.io/p_3446a97k37.jpg",
+                specs: [
+                  "Wifi : الجيل السادس (Wifi 6)",
+                  "معالج قوي : سرعة وأداء أعلى، استقرار أفضل للشبكة.",
+                  "ثنائي التردد : (2.4GHz + 5GHz ) بسرعة إجمالية تصل إلى (3202Mbps.)",
+                  "5 منافذ LAN : منفذ WAN و 4 منافذ LAN جميعها تدعم سرعة 1G",
+                  "استقرارية وثبات : مناسب جدًا للألعاب، البث المباشر بدقة 4K، والتصفح الكثيف.",
+                ],
+              },
+              {
+                name: "راوتر ريدمي Redmi AX3000",
+                price: "85,000 د.ع",
+                image: "https://i.top4top.io/p_3446pzbpj1.jpg",
+                specs: [
+                  "Wifi : الجيل السادس (Wifi 6)",
+                  "التغطية: ممتازة للمنازل المتوسطة إلى الكبيرة مع 4 هوائيات خارجية قوية",
+                  "السرعة: بسرعة تصل إلى 2976Mbps (574Mbps على 2.4GHz و2402Mbps على 5GHz).",
+                  "تحمّل الأجهزة: يدعم عدد كبير من الأجهزة بكفاءة عالية.",
+                  " للألعاب والبث: أداء رائع جدًا للبث بدقة 4K وألعاب أونلاين بدون لاكَ أو تقطيع.",
+                ],
+              },
+              {
+                name: "راوتر TP-link AX55 (ax3000)",
+                price: "85.000 د.ع",
+                image: "https://l.top4top.io/p_3446dtjox3.jpg",
+                specs: [
+                  "Wifi : الجيل السادس (Wifi 6)",
+                  "التغطية: يغطي منازل متوسطة إلى كبيرة و4 هوائيات قوية.",
+                  "السرعة: بسرعة تصل 2976Mbps (574Mbps على 2.4GHz و2402Mbps على 5GHz).",
+                  "تحمّل الأجهزة: يدعم عشرات الأجهزة بفضل MU-MIMO وOFDMA بدون تقطيع.",
+                  "للألعاب والبث: أداء ممتاز لألعاب الأونلاين والبث بدقة 4K بدون تأخير.",
+                ],
+              },
+              {
+                name: "راوتر TP-link AX53 (نسخة محدثة)",
+                price: "75.000 د.ع",
+                image: "https://k.top4top.io/p_34465byjq2.jpg",
+                specs: [
+                  "Wifi : الجيل السادس (Wifi 6)",
+                  "التغطية: تغطية ممتازة للمنازل المتوسطة بفضل 4 هوائيات.",
+                  "السرعة: بسرعة تصل 2976Mbps (574Mbps على 2.4GHz و2402Mbps على 5GHz).",
+                  "تحمّل الأجهزة: يدعم أجهزة كثيرة في نفس الوقت بكفاءة عالية بفضل MU-MIMO وOFDMA.",
+                  "للألعاب والبث: أداء قوي جدًا للألعاب والبث بدقة 4K مع تأخير شبه معدوم.",
+                ],
+              },
+              {
+                name: "راوتر ريدمي Redmi AC2100",
+                price: "75,000 د.ع",
+                image: "https://c.top4top.io/p_3446i62nu6.jpg",
+                specs: [
+                  "Wifi : الجيل الخامس (Wifi 5)",
+                  "التغطية: تغطي مساحة متوسطة إلى كبيرة بفضل 6 هوائيات خارجية قوية.",
+                  "السرعة: يدعم AC2100 بسرعة تصل إلى 2033Mbps (ممتاز للتصفح السريع).",
+                  "الألعاب والبث المباشر: يقدم أداء ثابت نسبيًا، لكن فيه تأخير بسيط مقارنة براوترات Wi-Fi 6.",
+                  " تحمل الأجهزة: يدعم عدد كبير من الاجهزة المتصلة بفضل MU-MIMO وتقنيات التوجيه الذكي.",
+                ],
+              },
+              {
+                name: "راوتر TP-link AX23 (ax1800)",
+                price: "75.000 د.ع",
+                image: "https://b.top4top.io/p_3446yghuj5.jpg",
+                specs: [
+                  "Wifi : الجيل السادس (Wifi 6)",
+                  "التغطية: ممتاز للمنازل المتوسطة بفضل 4 هوائيات قوية.",
+                  "السرعة: Wi-Fi 6 بسرعة إجمالية تصل إلى 1775Mbps (574Mbps على 2.4GHz و1201Mbps على 5GHz).",
+                  "تحمّل الأجهزة: يدعم أجهزة متعددة بكفاءة عالية",
+                  "للألعاب والبث: يقدم أداء ثابت ومناسب للألعاب المتوسطة والبث بدقة 4K.",
+                ],
+              },
+              {
+                name: "راوتر TP-link AX1500",
+                price: "55,000 د.ع",
+                image: "https://a.top4top.io/p_34461uoip4.jpg",
+                specs: [
+                  "Wifi : الجيل السادس (Wifi 6)",
+                  "التغطية: مناسب للمنازل الصغيرة إلى المتوسطة مع 4 هوائيات قوية",
+                  "السرعة: Wi-Fi 6 بسرعة إجمالية تصل إلى 1500Mbps (300Mbps على 2.4GHz و1201Mbps على 5GHz).",
+                  "تحمّل الأجهزة: يدعم أجهزة متعددة بكفاءة",
+                  "للألعاب والبث: أداء جيد جدًا للبث بدقة Full HD وألعاب أونلاين خفيفة بدون تقطيع.",
+                ],
+              },
+              {
+                name: "راوتر شاومي Xiaomi 4A",
+                price: "35,000 د.ع",
+                image: "https://h.top4top.io/p_3447m0cck1.jpeg",
+                specs: [
+                  "Wifi : الجيل الخامس (Wifi 5)",
+                  "التغطية: مناسب للمنازل الصغيرة إلى المتوسطة مع 4 هوائيات خارجية قوية.",
+                  "السرعة: ثنائي التردد (Dual-Band) بسرعة إجمالية تصل إلى 1167Mbps (300Mbps على 2.4GHz و867Mbps على 5GHz).",
+                  "تحمّل الأجهزة: يدعم عدد جيد من الاجهزة المتصلة في نفس الوقت مع أداء مستقر.",
+                  "للألعاب والبث: ممتاز للبث بدقة Full HD وتصفح سريع، مناسب للألعاب الخفيفة",
+                ],
+              },
+              {
+                name: "راوتر TP-link ac1200",
+                price: "45,000 د.ع",
+                image: "https://j.top4top.io/p_3447qrbzg1.jpeg",
+                specs: [
+                  "Wifi : الجيل الخامس (Wifi 5)",
+                  "التغطية: مناسب للشقق أو منازل صغيرة بفضل 4 هوائيات",
+                  "السرعة: يدعم AC1200 (300Mbps على 2.4GHz و867Mbps على 5GHz).",
+                  "تحمّل الأجهزة: يتحمّل عدد جيد من الأجهزة المنزلية لكن مو مثالي للشبكات الثقيلة.",
+                  "للألعاب والبث: مناسب للتصفح والبث بدقة Full HD، لكن مو مخصص للألعاب الثقيلة.",
+                ],
+              },
+            ],
+            onu: [
+              {
+                name: "جهاز ONU Huawei 1G",
+                price: "15.000 د.ع",
+                image: "https://c.top4top.io/p_3446omb4b5.jpg",
+                specs: [
+                  "دعم XPON/GPON",
+                  "2 منافذ LAN",
+                  "منافذ LAN تعدم سرعة تصل إلى 1 جيجابت/ثانية",
+                  "دعم IPv6",
+                ],
+              },
+              {
+                name: "جهاز ONU Huawei 100M",
+                price: "10.000 د.ع",
+                image: "https://d.top4top.io/p_3446qxlso6.jpg",
+                specs: [
+                  "دعم GPON",
+                  "4 منافذ LAN",
+                  "2 منافذ VoIP",
+                  "منافذ LAN تدعم سرعة تصل إلى 100 ميجابت/ثانية",
+                ],
+              },
+              {
+                name: "جهاز ONU Tenda 1G",
+                price: "10.000 د.ع",
+                image: "https://e.top4top.io/p_34467btqy7.jpg",
+                specs: [
+                  "دعم XPON",
+                  "منفذ LAN واحد",
+                  "منفذ LAN يدعم سرعة تصل الى 1 جيجابت/ثانية",
+                  "دعم IPv6",
+                ],
+              },
+            ],
+            ont: [
+              {
+                name: "جهاز ONT Huawei OptiXstar",
+                price: "45.000 د.ع",
+                image: "https://i.top4top.io/p_3461tsojj1.jpg",
+                specs: [
+                  "Wifi : الجيل الخامس (Wifi 5)",
+                  "التغطية: تغطية ممتازة للمنازل الصغيرة إلى المتوسطة مع هوائيات داخلية.",
+                  "السرعة: يدعم AC1200 (300Mbps على 2.4GHz و867Mbps على 5GHz).",
+                  "تحمّل الأجهزة: يدعم عدد جيد من الأجهزة المنزلية مع أداء مستقر للاستخدام اليومي.",
+                  "للألعاب والبث: مناسب للبث ومشاهدة المحتوى بدقة Full HD، لكن ليس مخصص للألعاب الثقيلة.",
+                ],
+              },
+              {
+                name: "جهاز ONT V5 AC1200 (جديد)",
+                price: "45.000 د.ع",
+                image: "https://b.top4top.io/p_3446vc0b04.jpg",
+                specs: [
+                  "Wifi : الجيل الخامس (Wifi 5)",
+                  "التغطية: تغطية ممتازة للمنازل الصغيرة إلى المتوسطة مع 2 هوائيات خارجية.",
+                  "السرعة: يدعم AC1200 (300Mbps على 2.4GHz و867Mbps على 5GHz).",
+                  "تحمّل الأجهزة: يدعم عدد جيد من الأجهزة المنزلية مع أداء مستقر للاستخدام اليومي.",
+                  "للألعاب والبث: مناسب للبث ومشاهدة المحتوى بدقة Full HD، لكن ليس مخصص للألعاب الثقيلة.",
+                ],
+              },
+              {
+                name: "جهاز ONT V5 AC1200 (مستعمل)",
+                price: "35.000 د.ع",
+                image: "https://b.top4top.io/p_3446vc0b04.jpg",
+                specs: [
+                  "Wifi : الجيل الخامس (Wifi 5)",
+                  "التغطية: تغطية ممتازة للمنازل الصغيرة إلى المتوسطة مع 2 هوائيات خارجية.",
+                  "السرعة: يدعم AC1200 (300Mbps على 2.4GHz و867Mbps على 5GHz).",
+                  "تحمّل الأجهزة: يدعم عدد جيد من الأجهزة المنزلية مع أداء مستقر للاستخدام اليومي.",
+                  "للألعاب والبث: مناسب للبث ومشاهدة المحتوى بدقة Full HD، لكن ليس مخصص للألعاب الثقيلة.",
+                ],
+              },
+              {
+                name: "جهاز ONT V6 AC1200 (جديد)",
+                price: "55.000 د.ع",
+                image: "https://l.top4top.io/p_3446xtv7f1.jpg",
+                specs: [
+                  "Wifi : الجيل الخامس (Wifi 5)",
+                  "التغطية: تغطية ممتازة للمنازل المتوسطة ودعم ثنائي التردد.",
+                  "السرعة: يدعم AC1200 (300Mbps على 2.4GHz و867Mbps على 5GHz).",
+                  "تحمّل الأجهزة: يدعم أجهزة متعددة بثبات جيد بفضل المعالج المدمج وتقنيات QoS.",
+                  "للألعاب والبث: مناسب للبث بدقة Full HD والألعاب الخفيفة، لكنه غير مخصص للجيمرز المحترفين.",
+                ],
+              },
+              {
+                name: "جهاز ONT V6 AC1200 (مستعمل)",
+                price: "35.000 د.ع",
+                image: "https://l.top4top.io/p_3446xtv7f1.jpg",
+                specs: [
+                  "Wifi : الجيل الخامس (Wifi 5)",
+                  "التغطية: تغطية ممتازة للمنازل المتوسطة ودعم ثنائي التردد.",
+                  "السرعة: يدعم AC1200 (300Mbps على 2.4GHz و867Mbps على 5GHz).",
+                  "تحمّل الأجهزة: يدعم أجهزة متعددة بثبات جيد بفضل المعالج المدمج وتقنيات QoS.",
+                  "للألعاب والبث: مناسب للبث بدقة Full HD والألعاب الخفيفة، لكنه غير مخصص للجيمرز المحترفين.",
+                ],
+              },
+              {
+                name: "جهاز ONT Sa1456c (حنين)",
+                price: "20.000 د.ع",
+                image: "https://j.top4top.io/p_3446ncs9e1.jpg",
+                specs: [
+                  "Wifi : الجيل الرابع (Wifi 4)",
+                  "التغطية: تغطية مناسبة للمنازل الصغيرة إلى المتوسطة بهوائيات داخلية",
+                  "السرعة: يدعم Wi-Fi بسرعات بسيطة الى متوسطة",
+                  "تحمّل الأجهزة: جيد للاستخدام اليومي، يدعم عدد بسيط من الأجهزة بشكل مستقر",
+                  "للألعاب والبث: أدائه جيد للألعاب الخفيفة والبث المباشر بجودة متوسطة، لكنه غير موجه للألعاب الثقيلة أو الاستخدام الاحترافي.",
+                ],
+              },
+            ],
+            other: [
+              {
+                name: "UPS",
+                price: "25.000 د.ع",
+                image: "https://f.top4top.io/p_3446zuaqh9.jpg",
+                specs: [
+                  "سعة البطارية: ليثيوم 8800 mAh تقدّر تتكرّر حتى 300 دورة شحن ",
+                  "الطاقة الخارجة: 18W، مخرج USB 5V وDC خيارات متعددة: 5V/9V/12V بتيار 1–2A، إضافة لمخرج PoE 15/24V",
+                  "مدى التوافق: يدعم تشغيل أجهزة مثل راوتر، مودم، كاميرا مراقبة، VoIP ونظام PoE بدون انقطاع",
+                  "الحماية الذكية: فيه حماية ضد الشحن الزائد، التفريغ الزائد، ماس كهربائي وتغيّر الجهد",
+                ],
+              },
+              {
+                name: "CBOX",
+                price: "75.000 د.ع",
+                image: "https://f.top4top.io/p_3446ks3kd1.jpg",
+                specs: [
+                  "الفيديو والترفيه : يدعم تشغيل فيديو بدقة 4K عبر Smart YouTube مع إمكانية تثبيت تطبيقات من متجر Play .",
+                  "الاتصال : Wifi 2.4 + منفذ إيثرنت + HDMI + دعم Miracast, DLNA, AirPlay",
+                  "لا يوجد تقطيع ويحتوي على 90 قناة مشفرة منها باقة beIN Sport كاملة وأفلام ومسلسلات OSN ومجموعة متنوعة من القنوات المشفرة ويمكن زيادتها حسب التحديث",
+                  "النظام والمعالج :  يعمل على Android 9 بمعالج رباعي النواة مسؤوليته الاستجابة السريعة وتحليل البيانات بصورة ممتازة",
+                ],
+              },
+              {
+                name: "TV-BOX",
+                price: "25.000 د.ع",
+                image: "https://k.top4top.io/p_344675uc71.jpg",
+                specs: [
+                  "الفيديو والترفيه : يدعم تشغيل الفيديو بدقة 1080/HDR عبر YouTube مع إمكانية تثبيت تطبيقات من متجر Play.",
+                  "الاتصال : Wifi 2.4 + منفذ إيثرنت + HDMI",
+                  "النظام:  يعمل بنظام  (Android) يدعم أغلب التطبيقات الأساسية مثل YouTube وNetflix (بجودة محدودة).",
+                  "المعالج : رباعي النواة أدائه مناسب للتشغيل الخفيف.",
+                ],
+              },
+              {
+                name: "كيبل ضوئي 120 متر او اقل",
+                price: "10.000 د.ع",
+                image: "https://l.top4top.io/p_3446yjj1x1.jpg",
+                specs: ["مسلح بثلاث طبقات معدنية", "مقاوم للحرارة والضروف الخارجية"],
+              },
+              {
+                name: "كيبل ضوئي 150M/200m",
+                price: "15.000 د.ع",
+                image: "https://l.top4top.io/p_3446yjj1x1.jpg",
+                specs: ["مسلح بثلاث طبقات معدنية", "مقاوم للحرارة والضروف الخارجية"],
+              },
+              {
+                name: "فيش ضوئي (APC/UPC)",
+                price: "1.000 د.ع",
+                image: "https://f.top4top.io/p_34467z4u78.jpg",
+                specs: ["مصنوعة بجودة عالية", "مقاومة للحرارة والضروف الخارجية"],
+              },
+              {
+                name: "كيبل UTP 20M",
+                price: "10.000 د.ع",
+                image: "https://g.top4top.io/p_3447nelng3.jpeg",
+                specs: ["مصنوعة بجودة عالية", "مقاومة للحرارة والضروف الخارجية"],
+              },
+              {
+                name: "كيبل UTP 30M",
+                price: "15.000 د.ع",
+                image: "https://h.top4top.io/p_3447xppge4.jpeg",
+                specs: ["مصنوعة بجودة عالية", "مقاومة للحرارة والضروف الخارجية"],
+              },
+              {
+                name: "كيبل UTP 40M",
+                price: "20.000 د.ع",
+                image: "https://i.top4top.io/p_3447qtoki5.jpeg",
+                specs: ["مصنوعة بجودة عالية", "مقاومة للحرارة والضروف الخارجية"],
+              },
+            ],
+          },
+        };
+
+        let offersData = {};
+        let allMaps = [];
+        let vlanMap = {};
+        let materials = {};
+
+        function loadData() {
+          // تحميل بيانات العروض
+          const storedOffers = localStorage.getItem("smartAgeOffers");
+          offersData = storedOffers ? JSON.parse(storedOffers) : defaultData.offers;
+
+          // تحميل بيانات الخرائط
+          const storedMaps = localStorage.getItem("smartAgeMaps");
+          allMaps = storedMaps ? JSON.parse(storedMaps) : defaultData.maps;
+
+          // تحميل بيانات الفيلانات
+          const storedVlans = localStorage.getItem("smartAgeVlans");
+          vlanMap = storedVlans ? JSON.parse(storedVlans) : defaultData.vlans;
+
+          // تحميل بيانات المواد
+          const storedMaterials = localStorage.getItem("smartAgeMaterials");
+          materials = storedMaterials
+            ? JSON.parse(storedMaterials)
+            : defaultData.materials;
+        }
+
+        function saveData() {
+          localStorage.setItem("smartAgeOffers", JSON.stringify(offersData));
+          localStorage.setItem("smartAgeMaps", JSON.stringify(allMaps));
+          localStorage.setItem("smartAgeVlans", JSON.stringify(vlanMap));
+          localStorage.setItem("smartAgeMaterials", JSON.stringify(materials));
+        }
+
+        // --- منطق تسجيل الدخول ---
+        function logout() {
+          localStorage.removeItem("smartAgeLogin"); // إزالة حالة تسجيل الدخول المحفوظة
+          localStorage.removeItem("userRole"); // إزالة الدور المحفوظ
+          location.reload(); // إعادة تحميل الصفحة لعرض شاشة تسجيل الدخول
+        }
+
+        function handleLogin(role) {
+          userRole = role;
+          localStorage.setItem("userRole", role); // حفظ الدور في localStorage
+          startApp();
+        }
+
+        // عرض نموذج تسجيل الدخول وتعيين الدور المتوقع
+        function showLoginForm(roleToLogin) {
+          loginOptions.style.display = "none";
+          loginForm.style.display = "block";
+          loginSubmitBtn.setAttribute("data-role-attempt", roleToLogin);
+          loginError.textContent = ""; // مسح أي أخطاء سابقة
+          usernameInput.value = "";
+          passwordInput.value = "";
+        }
+
+        teamLeaderBtn.addEventListener("click", function () {
+          handleLogin("teamLeader");
+        });
+
+        showFollowerLoginBtn.addEventListener("click", function () {
+          showLoginForm("follower");
+        });
+
+        showAdminLoginBtn.addEventListener("click", function () {
+          showLoginForm("admin");
+        });
+
+        loginForm.addEventListener("submit", function (e) {
+          e.preventDefault();
+          const username = usernameInput.value;
+          const password = passwordInput.value;
+          const roleAttempt = loginSubmitBtn.getAttribute("data-role-attempt");
+
+          if (
+            roleAttempt === "admin" &&
+            username === ADMIN_USERNAME &&
+            password === ADMIN_PASSWORD
+          ) {
+            handleLogin("admin");
+          } else if (
+            roleAttempt === "follower" &&
+            username === FOLLOWER_USERNAME &&
+            password === FOLLOWER_PASSWORD
+          ) {
+            handleLogin("follower");
+          } else {
+            loginError.textContent = "اسم المستخدم أو كلمة المرور غير صحيحة.";
+          }
+        });
+
+        function startApp() {
+          // إخفاء شاشة تسجيل الدخول وعرض المحتوى الرئيسي
+          loginOverlay.style.opacity = "0";
+          setTimeout(() => {
+            loginOverlay.style.display = "none";
+            mainWrapper.style.display = "block";
+            mainWrapper.style.animation = "fadeIn 0.5s";
+          }, 500);
+
+          // إعداد واجهة المستخدم بناءً على الدور
+          setupUIForRole();
+
+          // تهيئة ميزات الموقع
+          initializeApp();
+        }
+
+        function setupUIForRole() {
+          let roleText = "";
+          let offersLink = document.querySelector('.nav-link[data-section="offers"]');
+          let mobileOffersLink = document.querySelector('.mobile-nav-links .nav-link[data-section="offers"]');
+          let addMapButton = document.getElementById("add-new-map-btn");
+          let addVlanButton = document.getElementById("add-new-vlan-btn");
+          let addMaterialButton = document.getElementById("add-new-material-btn");
+
+
+          // إعداد عرض الدور
+          switch (userRole) {
+            case "admin":
+              roleText = "المسؤول";
+              // السماح بالوصول لقسم العروض
+              if (offersLink) offersLink.style.display = 'flex';
+              if (mobileOffersLink) mobileOffersLink.style.display = 'flex';
+              // عرض أزرار الإضافة للمسؤول
+              if (addMapButton) addMapButton.style.display = 'block';
+              if (addVlanButton) addVlanButton.style.display = 'block';
+              if (addMaterialButton) addMaterialButton.style.display = 'block';
+              break;
+            case "follower":
+              roleText = "المتابع";
+              // السماح بالوصول لقسم العروض
+              if (offersLink) offersLink.style.display = 'flex';
+              if (mobileOffersLink) mobileOffersLink.style.display = 'flex';
+              // إخفاء أزرار الإضافة للمتابع
+              if (addMapButton) addMapButton.style.display = 'none';
+              if (addVlanButton) addVlanButton.style.display = 'none';
+              if (addMaterialButton) addMaterialButton.style.display = 'none';
+              break;
+            case "teamLeader":
+              roleText = "قائد فريق";
+              // إخفاء قسم العروض لقائد الفريق
+              if (offersLink) offersLink.style.display = 'none';
+              if (mobileOffersLink) mobileOffersLink.style.display = 'none';
+              // إخفاء أزرار الإضافة لقائد الفريق
+              if (addMapButton) addMapButton.style.display = 'none';
+              if (addVlanButton) addVlanButton.style.display = 'none';
+              if (addMaterialButton) addMaterialButton.style.display = 'none';
+              break;
+          }
+
+          // تحديث واجهة المستخدم لسطح المكتب والهاتف
+          userRoleDisplay.textContent = roleText;
+          userInfoContainer.style.display = "flex";
+
+          const mobileHTML = `
+            <div class="user-status">
+               <i class="fas fa-user-circle"></i>
+               <span>${roleText}</span>
+            </div>
+            <button class="logout-btn mobile"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</button>
+          `;
+          mobileUserInfoContainer.innerHTML = mobileHTML;
+          mobileUserInfoContainer.style.display = "block";
+
+          // إرفاق مستمعي أحداث تسجيل الخروج
+          document
+            .querySelectorAll(".logout-btn")
+            .forEach((btn) => btn.addEventListener("click", logout));
+
+          // إظهار زر قائمة الهاتف فقط إذا كان المستخدم مسجلاً للدخول
+          mobileMenuBtn.style.display = "block";
+        }
+
+        // --- التحقق من تسجيل الدخول التلقائي عند التحميل ---
+        // تحميل البيانات أولاً
+        loadData();
+        const storedRole = localStorage.getItem("userRole");
+        if (storedRole) {
+          userRole = storedRole;
+          startApp(); // تجاوز شاشة تسجيل الدخول
+        } else {
+          // إذا لم يكن هناك مستخدم محفوظ، تأكد من أن شاشة تسجيل الدخول مرئية افتراضياً
+          loginOverlay.style.display = "flex";
+          loginOverlay.style.opacity = "1";
+          // إخفاء المحتوى الرئيسي حتى تسجيل الدخول
+          mainWrapper.style.display = "none";
+          // إظهار خيارات تسجيل الدخول الثلاثة
+          loginOptions.style.display = "block";
+          loginForm.style.display = "none"; // إخفاء النموذج
+        }
+
+        // --- تهيئة التطبيق الرئيسي ---
         function initializeApp() {
-          // Navigation functionality
+          // وظيفة التنقل
           navLinks.forEach((link) => {
             link.addEventListener("click", function (e) {
               e.preventDefault();
               const targetSectionId = this.getAttribute("data-section");
 
-              // Access control for 'offers' section
-              if (targetSectionId === "offers" && userRole === "viewer") {
+              // التحكم في الوصول لقسم 'العروض'
+              if (targetSectionId === "offers" && userRole === "teamLeader") {
                 showCustomAlert("لا يمكنك رؤية العروض يرجى تدقيقها مع المتابع");
                 return;
               }
 
-              // Switch section
+              // تبديل القسم النشط
               document
                 .querySelector(".nav-link.active")
                 ?.classList.remove("active");
-              // Handle both desktop and mobile nav links
+              // التعامل مع روابط التنقل لسطح المكتب والهاتف
               document
                 .querySelectorAll(
                   `.nav-link[data-section="${targetSectionId}"]`
@@ -1902,7 +3761,7 @@
               );
               document.getElementById(targetSectionId).classList.add("active");
 
-              // Close mobile menu
+              // إغلاق قائمة الهاتف
               mobileNav.classList.remove("active");
               overlay.classList.remove("active");
 
@@ -1910,7 +3769,7 @@
             });
           });
 
-          // Mobile menu toggle
+          // تبديل قائمة الهاتف
           mobileMenuBtn.addEventListener("click", () => {
             mobileNav.classList.add("active");
             overlay.classList.add("active");
@@ -1924,1578 +3783,805 @@
             overlay.classList.remove("active");
           });
 
-          // Lightbox close events
-          closeLightbox.addEventListener("click", () =>
-            lightbox.classList.remove("active")
-          );
-          lightbox.addEventListener("click", (e) => {
-            if (e.target === lightbox) lightbox.classList.remove("active");
-          });
-          document.addEventListener("keydown", (e) => {
-            if (e.key === "Escape") lightbox.classList.remove("active");
-          });
-
-          // Initialize dynamic content
+          // تهيئة المحتوى الديناميكي
           initMaps();
           initMaterials();
           setupOffers();
           setupVLANs();
         }
-      });
 
-      // --- Dynamic Content Functions ---
+        // --- وظائف المحتوى الديناميكي ---
 
-      function openImageLightbox(imgSrc, title) {
-        const lightbox = document.querySelector(".image-lightbox");
-        lightbox.querySelector("img").src = imgSrc;
-        lightbox.querySelector(".lightbox-title").textContent = title;
-        lightbox.classList.add("active");
-      }
+        // قسم الخرائط
+        function initMaps() {
+          const mapsContainer = document.querySelector(".maps-container");
+          const mapSearchInput = document.getElementById("mapSearchInput");
+          const addMapBtn = document.getElementById("add-new-map-btn");
 
-      // Data for maps
-      const allMaps = [
-        {
-          name: "وطني الدور",
-          link: "https://www.google.com/maps/d/edit?mid=1ZLaIWvkNGXWzXBtS2qn3QnuICsF4MLw",
-        },
-        {
-          name: "سوبرسيل الدور",
-          link: "https://www.google.com/maps/d/edit?mid=1UN4s5AvKMz8ZR3GrcPT0z865V2bUc30",
-        },
-        {
-          name: "وطني السلام",
-          link: "https://www.google.com/maps/d/edit?mid=12kyZLeaAIV0OkrVTqy99mKI-y-K7uYk",
-        },
-        {
-          name: "وطني حي العدل",
-          link: "https://www.google.com/maps/d/edit?mid=1cWV-pjm6j9L1MSURZp17WWSW3ExtoPc",
-        },
-        {
-          name: "وطني الاولى",
-          link: "https://www.google.com/maps/d/edit?mid=15jUIVVmvhdU_uogd-D8Nr9D5wmMBmFI",
-        },
-        {
-          name: "وطني الثانية",
-          link: "https://www.google.com/maps/d/edit?mid=1oOLbfyayvFBdWWOGpBK-xT1kXx0iw1g",
-        },
-        {
-          name: "وطني الثالثة",
-          link: "https://www.google.com/maps/d/edit?mid=1MEAolkaQxsmBkfsg71jx3XmvVnM-kzU",
-        },
-        {
-          name: "وطني ربيع ودباش",
-          link: "https://www.google.com/maps/d/edit?mid=18WceMP3GnyxvWb3AZM4aMRhe9mXs3pc",
-        },
-        {
-          name: "وطني البستان",
-          link: "https://www.google.com/maps/d/edit?mid=1JAbPhFOgkJgDbmUFpdl2kH7CVrihPbI",
-        },
-        {
-          name: "وطني الدولعي",
-          link: "https://www.google.com/maps/d/edit?mid=1H4WbY05i6KOeHPFYQdlGAH8EsZvo13M",
-        },
-        {
-          name: "وطني جكوك",
-          link: "https://www.google.com/maps/d/edit?mid=1tAYfNZ-l5-tTSLMDj1qyQxDdxG8BTIY",
-        },
-        {
-          name: "سوبرسيل الدولعي + الثانية",
-          link: "https://www.google.com/maps/d/edit?mid=1uLoAocxwVs-bn78wNgCG1G4CriTO_dI",
-        },
-        {
-          name: "وطني السيدية",
-          link: "https://www.google.com/maps/d/edit?mid=1eTMFXgQn7QYRw1DzB28ECUB22qHbba0",
-        },
-        {
-          name: "وطني حي العامل",
-          link: "https://www.google.com/maps/d/edit?mid=13NvhiIX_lPuUHMcmvejLPFvJCs9fbM8",
-        },
-        {
-          name: "الزراعي",
-          link: "https://www.google.com/maps/d/edit?mid=19AlClkHNP-2VJ3Yu2LPjftkl1Y8TdX8&ll",
-        },
-        {
-          name: "الزراعي 2",
-          link: "https://www.google.com/maps/d/edit?mid=1ixmnNvPz62U1OxsZdHhbfycnmxQwgMs",
-        },
-        {
-          name: "المجمع",
-          link: "https://www.google.com/maps/d/edit?mid=1J9zPGaDYaeUyP3EGqGZxS4njfX-hVsM&ll",
-        },
-        {
-          name: "الثانية اهلي",
-          link: "https://www.google.com/maps/d/edit?mid=15YRfrZL8meLKOYDPb19r-EfYENopqwA&ll",
-        },
-        {
-          name: "السفارات",
-          link: "https://www.google.com/maps/d/edit?hl=ar&mid=1K6gK8HH8u1XFfbPRx5cRe9NrVYGPzOM&ll",
-        },
-      ];
+          // دالة لعرض الخرائط
+          function displayMaps(mapsToDisplay) {
+            mapsContainer.innerHTML = ""; // مسح الموجود
+            if (mapsToDisplay.length === 0) {
+              mapsContainer.innerHTML = `<p style="grid-column: 1 / -1; text-align:center; color:#666;">لا توجد خرائط مطابقة لبحثك.</p>`;
+              return;
+            }
+            mapsToDisplay.forEach((map, index) => {
+              const mapItem = document.createElement("a");
+              mapItem.className = "map-item";
+              const originalIndex = allMaps.findIndex(
+                (item) => item.name === map.name
+              );
+              mapItem.href = map.link;
+              mapItem.target = "_blank";
+              mapItem.innerHTML = `
+                        <div class="map-number">${originalIndex + 1}</div>
+                        <div class="map-name">${map.name}</div>
+                        ${
+                          userRole === "admin"
+                            ? `
+                            <div class="map-actions">
+                                <button class="edit-map-btn" data-index="${originalIndex}"><i class="fas fa-edit"></i></button>
+                                <button class="delete-map-btn" data-index="${originalIndex}"><i class="fas fa-trash"></i></button>
+                            </div>
+                            `
+                            : ""
+                        }
+                    `;
+              mapsContainer.appendChild(mapItem);
+            });
 
-      function initMaps() {
-        const mapsContainer = document.querySelector(".maps-container");
-        const mapSearchInput = document.getElementById("mapSearchInput");
-
-        // Function to display maps
-        function displayMaps(mapsToDisplay) {
-          mapsContainer.innerHTML = ""; // Clear existing
-          if (mapsToDisplay.length === 0) {
-            mapsContainer.innerHTML = `<p style="grid-column: 1 / -1; text-align:center; color:#666;">لا توجد خرائط مطابقة لبحثك.</p>`;
-            return;
+            // إرفاق مستمعي الأحداث لأزرار التعديل والحذف إذا كان المسؤول
+            if (userRole === "admin") {
+              mapsContainer.querySelectorAll(".edit-map-btn").forEach((button) => {
+                button.addEventListener("click", (e) => {
+                  e.preventDefault();
+                  e.stopPropagation(); // منع فتح الرابط
+                  const index = parseInt(button.dataset.index);
+                  editMap(index);
+                });
+              });
+              mapsContainer.querySelectorAll(".delete-map-btn").forEach((button) => {
+                button.addEventListener("click", (e) => {
+                  e.preventDefault();
+                  e.stopPropagation(); // منع فتح الرابط
+                  const index = parseInt(button.dataset.index);
+                  deleteMap(index);
+                });
+              });
+            }
           }
-          mapsToDisplay.forEach((map, index) => {
-            const mapItem = document.createElement("a");
-            mapItem.className = "map-item";
-            const originalIndex = allMaps.findIndex(
-              (item) => item.name === map.name
+
+          // العرض الأولي لجميع الخرائط
+          displayMaps(allMaps);
+
+          // وظيفة البحث عند الإدخال
+          mapSearchInput.addEventListener("input", function () {
+            const searchTerm = this.value.trim().toLowerCase();
+            const filteredMaps = allMaps.filter((map) =>
+              map.name.toLowerCase().includes(searchTerm)
             );
-            mapItem.href = map.link;
-            mapItem.target = "_blank";
-            mapItem.innerHTML = `<div class="map-number">${
-              originalIndex + 1
-            }</div><div class="map-name">${map.name}</div>`;
-            mapsContainer.appendChild(mapItem);
+            displayMaps(filteredMaps);
+          });
+
+          // وظيفة إضافة خريطة جديدة
+          addMapBtn.addEventListener("click", () => {
+            openEditModal(
+              "إضافة خريطة جديدة",
+              { name: "", link: "" },
+              "map",
+              -1
+            );
+          });
+
+          // تعديل الخريطة (مسؤول فقط)
+          function editMap(index) {
+            const map = allMaps[index];
+            openEditModal("تعديل الخريطة", map, "map", index);
+          }
+
+          // حذف الخريطة (مسؤول فقط)
+          async function deleteMap(index) {
+            const map = allMaps[index];
+            const confirmed = await showCustomConfirm(
+              `هل أنت متأكد من حذف الخريطة "${map.name}"؟`
+            );
+            if (confirmed) {
+              allMaps.splice(index, 1);
+              saveData();
+              displayMaps(allMaps); // إعادة عرض الخرائط
+              showCustomAlert("تم حذف الخريطة بنجاح.");
+            }
+          }
+        }
+
+        // قسم العروض
+        function setupOffers() {
+          const showOffersBtn = document.getElementById("showOffersBtn");
+          const areaNumberInput = document.getElementById("areaNumber");
+          const offersResults = document.getElementById("offersResults");
+
+          showOffersBtn.addEventListener("click", () =>
+            displayOffers(areaNumberInput.value.trim())
+          );
+          areaNumberInput.addEventListener("keypress", (e) => {
+            if (e.key === "Enter") showOffersBtn.click();
           });
         }
 
-        // Initial display of all maps
-        displayMaps(allMaps);
-
-        // Search functionality on input
-        mapSearchInput.addEventListener("input", function () {
-          const searchTerm = this.value.trim().toLowerCase();
-          const filteredMaps = allMaps.filter((map) =>
-            map.name.toLowerCase().includes(searchTerm)
-          );
-          displayMaps(filteredMaps);
-        });
-      }
-
-      function setupOffers() {
-        const showOffersBtn = document.getElementById("showOffersBtn");
-        const areaNumberInput = document.getElementById("areaNumber");
-
-        showOffersBtn.addEventListener("click", () =>
-          displayOffers(areaNumberInput.value.trim())
-        );
-        areaNumberInput.addEventListener("keypress", (e) => {
-          if (e.key === "Enter") showOffersBtn.click();
-        });
-      }
-
-      const offersData = {
-        "سوبر سيل حكومي": {
-          table: [
-            ["شهر", "38,000", "48,000", "68,000", "غير متوفر"],
-            ["3 أشهر", "غير متوفر", "غير متوفر", "غير متوفر", "غير متوفر"],
-          ],
-          note: "السرعات المذكورة تشمل اشتراكات الوطني فقط | الكيبل بـ10,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 10",
-        },
-        "سوبرسيل حكومي": {
-          table: [
-            ["شهر", "38,000", "48,000", "68,000", "غير متوفر"],
-            ["3 أشهر", "غير متوفر", "غير متوفر", "غير متوفر", "غير متوفر"],
-          ],
-          note: "السرعات المذكورة تشمل اشتراكات الوطني فقط | الكيبل بـ10,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 10",
-        },
-        "سوبر حكومي": {
-          table: [
-            ["شهر", "38,000", "48,000", "68,000", "غير متوفر"],
-            ["3 أشهر", "غير متوفر", "غير متوفر", "غير متوفر", "غير متوفر"],
-          ],
-          note: "السرعات المذكورة تشمل اشتراكات الوطني فقط | الكيبل بـ10,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 10",
-        },
-        سوبر: {
-          table: [
-            ["شهر", "38,000", "48,000", "68,000", "غير متوفر"],
-            ["3 أشهر", "غير متوفر", "غير متوفر", "غير متوفر", "غير متوفر"],
-          ],
-          note: "السرعات المذكورة تشمل اشتراكات الوطني فقط | الكيبل بـ10,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 10",
-        },
-        "سوبر سيل": {
-          table: [
-            ["شهر", "38,000", "48,000", "68,000", "غير متوفر"],
-            ["3 أشهر", "غير متوفر", "غير متوفر", "غير متوفر", "غير متوفر"],
-          ],
-          note: "السرعات المذكورة تشمل اشتراكات الوطني فقط | الكيبل بـ10,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 10",
-        },
-        الاهليات: {
-          table: [
-            ["ايرثلنك", "35,000", "40,000", "50,000", "غير متوفر"],
-            ["سوبرسيل", "30,000", "35,000", "45,000", "55,000"],
-            ["هالة", "30,000", "35,000", "50,000", "غير متوفر"],
-          ],
-          note: "السرعات المذكورة تشمل اشتراكات الوطني فقط | الكيبل بـ10,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 2",
-        },
-        اهليات: {
-          table: [
-            ["ايرثلنك", "35,000", "40,000", "50,000", "غير متوفر"],
-            ["سوبرسيل", "30,000", "35,000", "45,000", "55,000"],
-            ["هالة", "30,000", "35,000", "50,000", "غير متوفر"],
-          ],
-          note: "السرعات المذكورة تشمل اشتراكات الوطني فقط | الكيبل بـ10,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 2",
-        },
-        الزراعي: {
-          table: [
-            ["ايرثلنك", "35,000", "40,000", "50,000", "غير متوفر"],
-            ["سوبرسيل", "30,000", "35,000", "45,000", "55,000"],
-            ["هالة", "30,000", "35,000", "50,000", "غير متوفر"],
-          ],
-          note: "السرعات المذكورة تشمل اشتراكات الوطني فقط | الكيبل بـ10,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 2",
-        },
-        زراعي: {
-          table: [
-            ["ايرثلنك", "35,000", "40,000", "50,000", "غير متوفر"],
-            ["سوبرسيل", "30,000", "35,000", "45,000", "55,000"],
-            ["هالة", "30,000", "35,000", "50,000", "غير متوفر"],
-          ],
-          note: "السرعات المذكورة تشمل اشتراكات الوطني فقط | الكيبل بـ10,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 2",
-        },
-        المجمع: {
-          table: [
-            ["ايرثلنك", "35,000", "40,000", "50,000", "غير متوفر"],
-            ["سوبرسيل", "30,000", "35,000", "45,000", "55,000"],
-            ["هالة", "30,000", "35,000", "50,000", "غير متوفر"],
-          ],
-          note: "السرعات المذكورة تشمل اشتراكات الوطني فقط | الكيبل بـ10,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 2",
-        },
-        مجمع: {
-          table: [
-            ["ايرثلنك", "35,000", "40,000", "50,000", "غير متوفر"],
-            ["سوبرسيل", "30,000", "35,000", "45,000", "55,000"],
-            ["هالة", "30,000", "35,000", "50,000", "غير متوفر"],
-          ],
-          note: "السرعات المذكورة تشمل اشتراكات الوطني فقط | الكيبل بـ10,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 2",
-        },
-        الاهلي: {
-          table: [
-            ["ايرثلنك", "35,000", "40,000", "50,000", "غير متوفر"],
-            ["سوبرسيل", "30,000", "35,000", "45,000", "55,000"],
-            ["هالة", "30,000", "35,000", "50,000", "غير متوفر"],
-          ],
-          note: "السرعات المذكورة تشمل اشتراكات الوطني فقط | الكيبل بـ10,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 2",
-        },
-        اهلي: {
-          table: [
-            ["ايرثلنك", "35,000", "40,000", "50,000", "غير متوفر"],
-            ["سوبرسيل", "30,000", "35,000", "45,000", "55,000"],
-            ["هالة", "30,000", "35,000", "50,000", "غير متوفر"],
-          ],
-          note: "السرعات المذكورة تشمل اشتراكات الوطني فقط | الكيبل بـ10,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 2",
-        },
-        سوبرسيل: {
-          table: [
-            ["شهر", "38,000", "48,000", "68,000", "غير متوفر"],
-            ["3 أشهر", "غير متوفر", "غير متوفر", "غير متوفر", "غير متوفر"],
-          ],
-          note: "السرعات المذكورة تشمل اشتراكات الوطني فقط | الكيبل بـ10,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 10",
-        },
-        122: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 الاف | الجهاز الضوئي بـ10,000 | الڤيلان : 615",
-        },
-        176: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "يرجى التأكد من وسيم بخصوص التفعيل | الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 516",
-        },
-        178: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل مجاني | الجهاز الضوئي بـ5,000 | الڤيلان : 518",
-        },
-        43: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "صفحة كاظم : الكيبل بـ5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 311",
-        },
-        44: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "صفحة كاظم : الكيبل بـ5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 313",
-        },
-        45: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "صفحة كاظم : الكيبل بـ5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 312",
-        },
-        107: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل مجاني | الجهاز الضوئي بـ5,000 | الڤيلان : 612",
-        },
-        108: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 616",
-        },
-        61: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "صفحة كاظم : الكيبل مجاني | الجهاز الضوئي بـ5,000 | الڤيلان : 220",
-        },
-        60: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "صفحة كاظم : الكيبل مجاني | الجهاز الضوئي بـ5,000 | الڤيلان : 219",
-        },
-        183: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 519",
-        },
-        106: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل مجاني | الجهاز الضوئي بـ5,000 | الڤيلان : 611",
-        },
-        175: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "يرجى التأكد من وسيم بخصوص التفعيل | الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 516",
-        },
-        174: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "يرجى التأكد من وسيم بخصوص التفعيل | الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 516",
-        },
-        173: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "يرجى التأكد من وسيم بخصوص التفعيل | الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 516",
-        },
-        54: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 217",
-        },
-        152: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 514",
-        },
-
-        52: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 214",
-        },
-        51: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل مجاني | الجهاز الضوئي بـ5,000 | الڤيلان : 216",
-        },
-        55: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 215",
-        },
-        1747: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 213",
-        },
-        163: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 513",
-        },
-        376: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 218",
-        },
-        147: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 417",
-        },
-        182: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 512",
-        },
-        1980: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 211",
-        },
-        68: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 111",
-        },
-        72: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 112",
-        },
-        71: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 114",
-        },
-        49: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 120",
-        },
-        50: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 119",
-        },
-        53: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 210",
-        },
-        1850: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 118",
-        },
-        165: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 511",
-        },
-        181: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل مجاني | الجهاز الضوئي بـ5,000 | الڤيلان : 510",
-        },
-        170: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل مجاني | الجهاز الضوئي بـ5,000 | الڤيلان : 418",
-        },
-        134: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 419",
-        },
-        172: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 416",
-        },
-        164: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 413",
-        },
-        48: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 117",
-        },
-        46: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 115",
-        },
-        47: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 113",
-        },
-        311: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 411",
-        },
-        99: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 110",
-        },
-        119: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل مجاني | الجهاز الضوئي بـ5,000 | الڤيلان : 120",
-        },
-        118: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل مجاني | الجهاز الضوئي بـ5,000 | الڤيلان : 410",
-        },
-        167: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 217",
-        },
-        139: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 315",
-        },
-        116: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل مجاني | الجهاز الضوئي بـ5,000 | الڤيلان : 319",
-        },
-        171: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 311",
-        },
-        247: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل مجاني | الجهاز الضوئي بـ5,000 | الڤيلان : 311",
-        },
-        245: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل مجاني | الجهاز الضوئي بـ5,000 | الڤيلان : 311",
-        },
-        244: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل مجاني | الجهاز الضوئي بـ5,000 | الڤيلان : 311",
-        },
-        237: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل مجاني | الجهاز الضوئي بـ5,000 | الڤيلان : 311",
-        },
-        235: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل مجاني | الجهاز الضوئي بـ5,000 | الڤيلان : 311",
-        },
-        180: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 218",
-        },
-        162: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل مجاني | الجهاز الضوئي بـ5,000 | الڤيلان : 215",
-        },
-        161: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 115",
-        },
-        166: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 316",
-        },
-        169: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 216",
-        },
-        179: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 317",
-        },
-        138: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 212",
-        },
-        142: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 214",
-        },
-        136: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 314",
-        },
-        143: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 313",
-        },
-        137: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 213",
-        },
-        146: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 118",
-        },
-        144: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 119",
-        },
-        266: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 115",
-        },
-        1697: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 715",
-        },
-        265: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 114",
-        },
-        1720: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 310",
-        },
-        149: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 117",
-        },
-        264: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 119",
-        },
-        1696: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 612",
-        },
-        259: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 117",
-        },
-        148: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 113",
-        },
-        1698: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 716",
-        },
-        1721: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 315",
-        },
-        267: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 213",
-        },
-        140: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 211",
-        },
-        1692: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 115",
-        },
-        1699: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 717",
-        },
-        1694: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 112",
-        },
-        1310: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 114",
-        },
-        151: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 210",
-        },
-        121: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل مجاني | الجهاز الضوئي بـ5,000 | الڤيلان : 318",
-        },
-        109: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل مجاني | الجهاز الضوئي بـ5,000 | الڤيلان : 617",
-        },
-        110: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 614",
-        },
-        111: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 310",
-        },
-        112: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 312",
-        },
-        113: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 411",
-        },
-        117: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل مجاني | الجهاز الضوئي بـ5,000 | الڤيلان : 618",
-        },
-        120: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "45,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 5,000 | الجهاز الضوئي بـ10,000 | الڤيلان : 412",
-        },
-        مصعب: {
-          table: [
-            ["شهر", "15,000", "20,000", "30,000", "75,000"],
-            ["شهرين", "34,000", "48,000", "75,000", "120,000"],
-            ["ثلاث اشهر", "54,000", "75,000", "120,000", "180,000"],
-          ],
-          note: "الكيبل 10,000 | الجهاز الضوئي بـ10,000",
-        },
-      };
-      function displayOffers(areaNumber) {
-        const offersResults = document.getElementById("offersResults");
-        if (!areaNumber) {
-          showCustomAlert("الرجاء إدخال رقم المنطقة أو اسمها");
-          return;
-        }
-
-        offersResults.innerHTML = "";
-        offersResults.classList.add("active");
-
-        // Normalize input for matching
-        let normalizedArea = areaNumber.replace(/ال/g, "").trim(); // Remove 'ال'
-        if (normalizedArea === "زراعي")
-          normalizedArea = "زراعي"; // Ensure 'زراعي' maps to 'زراعي'
-        else if (normalizedArea === "اهلي" || normalizedArea === "اهليات")
-          normalizedArea = "الاهليات"; // Map 'اهلي'/'اهليات' to 'الاهليات'
-        else if (normalizedArea === "مجمع") normalizedArea = "المجمع"; // Map 'مجمع' to 'المجمع'
-
-        const areaOffers = offersData[areaNumber] || offersData[normalizedArea]; // Try original, then normalized
-
-        if (!areaOffers) {
-          offersResults.innerHTML = `<div class="offer-table-container"><div class="area-title">لا توجد عروض متاحة للمنطقة ${areaNumber}</div><p style="text-align:center;">الرجاء التأكد من رقم المنطقة أو اسمها أو التواصل مع الدعم الفني</p></div>`;
-          return;
-        }
-
-        let tableHTML = `<div class="offer-table-container"><div class="area-title">العروض الخاصة بـ  ${areaNumber}</div><table class="offer-table"><thead><tr><th>المدة</th><th>فئة اولى (FIBER 35)</th><th>فئة ثانية (FIBER 50)</th><th>فئة ثالثة (FIBER 75)</th><th>فئة رابعة (FIBER 150)</th></tr></thead><tbody>`;
-        areaOffers.table.forEach((row) => {
-          tableHTML += `<tr>${row
-            .map((cell) => `<td>${cell}</td>`)
-            .join("")}</tr>`;
-        });
-        tableHTML += `</tbody></table><div class="offer-note">${areaOffers.note}</div></div>`;
-        offersResults.innerHTML = tableHTML;
-      }
-
-      function setupVLANs() {
-        const showVlanBtn = document.getElementById("showVlanBtn");
-        const vlanInput = document.getElementById("vlanInput");
-        const vlanResult = document.getElementById("vlanResult");
-        const vlanMap = {
-          151: "210",
-          235: "317",
-          مجمع: "2",
-          المجمع: "2",
-          اهلي: "2",
-          الاهلي: "2",
-          الاهليات: "2",
-          اهليات: "2",
-          زراعي: "2",
-          الزراعي: "2",
-          1310: "114",
-          1694: "112 ",
-          1692: "115 ",
-          140: "211 ",
-          267: "213",
-          1721: "315",
-          1698: "716",
-          148: "113",
-          259: "117",
-          1696: "612",
-          264: "119",
-          149: "117",
-          1720: "310",
-          265: "114",
-          1697: "715",
-          266: "115",
-          144: "119",
-          146: "118",
-          137: "213",
-          143: "313",
-          136: "314",
-          142: "214",
-          138: "212",
-          111: "310",
-          179: "317",
-          169: "216",
-          166: "316",
-          161: "115 ",
-          162: "215",
-          180: "218",
-          171: "311",
-          116: "319",
-          139: "315",
-          112: "312",
-          167: "217",
-          118: "410",
-          119: "120",
-          121: "318",
-          311: "411",
-          120: "412",
-          99: "110",
-          47: "113",
-          46: "115",
-          48: "117",
-          164: "413",
-          172: "416",
-          134: "419",
-          170: "418",
-          181: "510",
-          165: "511",
-          1850: "118",
-          53: "210",
-          50: "119",
-          49: "120",
-          71: "114",
-          72: "112",
-          68: "111",
-          69: "116",
-          113: "411",
-          1980: "211",
-          73: "212",
-          182: "512",
-          147: "417",
-          376: "218",
-          163: "513",
-          1747: "213",
-          55: "215",
-          51: "216",
-          52: "214",
-          152: "514",
-          54: "217",
-          173: "515",
-          174: "516",
-          175: "517",
-          106: "611",
-          183: "519",
-          60: "219",
-          61: "220",
-          108: "616",
-          117: "618",
-          107: "612",
-          110: "614",
-          109: "617",
-          122: "615",
-          178: "518",
-          176: "610",
-          45: "312",
-          44: "313",
-          43: "311",
-        };
-
-        showVlanBtn.addEventListener("click", () => {
-          let area = vlanInput.value.trim();
-          if (!area) {
+        function displayOffers(areaNameOrNumber) {
+          const offersResults = document.getElementById("offersResults");
+          if (!areaNameOrNumber) {
             showCustomAlert("الرجاء إدخال رقم المنطقة أو اسمها");
             return;
           }
 
-          // Normalize input for VLAN lookup
-          let normalizedArea = area.replace(/ال/g, "").trim(); // Remove 'ال'
-          if (normalizedArea === "زراعي")
-            normalizedArea = "زراعي"; // Ensure 'زراعي' maps to 'زراعي'
+          offersResults.innerHTML = "";
+          offersResults.classList.add("active");
+
+          let normalizedArea = areaNameOrNumber.replace(/ال/g, "").trim();
+          if (normalizedArea === "زراعي") normalizedArea = "زراعي";
           else if (normalizedArea === "اهلي" || normalizedArea === "اهليات")
-            normalizedArea = "اهليات"; // Map 'اهلي'/'اهليات' to 'اهليات'
-          else if (normalizedArea === "مجمع") normalizedArea = "مجمع"; // Map 'مجمع' to 'مجمع'
+            normalizedArea = "الاهليات";
+          else if (normalizedArea === "مجمع") normalizedArea = "المجمع";
 
-          const vlan = vlanMap[area] || vlanMap[normalizedArea]; // Try original, then normalized
+          const areaOffersKey =
+            offersData[areaNameOrNumber] ? areaNameOrNumber : normalizedArea;
+          const areaOffers = offersData[areaOffersKey];
 
-          vlanResult.textContent = vlan
-            ? `VLAN: ${vlan}`
-            : "لم يتم العثور على فيلان لهذه المنطقة";
-          vlanResult.classList.add("active");
-        });
-        vlanInput.addEventListener("keypress", (e) => {
-          if (e.key === "Enter") showVlanBtn.click();
-        });
-      }
+          if (!areaOffers) {
+            offersResults.innerHTML = `<div class="offer-table-container"><div class="area-title">لا توجد عروض متاحة للمنطقة ${areaNameOrNumber}</div><p style="text-align:center;">الرجاء التأكد من رقم المنطقة أو اسمها أو التواصل مع الدعم الفني</p></div>`;
+            if (userRole === 'admin') {
+                offersResults.innerHTML += `
+                    <button class="add-new-button" onclick="openAddOfferModal('${areaNameOrNumber}')">
+                        إضافة عرض جديد لهذه المنطقة <i class="fas fa-plus"></i>
+                    </button>
+                `;
+            }
+            return;
+          }
 
-      function initMaterials() {
-        const materialsGrid = document.querySelector(".materials-grid");
-        const categoryBtns = document.querySelectorAll(".category-btn");
-        const materials = {
-          routers: [
-            {
-              name: "راوتر TP-link Deco S7",
-              price:
-                "السعر : قطعة بـ65.000 د.ع | قطعتين بـ110.000 د.ع | ثلاث قطع بـ150.000 د.ع",
-              image: "https://f.top4top.io/p_3446t1urf1.jpg",
-              specs: [
-                "Wifi : الجيل الخامس (Wifi 5)",
-                "تغطية شاملة بتقنية (Mesh): يغطي حتى 560م² بدون انقطاع",
-                "ثنائي التردد : (2.4GHz + 5GHz ) بسرعة تصل إلى 1300Mbps.",
-                "منافذ LAN : لكل قطعة يوجد ثلاث منافذ LAN",
-                "تحكم بالتطبيق  : إدارة الشبكة بسهولة عبر تطبيق Deco.",
-              ],
-            },
-            {
-              name: "راوتر TP-Link Deco M4",
-              price:
-                "السعر : قطعة بـ55.000 د.ع | قطعتين بـ100.000 د.ع | ثلاث قطع بـ130.000 د.ع",
-              image: "https://h.top4top.io/p_34461ghq210.jpg",
-              specs: [
-                "Wifi : الجيل الخامس (Wifi 5)",
-                "تغطية قوية (Mesh) : يغطي حتى 370م².",
-                "ثنائي التردد :  يدعم 2.4GHz و5GHz بسرعة تصل إلى 1200Mbps.",
-                "منافذ LAN : لكل قطعة يوجد منفذين LAN",
-                "تحكم بالتطبيق : إعداد ومراقبة الشبكة بسهولة من تطبيق Deco.",
-              ],
-            },
-            {
-              name: "راوتر TP-link Deco E4",
-              price:
-                "السعر : قطعة بـ45.000 د.ع | قطعتين بـ100.000 د.ع | ثلاث قطع بـ130.000 د.ع",
-              image: "https://g.top4top.io/p_3446z9fxr9.jpg",
-              specs: [
-                "Wifi : الجيل الخامس (Wifi 5)",
-                "نظام (Mesh) بتغطية ممتازة : يغطي حتى 370م²",
-                "ثنائي التردد : (2.4GHz  و 5GHz ) بسرعة تصل إلى 1200Mbps.",
-                "اداء ثابت : مناسب للاستخدام اليومي الكثيف (جيد في الالعاب والبث المباشر لكن ليس بكثافة, الفئات الاعلى افضل)",
-                "تحكم بالتطبيق : إعداد ومراقبة الشبكة بسهولة من تطبيق Deco.",
-              ],
-            },
-            {
-              name: "راوتر شاومي xiaomi ax3200",
-              price: "السعر : 90.000 د.ع",
-              image: "https://d.top4top.io/p_3446a97k37.jpg",
-              specs: [
-                "Wifi : الجيل السادس (Wifi 6)",
-                "معالج قوي : سرعة وأداء أعلى، استقرار أفضل للشبكة.",
-                "ثنائي التردد : (2.4GHz + 5GHz ) بسرعة إجمالية تصل إلى (3202Mbps.)",
-                "5 منافذ LAN : منفذ WAN و 4 منافذ LAN جميعها تدعم سرعة 1G",
-                "استقرارية وثبات : مناسب جدًا للألعاب، البث المباشر بدقة 4K، والتصفح الكثيف.",
-              ],
-            },
-            {
-              name: "راوتر ريدمي Redmi AX3000",
-              price: "85,000 د.ع",
-              image: "https://i.top4top.io/p_3446pzbpj1.jpg",
-              specs: [
-                "Wifi : الجيل السادس (Wifi 6)",
-                "التغطية: ممتازة للمنازل المتوسطة إلى الكبيرة مع 4 هوائيات خارجية قوية",
-                "السرعة: بسرعة تصل إلى 2976Mbps (574Mbps على 2.4GHz و2402Mbps على 5GHz).",
-                "تحمّل الأجهزة: يدعم عدد كبير من الأجهزة بكفاءة عالية.",
-                " للألعاب والبث: أداء رائع جدًا للبث بدقة 4K وألعاب أونلاين بدون لاكَ أو تقطيع.",
-              ],
-            },
-            {
-              name: "راوتر TP-link AX55 (ax3000)",
-              price: "85.000 د.ع",
-              image: "https://l.top4top.io/p_3446dtjox3.jpg",
-              specs: [
-                "Wifi : الجيل السادس (Wifi 6)",
-                "التغطية: يغطي منازل متوسطة إلى كبيرة و4 هوائيات قوية.",
-                "السرعة: بسرعة تصل 2976Mbps (574Mbps على 2.4GHz و2402Mbps على 5GHz).",
-                "تحمّل الأجهزة: يدعم عشرات الأجهزة بفضل MU-MIMO وOFDMA بدون تقطيع.",
-                "للألعاب والبث: أداء ممتاز لألعاب الأونلاين والبث بدقة 4K بدون تأخير.",
-              ],
-            },
-            {
-              name: "راوتر TP-link AX53 (نسخة محدثة)",
-              price: "75.000 د.ع",
-              image: "https://k.top4top.io/p_34465byjq2.jpg",
-              specs: [
-                "Wifi : الجيل السادس (Wifi 6)",
-                "التغطية: تغطية ممتازة للمنازل المتوسطة بفضل 4 هوائيات.",
-                "السرعة: بسرعة تصل 2976Mbps (574Mbps على 2.4GHz و2402Mbps على 5GHz).",
-                "تحمّل الأجهزة: يدعم أجهزة كثيرة في نفس الوقت بكفاءة عالية بفضل MU-MIMO وOFDMA.",
-                "للألعاب والبث: أداء قوي جدًا للألعاب والبث بدقة 4K مع تأخير شبه معدوم.",
-              ],
-            },
-            {
-              name: "راوتر ريدمي Redmi AC2100",
-              price: "75,000 د.ع",
-              image: "https://c.top4top.io/p_3446i62nu6.jpg",
-              specs: [
-                "Wifi : الجيل الخامس (Wifi 5)",
-                "التغطية: تغطي مساحة متوسطة إلى كبيرة بفضل 6 هوائيات خارجية قوية.",
-                "السرعة: يدعم AC2100 بسرعة تصل إلى 2033Mbps (ممتاز للتصفح السريع).",
-                "الألعاب والبث المباشر: يقدم أداء ثابت نسبيًا، لكن فيه تأخير بسيط مقارنة براوترات Wi-Fi 6.",
-                " تحمل الأجهزة: يدعم عدد كبير من الاجهزة المتصلة بفضل MU-MIMO وتقنيات التوجيه الذكي.",
-              ],
-            },
-            {
-              name: "راوتر TP-link AX23 (ax1800)",
-              price: "75.000 د.ع",
-              image: "https://b.top4top.io/p_3446yghuj5.jpg",
-              specs: [
-                "Wifi : الجيل السادس (Wifi 6)",
-                "التغطية: ممتاز للمنازل المتوسطة بفضل 4 هوائيات قوية.",
-                "السرعة: Wi-Fi 6 بسرعة إجمالية تصل إلى 1775Mbps (574Mbps على 2.4GHz و1201Mbps على 5GHz).",
-                "تحمّل الأجهزة: يدعم أجهزة متعددة بكفاءة عالية",
-                "للألعاب والبث: يقدم أداء ثابت ومناسب للألعاب المتوسطة والبث بدقة 4K.",
-              ],
-            },
-            {
-              name: "راوتر TP-link AX1500",
-              price: "55,000 د.ع",
-              image: "https://a.top4top.io/p_34461uoip4.jpg",
-              specs: [
-                "Wifi : الجيل السادس (Wifi 6)",
-                "التغطية: مناسب للمنازل الصغيرة إلى المتوسطة مع 4 هوائيات قوية",
-                "السرعة: Wi-Fi 6 بسرعة إجمالية تصل إلى 1500Mbps (300Mbps على 2.4GHz و1201Mbps على 5GHz).",
-                "تحمّل الأجهزة: يدعم أجهزة متعددة بكفاءة",
-                "للألعاب والبث: أداء جيد جدًا للبث بدقة Full HD وألعاب أونلاين خفيفة بدون تقطيع.",
-              ],
-            },
-            {
-              name: "راوتر شاومي Xiaomi 4A",
-              price: "35,000 د.ع",
-              image: "https://h.top4top.io/p_3447m0cck1.jpeg",
-              specs: [
-                "Wifi : الجيل الخامس (Wifi 5)",
-                "التغطية: مناسب للمنازل الصغيرة إلى المتوسطة مع 4 هوائيات خارجية قوية.",
-                "السرعة: ثنائي التردد (Dual-Band) بسرعة إجمالية تصل إلى 1167Mbps (300Mbps على 2.4GHz و867Mbps على 5GHz).",
-                "تحمّل الأجهزة: يدعم عدد جيد من الاجهزة المتصلة في نفس الوقت مع أداء مستقر.",
-                "للألعاب والبث: ممتاز للبث بدقة Full HD وتصفح سريع، مناسب للألعاب الخفيفة",
-              ],
-            },
-            {
-              name: "راوتر TP-link ac1200",
-              price: "45,000 د.ع",
-              image: "https://j.top4top.io/p_3447qrbzg1.jpeg",
-              specs: [
-                "Wifi : الجيل الخامس (Wifi 5)",
-                "التغطية: مناسب للشقق أو منازل صغيرة بفضل 4 هوائيات",
-                "السرعة: يدعم AC1200 (300Mbps على 2.4GHz و867Mbps على 5GHz).",
-                "تحمّل الأجهزة: يتحمّل عدد جيد من الأجهزة المنزلية لكن مو مثالي للشبكات الثقيلة.",
-                "للألعاب والبث: مناسب للتصفح والبث بدقة Full HD، لكن مو مخصص للألعاب الثقيلة.",
-              ],
-            },
-          ],
-          onu: [
-            {
-              name: "جهاز ONU Huawei 1G",
-              price: "15.000 د.ع",
-              image: "https://c.top4top.io/p_3446omb4b5.jpg",
-              specs: [
-                "دعم XPON/GPON",
-                "2 منافذ LAN",
-                "منافذ LAN تعدم سرعة تصل إلى 1 جيجابت/ثانية",
-                "دعم IPv6",
-              ],
-            },
-            {
-              name: "جهاز ONU Huawei 100M",
-              price: "10.000 د.ع",
-              image: "https://d.top4top.io/p_3446qxlso6.jpg",
-              specs: [
-                "دعم GPON",
-                "4 منافذ LAN",
-                "2 منافذ VoIP",
-                "منافذ LAN تدعم سرعة تصل إلى 100 ميجابت/ثانية",
-              ],
-            },
-            {
-              name: "جهاز ONU Tenda 1G",
-              price: "10.000 د.ع",
-              image: "https://e.top4top.io/p_34467btqy7.jpg",
-              specs: [
-                "دعم XPON",
-                "منفذ LAN واحد",
-                "منفذ LAN يدعم سرعة تصل الى 1 جيجابت/ثانية",
-                "دعم IPv6",
-              ],
-            },
-          ],
-          ont: [
-            {
-              name: "جهاز ONT Huawei OptiXstar",
-              price: "45.000 د.ع",
-              image: "https://i.top4top.io/p_3461tsojj1.jpg",
-              specs: [
-                "Wifi : الجيل الخامس (Wifi 5)",
-                "التغطية: تغطية ممتازة للمنازل الصغيرة إلى المتوسطة مع هوائيات داخلية.",
-                "السرعة: يدعم AC1200 (300Mbps على 2.4GHz و867Mbps على 5GHz).",
-                "تحمّل الأجهزة: يدعم عدد جيد من الأجهزة المنزلية مع أداء مستقر للاستخدام اليومي.",
-                "للألعاب والبث: مناسب للبث ومشاهدة المحتوى بدقة Full HD، لكن ليس مخصص للألعاب الثقيلة.",
-              ],
-            },
-            {
-              name: "جهاز ONT V5 AC1200 (جديد)",
-              price: "45.000 د.ع",
-              image: "https://b.top4top.io/p_3446vc0b04.jpg",
-              specs: [
-                "Wifi : الجيل الخامس (Wifi 5)",
-                "التغطية: تغطية ممتازة للمنازل الصغيرة إلى المتوسطة مع 2 هوائيات خارجية.",
-                "السرعة: يدعم AC1200 (300Mbps على 2.4GHz و867Mbps على 5GHz).",
-                "تحمّل الأجهزة: يدعم عدد جيد من الأجهزة المنزلية مع أداء مستقر للاستخدام اليومي.",
-                "للألعاب والبث: مناسب للبث ومشاهدة المحتوى بدقة Full HD، لكن ليس مخصص للألعاب الثقيلة.",
-              ],
-            },
-            {
-              name: "جهاز ONT V5 AC1200 (مستعمل)",
-              price: "35.000 د.ع",
-              image: "https://b.top4top.io/p_3446vc0b04.jpg",
-              specs: [
-                "Wifi : الجيل الخامس (Wifi 5)",
-                "التغطية: تغطية ممتازة للمنازل الصغيرة إلى المتوسطة مع 2 هوائيات خارجية.",
-                "السرعة: يدعم AC1200 (300Mbps على 2.4GHz و867Mbps على 5GHz).",
-                "تحمّل الأجهزة: يدعم عدد جيد من الأجهزة المنزلية مع أداء مستقر للاستخدام اليومي.",
-                "للألعاب والبث: مناسب للبث ومشاهدة المحتوى بدقة Full HD، لكن ليس مخصص للألعاب الثقيلة.",
-              ],
-            },
-            {
-              name: "جهاز ONT V6 AC1200 (جديد)",
-              price: "55.000 د.ع",
-              image: "https://l.top4top.io/p_3446xtv7f1.jpg",
-              specs: [
-                "Wifi : الجيل الخامس (Wifi 5)",
-                "التغطية: تغطية ممتازة للمنازل المتوسطة ودعم ثنائي التردد.",
-                "السرعة: يدعم AC1200 (300Mbps على 2.4GHz و867Mbps على 5GHz).",
-                "تحمّل الأجهزة: يدعم أجهزة متعددة بثبات جيد بفضل المعالج المدمج وتقنيات QoS.",
-                "للألعاب والبث: مناسب للبث بدقة Full HD والألعاب الخفيفة، لكنه غير مخصص للجيمرز المحترفين.",
-              ],
-            },
-            {
-              name: "جهاز ONT V6 AC1200 (مستعمل)",
-              price: "35.000 د.ع",
-              image: "https://l.top4top.io/p_3446xtv7f1.jpg",
-              specs: [
-                "Wifi : الجيل الخامس (Wifi 5)",
-                "التغطية: تغطية ممتازة للمنازل المتوسطة ودعم ثنائي التردد.",
-                "السرعة: يدعم AC1200 (300Mbps على 2.4GHz و867Mbps على 5GHz).",
-                "تحمّل الأجهزة: يدعم أجهزة متعددة بثبات جيد بفضل المعالج المدمج وتقنيات QoS.",
-                "للألعاب والبث: مناسب للبث بدقة Full HD والألعاب الخفيفة، لكنه غير مخصص للجيمرز المحترفين.",
-              ],
-            },
-            {
-              name: "جهاز ONT Sa1456c (حنين)",
-              price: "20.000 د.ع",
-              image: "https://j.top4top.io/p_3446ncs9e1.jpg",
-              specs: [
-                "Wifi : الجيل الرابع (Wifi 4)",
-                "التغطية: تغطية مناسبة للمنازل الصغيرة إلى المتوسطة بهوائيات داخلية",
-                "السرعة: يدعم Wi-Fi بسرعات بسيطة الى متوسطة",
-                "تحمّل الأجهزة: جيد للاستخدام اليومي، يدعم عدد بسيط من الأجهزة بشكل مستقر",
-                "للألعاب والبث: أدائه جيد للألعاب الخفيفة والبث المباشر بجودة متوسطة، لكنه غير موجه للألعاب الثقيلة أو الاستخدام الاحترافي.",
-              ],
-            },
-          ],
-          other: [
-            {
-              name: "UPS",
-              price: "25.000 د.ع",
-              image: "https://f.top4top.io/p_3446zuaqh9.jpg",
-              specs: [
-                "سعة البطارية: ليثيوم 8800 mAh تقدّر تتكرّر حتى 300 دورة شحن ",
-                "الطاقة الخارجة: 18 W، مخرج USB 5V وDC خيارات متعددة: 5V/9V/12V بتيار 1–2A، إضافة لمخرج PoE 15/24V",
-                "مدى التوافق: يدعم تشغيل أجهزة مثل راوتر، مودم، كاميرا مراقبة، VoIP ونظام PoE بدون انقطاع",
-                "الحماية الذكية: فيه حماية ضد الشحن الزائد، التفريغ الزائد، ماس كهربائي وتغيّر الجهد",
-              ],
-            },
-            {
-              name: "CBOX",
-              price: "75.000 د.ع",
-              image: "https://f.top4top.io/p_3446ks3kd1.jpg",
-              specs: [
-                "الفيديو والترفيه : يدعم تشغيل فيديو بدقة 4K عبر Smart YouTube مع إمكانية تثبيت تطبيقات من متجر Play .",
-                "الاتصال : Wifi 2.4 + منفذ إيثرنت + HDMI + دعم Miracast, DLNA, AirPlay",
-                "لا يوجد تقطيع ويحتوي على 90 قناة مشفرة منها باقة beIN Sport كاملة وأفلام ومسلسلات OSN ومجموعة متنوعة من القنوات المشفرة ويمكن زيادتها حسب التحديث",
-                "النظام والمعالج :  يعمل على Android 9 بمعالج رباعي النواة مسؤوليته الاستجابة السريعة وتحليل البيانات بصورة ممتازة",
-              ],
-            },
-            {
-              name: "TV-BOX",
-              price: "25.000 د.ع",
-              image: "https://k.top4top.io/p_344675uc71.jpg",
-              specs: [
-                "الفيديو والترفيه : يدعم تشغيل الفيديو بدقة 1080/HDR عبر YouTube مع إمكانية تثبيت تطبيقات من متجر Play.",
-                "الاتصال : Wifi 2.4 + منفذ إيثرنت + HDMI",
-                "النظام:  يعمل بنظام  (Android) يدعم أغلب التطبيقات الأساسية مثل YouTube وNetflix (بجودة محدودة).",
-                "المعالج : رباعي النواة أدائه مناسب للتشغيل الخفيف.",
-              ],
-            },
-            {
-              name: "كيبل ضوئي 120 متر او اقل",
-              price: "10.000 د.ع",
-              image: "https://l.top4top.io/p_3446yjj1x1.jpg",
-              specs: [
-                "مسلح بثلاث طبقات معدنية",
-                "مقاوم للحرارة والضروف الخارجية",
-              ],
-            },
-            {
-              name: "كيبل ضوئي 150M/200m",
-              price: "15.000 د.ع",
-              image: "https://l.top4top.io/p_3446yjj1x1.jpg",
-              specs: [
-                "مسلح بثلاث طبقات معدنية",
-                "مقاوم للحرارة والضروف الخارجية",
-              ],
-            },
-            {
-              name: "فيش ضوئي (APC/UPC)",
-              price: "1.000 د.ع",
-              image: "https://f.top4top.io/p_34467z4u78.jpg",
-              specs: ["مصنوعة بجودة عالية", "مقاومة للحرارة والضروف الخارجية"],
-            },
-            {
-              name: "كيبل UTP 20M",
-              price: "10.000 د.ع",
-              image: "https://g.top4top.io/p_3447nelng3.jpeg",
-              specs: ["مصنوعة بجودة عالية", "مقاومة للحرارة والضروف الخارجية"],
-            },
-            {
-              name: "كيبل UTP 30M",
-              price: "15.000 د.ع",
-              image: "https://h.top4top.io/p_3447xppge4.jpeg",
-              specs: ["مصنوعة بجودة عالية", "مقاومة للحرارة والضروف الخارجية"],
-            },
-            {
-              name: "كيبل UTP 40M",
-              price: "20.000 د.ع",
-              image: "https://i.top4top.io/p_3447qtoki5.jpeg",
-              specs: ["مصنوعة بجودة عالية", "مقاومة للحرارة والضروف الخارجية"],
-            },
-          ],
-        };
+          let tableHTML = `<div class="offer-table-container"><div class="area-title">العروض الخاصة بـ  ${areaNameOrNumber}</div>`;
 
-        function displayMaterials(category) {
-          materialsGrid.innerHTML = "";
-          materials[category].forEach((item) => {
-            const card = document.createElement("div");
-            card.className = "material-card";
-            card.innerHTML = `<div class="material-img"> <div class="zoom-icon"><i class="fas fa-search-plus"></i></div> <img src="${
-              item.image
-            }" alt="${
-              item.name
-            }" onerror="this.onerror=null;this.src='https://placehold.co/400x200/2c3e50/ecf0f1?text=Image+Not+Found';"> </div> <div class="material-content"> <h3>${
-              item.name
-            }</h3> <div class="material-price">${
-              item.price
-            }</div> <ul class="material-specs"> ${item.specs
-              .map((spec) => `<li>${spec}</li>`)
-              .join("")} </ul> </div>`;
-            card
-              .querySelector(".material-img")
-              .addEventListener("click", () =>
-                openImageLightbox(item.image, item.name)
-              );
-            materialsGrid.appendChild(card);
+          // أزرار إدارة العروض للمسؤول
+          if (userRole === "admin") {
+            tableHTML += `
+                <div style="text-align:center; margin-bottom: 15px;">
+                    <button class="add-new-button" onclick="openAddOfferModal('${areaOffersKey}')">
+                        إضافة صف جديد للعرض <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+            `;
+          }
+
+
+          tableHTML += `
+            <table class="offer-table">
+                <thead>
+                    <tr>
+                        <th>المدة</th>
+                        <th>فئة اولى (FIBER 35)</th>
+                        <th>فئة ثانية (FIBER 50)</th>
+                        <th>فئة ثالثة (FIBER 75)</th>
+                        <th>فئة رابعة (FIBER 150)</th>
+                        ${userRole === "admin" ? "<th>الإجراءات</th>" : ""}
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+          areaOffers.table.forEach((row, rowIndex) => {
+            tableHTML += `<tr>`;
+            row.forEach((cell, colIndex) => {
+              tableHTML += `<td data-row="${rowIndex}" data-col="${colIndex}">
+                                <span class="display-value">${cell}</span>
+                                ${
+                                  userRole === "admin"
+                                    ? `
+                                    <input type="text" value="${cell}" class="edit-input" style="display:none;" />
+                                    `
+                                    : ""
+                                }
+                            </td>`;
+            });
+            if (userRole === "admin") {
+              tableHTML += `
+                        <td>
+                            <div class="offer-edit-buttons">
+                                <button class="edit-offer-row-btn" data-row-index="${rowIndex}"><i class="fas fa-edit"></i> تعديل</button>
+                                <button class="delete-offer-row-btn" data-row-index="${rowIndex}"><i class="fas fa-trash"></i> حذف</button>
+                            </div>
+                            <div class="offer-edit-buttons" style="display:none;">
+                                <button class="save-offer-row-btn" data-row-index="${rowIndex}"><i class="fas fa-save"></i> حفظ</button>
+                                <button class="cancel-offer-row-btn" data-row-index="${rowIndex}"><i class="fas fa-times"></i> إلغاء</button>
+                            </div>
+                        </td>
+                    `;
+            }
+            tableHTML += `</tr>`;
           });
+          tableHTML += `</tbody></table><div class="offer-note" id="offer-note-${areaOffersKey}">${areaOffers.note}</div>`;
+
+          if (userRole === 'admin') {
+            tableHTML += `
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="btn" id="edit-offer-note-btn" data-area-key="${areaOffersKey}">
+                        تعديل الملاحظة <i class="fas fa-edit"></i>
+                    </button>
+                </div>
+            `;
+          }
+
+          tableHTML += `</div>`;
+          offersResults.innerHTML = tableHTML;
+
+          // إضافة مستمعي الأحداث لأزرار التعديل والحذف والحفظ والإلغاء
+          if (userRole === "admin") {
+            // Edit Row
+            offersResults.querySelectorAll(".edit-offer-row-btn").forEach((btn) => {
+              btn.addEventListener("click", function () {
+                const rowIndex = parseInt(this.dataset.rowIndex);
+                const rowElement = this.closest("tr");
+                rowElement.querySelectorAll("td:not(:last-child)").forEach((cell) => {
+                  cell.querySelector(".display-value").style.display = "none";
+                  cell.querySelector(".edit-input").style.display = "block";
+                });
+                this.closest(".offer-edit-buttons").style.display = "none";
+                this.closest("td").querySelector(".offer-edit-buttons:last-child").style.display = "flex";
+              });
+            });
+
+            // Save Row
+            offersResults.querySelectorAll(".save-offer-row-btn").forEach((btn) => {
+              btn.addEventListener("click", async function () {
+                const rowIndex = parseInt(this.dataset.rowIndex);
+                const rowElement = this.closest("tr");
+                const newRowData = [];
+                rowElement.querySelectorAll("td:not(:last-child)").forEach((cell) => {
+                  newRowData.push(cell.querySelector(".edit-input").value);
+                });
+
+                const confirmed = await showCustomConfirm("هل أنت متأكد من حفظ التعديلات؟");
+                if (confirmed) {
+                    offersData[areaOffersKey].table[rowIndex] = newRowData;
+                    saveData();
+                    showCustomAlert("تم حفظ التعديلات بنجاح.");
+                    displayOffers(areaNameOrNumber); // إعادة عرض الجدول لتحديث الواجهة
+                } else {
+                    displayOffers(areaNameOrNumber); // إلغاء التعديلات وإعادة عرض الجدول الأصلي
+                }
+              });
+            });
+
+            // Cancel Row Edit
+            offersResults.querySelectorAll(".cancel-offer-row-btn").forEach((btn) => {
+              btn.addEventListener("click", function () {
+                displayOffers(areaNameOrNumber); // إعادة عرض الجدول لإلغاء التعديلات
+              });
+            });
+
+            // Delete Row
+            offersResults.querySelectorAll(".delete-offer-row-btn").forEach((btn) => {
+              btn.addEventListener("click", async function () {
+                const rowIndex = parseInt(this.dataset.rowIndex);
+                const confirmed = await showCustomConfirm("هل أنت متأكد من حذف هذا الصف؟");
+                if (confirmed) {
+                    offersData[areaOffersKey].table.splice(rowIndex, 1);
+                    saveData();
+                    showCustomAlert("تم حذف الصف بنجاح.");
+                    displayOffers(areaNameOrNumber); // إعادة عرض الجدول لتحديث الواجهة
+                }
+              });
+            });
+
+            // Edit Note
+            document.getElementById('edit-offer-note-btn').addEventListener('click', async function() {
+                const areaKey = this.dataset.areaKey;
+                const currentNote = offersData[areaKey].note;
+                const newNote = prompt("أدخل الملاحظة الجديدة:", currentNote);
+                if (newNote !== null && newNote.trim() !== currentNote.trim()) {
+                    const confirmed = await showCustomConfirm("هل أنت متأكد من حفظ الملاحظة الجديدة؟");
+                    if (confirmed) {
+                        offersData[areaKey].note = newNote.trim();
+                        saveData();
+                        document.getElementById(`offer-note-${areaKey}`).textContent = newNote.trim();
+                        showCustomAlert("تم حفظ الملاحظة بنجاح.");
+                    }
+                }
+            });
+          }
+        }
+        // وظيفة تفتح مودال إضافة عرض جديد
+        function openAddOfferModal(areaKey) {
+            currentEditTarget = areaKey;
+            editModalTitle.textContent = `إضافة صف جديد لـ ${areaKey}`;
+            editForm.innerHTML = `
+                <div class="form-group">
+                    <label for="offer-col0">المدة</label>
+                    <input type="text" id="offer-col0" class="form-control" value="" />
+                </div>
+                <div class="form-group">
+                    <label for="offer-col1">فئة اولى (FIBER 35)</label>
+                    <input type="text" id="offer-col1" class="form-control" value="" />
+                </div>
+                <div class="form-group">
+                    <label for="offer-col2">فئة ثانية (FIBER 50)</label>
+                    <input type="text" id="offer-col2" class="form-control" value="" />
+                </div>
+                <div class="form-group">
+                    <label for="offer-col3">فئة ثالثة (FIBER 75)</label>
+                    <input type="text" id="offer-col3" class="form-control" value="" />
+                </div>
+                <div class="form-group">
+                    <label for="offer-col4">فئة رابعة (FIBER 150)</label>
+                    <input type="text" id="offer-col4" class="form-control" value="" />
+                </div>
+            `;
+            editSaveBtn.onclick = saveNewOfferRow;
+            editModal.style.display = "flex";
+        }
+        // جعل الوظيفة متاحة عالميًا للزر الذي يستخدم `onclick`
+        window.openAddOfferModal = openAddOfferModal;
+
+
+        // وظيفة حفظ صف العرض الجديد
+        async function saveNewOfferRow() {
+            const newRow = [];
+            for (let i = 0; i < 5; i++) { // Assuming 5 columns for offer data
+                const input = document.getElementById(`offer-col${i}`);
+                if (input) {
+                    newRow.push(input.value.trim());
+                } else {
+                    newRow.push(""); // Push empty string if input not found
+                }
+            }
+
+            // Check if the areaKey already exists. If not, create it.
+            if (!offersData[currentEditTarget]) {
+                offersData[currentEditTarget] = {
+                    table: [],
+                    note: "ملاحظة افتراضية لهذا العرض الجديد.", // Default note for new area
+                };
+            }
+
+            offersData[currentEditTarget].table.push(newRow);
+            saveData();
+            showCustomAlert("تم إضافة العرض بنجاح.");
+            editModal.style.display = "none";
+            displayOffers(currentEditTarget); // إعادة عرض العروض للمنطقة المحددة
         }
 
-        categoryBtns.forEach((btn) => {
-          btn.addEventListener("click", function () {
-            categoryBtns.forEach((b) => b.classList.remove("active"));
-            this.classList.add("active");
-            displayMaterials(this.getAttribute("data-category"));
-          });
-        });
 
-        displayMaterials("routers");
-      }
+        // قسم الفيلانات
+        function setupVLANs() {
+          const showVlanBtn = document.getElementById("showVlanBtn");
+          const vlanInput = document.getElementById("vlanInput");
+          const vlanResult = document.getElementById("vlanResult");
+          const addVlanBtn = document.getElementById("add-new-vlan-btn");
+
+          showVlanBtn.addEventListener("click", () => {
+            let area = vlanInput.value.trim();
+            displayVlan(area);
+          });
+          vlanInput.addEventListener("keypress", (e) => {
+            if (e.key === "Enter") showVlanBtn.click();
+          });
+
+          addVlanBtn.addEventListener("click", () => {
+            openEditModal(
+              "إضافة فيلان جديد",
+              { area: "", vlan: "" },
+              "vlan",
+              -1
+            );
+          });
+
+          function displayVlan(area) {
+            let normalizedArea = area.replace(/ال/g, "").trim();
+            if (normalizedArea === "زراعي") normalizedArea = "زراعي";
+            else if (normalizedArea === "اهلي" || normalizedArea === "اهليات")
+              normalizedArea = "اهليات";
+            else if (normalizedArea === "مجمع") normalizedArea = "مجمع";
+
+            const vlan = vlanMap[area] || vlanMap[normalizedArea];
+
+            vlanResult.textContent = vlan
+              ? `VLAN: ${vlan}`
+              : "لم يتم العثور على فيلان لهذه المنطقة";
+            vlanResult.classList.add("active");
+
+            // أزرار التعديل والحذف للفيلان
+            if (userRole === "admin" && vlan) {
+              const actionsHtml = `
+                    <div class="vlan-actions admin-visible">
+                        <button class="edit-vlan-btn" data-area-key="${
+                          area || normalizedArea
+                        }"><i class="fas fa-edit"></i></button>
+                        <button class="delete-vlan-btn" data-area-key="${
+                          area || normalizedArea
+                        }"><i class="fas fa-trash"></i></button>
+                    </div>
+                `;
+              vlanResult.innerHTML += actionsHtml;
+
+              vlanResult
+                .querySelector(".edit-vlan-btn")
+                .addEventListener("click", () =>
+                  editVlan(area || normalizedArea, vlan)
+                );
+              vlanResult
+                .querySelector(".delete-vlan-btn")
+                .addEventListener("click", () =>
+                  deleteVlan(area || normalizedArea)
+                );
+            } else if (userRole === "admin" && !vlan) {
+                // If no VLAN found, allow admin to add one for this area
+                vlanResult.innerHTML = `
+                    <p>لم يتم العثور على فيلان لهذه المنطقة.</p>
+                    <button class="btn" style="width: auto; margin-top: 10px;" onclick="openAddVlanModal('${area}')">
+                        إضافة فيلان لـ ${area} <i class="fas fa-plus"></i>
+                    </button>
+                `;
+                vlanResult.classList.add("active");
+            }
+          }
+          // جعل الوظيفة متاحة عالميًا للزر الذي يستخدم `onclick`
+          window.openAddVlanModal = openAddVlanModal;
+
+          // وظيفة تفتح مودال إضافة/تعديل فيلان
+          function openAddVlanModal(areaKeyToAdd) {
+            currentEditTarget = areaKeyToAdd;
+            editModalTitle.textContent = `إضافة فيلان جديد لـ ${areaKeyToAdd}`;
+            editForm.innerHTML = `
+                <div class="form-group">
+                    <label for="vlan-area-key">اسم/رقم المنطقة</label>
+                    <input type="text" id="vlan-area-key" class="form-control" value="${areaKeyToAdd}" ${areaKeyToAdd ? 'readonly' : ''} />
+                </div>
+                <div class="form-group">
+                    <label for="vlan-value">قيمة الفيلان</label>
+                    <input type="text" id="vlan-value" class="form-control" value="" />
+                </div>
+            `;
+            editSaveBtn.onclick = saveVlan;
+            editModal.style.display = "flex";
+          }
+
+          function editVlan(areaKey, currentValue) {
+            currentEditTarget = areaKey;
+            editModalTitle.textContent = `تعديل فيلان لـ ${areaKey}`;
+            editForm.innerHTML = `
+                <div class="form-group">
+                    <label for="vlan-area-key">اسم/رقم المنطقة</label>
+                    <input type="text" id="vlan-area-key" class="form-control" value="${areaKey}" readonly />
+                </div>
+                <div class="form-group">
+                    <label for="vlan-value">قيمة الفيلان</label>
+                    <input type="text" id="vlan-value" class="form-control" value="${currentValue}" />
+                </div>
+            `;
+            editSaveBtn.onclick = saveVlan;
+            editModal.style.display = "flex";
+          }
+
+          async function saveVlan() {
+            const areaKey = document.getElementById("vlan-area-key").value.trim();
+            const vlanValue = document.getElementById("vlan-value").value.trim();
+
+            if (!areaKey || !vlanValue) {
+                showCustomAlert("الرجاء إدخال اسم/رقم المنطقة وقيمة الفيلان.");
+                return;
+            }
+
+            const confirmed = await showCustomConfirm(`هل أنت متأكد من حفظ التعديلات على الفيلان للمنطقة "${areaKey}"؟`);
+            if (confirmed) {
+                vlanMap[areaKey] = vlanValue;
+                saveData();
+                showCustomAlert("تم حفظ الفيلان بنجاح.");
+                editModal.style.display = "none";
+                displayVlan(areaKey); // إعادة عرض الفيلان المحدث
+            }
+          }
+
+          async function deleteVlan(areaKey) {
+            const confirmed = await showCustomConfirm(
+              `هل أنت متأكد من حذف الفيلان للمنطقة "${areaKey}"؟`
+            );
+            if (confirmed) {
+              delete vlanMap[areaKey];
+              saveData();
+              showCustomAlert("تم حذف الفيلان بنجاح.");
+              vlanResult.innerHTML = ""; // مسح النتيجة المعروضة
+              vlanResult.classList.remove("active");
+            }
+          }
+        }
+
+        // قسم المواد
+        function initMaterials() {
+          const materialsGrid = document.querySelector(".materials-grid");
+          const categoryBtns = document.querySelectorAll(".category-btn");
+          const addMaterialBtn = document.getElementById("add-new-material-btn");
+
+          function displayMaterials(category) {
+            materialsGrid.innerHTML = "";
+            currentEditCategory = category; // حفظ الفئة الحالية
+
+            const categoryMaterials = materials[category] || []; // تأكد من وجود المصفوفة
+
+            if (categoryMaterials.length === 0 && userRole !== 'admin') {
+                materialsGrid.innerHTML = `<p style="grid-column: 1 / -1; text-align:center; color:#666;">لا توجد مواد في هذه الفئة.</p>`;
+                return;
+            }
+
+
+            categoryMaterials.forEach((item, index) => {
+              const card = document.createElement("div");
+              card.className = "material-card";
+              card.innerHTML = `
+                        <div class="material-img">
+                            <div class="zoom-icon"><i class="fas fa-search-plus"></i></div>
+                            <img src="${item.image}" alt="${
+                item.name
+              }" onerror="this.onerror=null;this.src='https://placehold.co/400x200/2c3e50/ecf0f1?text=Image+Not+Found';">
+                        </div>
+                        <div class="material-content">
+                            <h3>${item.name}</h3>
+                            <div class="material-price">${item.price}</div>
+                            <ul class="material-specs">
+                                ${item.specs.map((spec) => `<li>${spec}</li>`).join("")}
+                            </ul>
+                        </div>
+                        ${
+                          userRole === "admin"
+                            ? `
+                            <div class="material-actions">
+                                <button class="edit-material-btn" data-index="${index}"><i class="fas fa-edit"></i></button>
+                                <button class="delete-material-btn" data-index="${index}"><i class="fas fa-trash"></i></button>
+                            </div>
+                            `
+                            : ""
+                        }
+                    `;
+              card
+                .querySelector(".material-img")
+                .addEventListener("click", () =>
+                  openImageLightbox(item.image, item.name)
+                );
+              materialsGrid.appendChild(card);
+            });
+
+            // إرفاق مستمعي الأحداث لأزرار التعديل والحذف إذا كان المسؤول
+            if (userRole === "admin") {
+              materialsGrid
+                .querySelectorAll(".edit-material-btn")
+                .forEach((button) => {
+                  button.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const index = parseInt(button.dataset.index);
+                    editMaterial(currentEditCategory, index);
+                  });
+                });
+              materialsGrid
+                .querySelectorAll(".delete-material-btn")
+                .forEach((button) => {
+                  button.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const index = parseInt(button.dataset.index);
+                    deleteMaterial(currentEditCategory, index);
+                  });
+                });
+            }
+          }
+
+          categoryBtns.forEach((btn) => {
+            btn.addEventListener("click", function () {
+              categoryBtns.forEach((b) => b.classList.remove("active"));
+              this.classList.add("active");
+              displayMaterials(this.getAttribute("data-category"));
+            });
+          });
+
+          // عرض المواد الافتراضية عند التحميل
+          displayMaterials("routers");
+
+          // وظيفة إضافة مادة جديدة
+          addMaterialBtn.addEventListener("click", () => {
+            openEditModal(
+              "إضافة مادة جديدة",
+              { name: "", price: "", image: "", specs: [] },
+              "material",
+              -1,
+              currentEditCategory // تمرير الفئة الحالية للإضافة
+            );
+          });
+
+          // تعديل المادة (مسؤول فقط)
+          function editMaterial(category, index) {
+            const material = materials[category][index];
+            openEditModal(
+              `تعديل مادة: ${material.name}`,
+              material,
+              "material",
+              index,
+              category
+            );
+          }
+
+          // حذف المادة (مسؤول فقط)
+          async function deleteMaterial(category, index) {
+            const material = materials[category][index];
+            const confirmed = await showCustomConfirm(
+              `هل أنت متأكد من حذف المادة "${material.name}" من فئة "${category}"؟`
+            );
+            if (confirmed) {
+              materials[category].splice(index, 1);
+              saveData();
+              displayMaterials(category); // إعادة عرض المواد
+              showCustomAlert("تم حذف المادة بنجاح.");
+            }
+          }
+        }
+
+        // --- وظائف المودال العامة للتعديل والإضافة (للمسؤول) ---
+        function openEditModal(title, data, type, index, category = null) {
+          editModalTitle.textContent = title;
+          editForm.innerHTML = ""; // مسح النموذج القديم
+          currentEditTarget = { type, index, category }; // حفظ تفاصيل العنصر الذي يتم تعديله
+
+          let formHtml = "";
+          if (type === "map") {
+            formHtml = `
+                    <div class="form-group">
+                        <label for="map-name">اسم المنطقة</label>
+                        <input type="text" id="map-name" class="form-control" value="${data.name}" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="map-link">رابط الخريطة</label>
+                        <input type="url" id="map-link" class="form-control" value="${data.link}" required />
+                    </div>
+                `;
+            editSaveBtn.onclick = saveMap;
+          } else if (type === "material") {
+            // Material form for add/edit
+            formHtml = `
+                    <div class="form-group">
+                        <label for="material-name">اسم المادة</label>
+                        <input type="text" id="material-name" class="form-control" value="${data.name}" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="material-price">السعر</label>
+                        <input type="text" id="material-price" class="form-control" value="${data.price}" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="material-image">رابط الصورة</label>
+                        <input type="url" id="material-image" class="form-control" value="${data.image}" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="material-specs">المواصفات (اكتب كل مواصفة في سطر جديد)</label>
+                        <textarea id="material-specs" class="form-control" rows="5">${data.specs ? data.specs.join("\n") : ""}</textarea>
+                    </div>
+                `;
+            editSaveBtn.onclick = saveMaterial;
+          } else if (type === "vlan") {
+            // VLAN form for add/edit (already handled by openAddVlanModal/editVlan functions)
+            // This case should ideally not be reached if openAddVlanModal/editVlan set `editSaveBtn.onclick` directly.
+            // Keeping it for completeness as a fallback or for consistency.
+            formHtml = `
+                <div class="form-group">
+                    <label for="vlan-area-key">اسم/رقم المنطقة</label>
+                    <input type="text" id="vlan-area-key" class="form-control" value="${data.area}" ${data.area ? 'readonly' : ''} required />
+                </div>
+                <div class="form-group">
+                    <label for="vlan-value">قيمة الفيلان</label>
+                    <input type="text" id="vlan-value" class="form-control" value="${data.vlan}" required />
+                </div>
+            `;
+            editSaveBtn.onclick = saveVlan; // Assuming saveVlan is globally accessible or passed
+          }
+
+          editForm.innerHTML = formHtml;
+          editModal.style.display = "flex";
+
+          editCancelBtn.onclick = () => {
+            editModal.style.display = "none";
+          };
+        }
+
+        // --- وظائف الحفظ الخاصة بالمودال (للمسؤول) ---
+
+        async function saveMap() {
+          const mapName = document.getElementById("map-name").value.trim();
+          const mapLink = document.getElementById("map-link").value.trim();
+
+          if (!mapName || !mapLink) {
+            showCustomAlert("الرجاء إدخال اسم ورابط الخريطة.");
+            return;
+          }
+
+          const confirmed = await showCustomConfirm("هل أنت متأكد من حفظ التعديلات؟");
+          if (!confirmed) {
+            return;
+          }
+
+          if (currentEditTarget.index === -1) {
+            // Add new map
+            allMaps.push({ name: mapName, link: mapLink });
+            showCustomAlert("تم إضافة الخريطة بنجاح.");
+          } else {
+            // Edit existing map
+            allMaps[currentEditTarget.index] = { name: mapName, link: mapLink };
+            showCustomAlert("تم تحديث الخريطة بنجاح.");
+          }
+          saveData();
+          displayMaps(allMaps); // إعادة عرض الخرائط بعد الحفظ
+          editModal.style.display = "none";
+        }
+
+        async function saveMaterial() {
+            const materialName = document.getElementById("material-name").value.trim();
+            const materialPrice = document.getElementById("material-price").value.trim();
+            const materialImage = document.getElementById("material-image").value.trim();
+            const materialSpecs = document.getElementById("material-specs").value.split('\n').map(s => s.trim()).filter(s => s !== "");
+
+            if (!materialName || !materialPrice || !materialImage) {
+                showCustomAlert("الرجاء إدخال اسم المادة والسعر ورابط الصورة.");
+                return;
+            }
+
+            const confirmed = await showCustomConfirm("هل أنت متأكد من حفظ التعديلات؟");
+            if (!confirmed) {
+                return;
+            }
+
+            const newMaterial = {
+                name: materialName,
+                price: materialPrice,
+                image: materialImage,
+                specs: materialSpecs
+            };
+
+            if (currentEditTarget.index === -1) {
+                // Add new material
+                if (!materials[currentEditTarget.category]) {
+                    materials[currentEditTarget.category] = [];
+                }
+                materials[currentEditTarget.category].push(newMaterial);
+                showCustomAlert("تم إضافة المادة بنجاح.");
+            } else {
+                // Edit existing material
+                materials[currentEditTarget.category][currentEditTarget.index] = newMaterial;
+                showCustomAlert("تم تحديث المادة بنجاح.");
+            }
+            saveData();
+            displayMaterials(currentEditTarget.category); // إعادة عرض المواد بعد الحفظ
+            editModal.style.display = "none";
+        }
+
+        // This function needs to be globally accessible for `onclick` in displayVlan
+        window.saveVlan = async function() {
+            const areaKeyInput = document.getElementById("vlan-area-key");
+            const vlanValueInput = document.getElementById("vlan-value");
+
+            const areaKey = areaKeyInput.value.trim();
+            const vlanValue = vlanValueInput.value.trim();
+
+            if (!areaKey || !vlanValue) {
+                showCustomAlert("الرجاء إدخال اسم/رقم المنطقة وقيمة الفيلان.");
+                return;
+            }
+
+            const confirmed = await showCustomConfirm(`هل أنت متأكد من حفظ التعديلات على الفيلان للمنطقة "${areaKey}"؟`);
+            if (confirmed) {
+                vlanMap[areaKey] = vlanValue;
+                saveData();
+                showCustomAlert("تم حفظ الفيلان بنجاح.");
+                editModal.style.display = "none";
+                // Re-display the VLAN for the area that was just edited/added
+                // Make sure `displayVlan` is also accessible globally or its call is handled correctly.
+                displayVlan(areaKey);
+            }
+        }
+      });
     </script>
   </body>
 </html>
