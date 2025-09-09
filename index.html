@@ -292,6 +292,9 @@
       
       /* User info is hidden by default, shown via body.logged-in class */
       #user-info-container {
+        display: none;
+      }
+      body.logged-in #user-info-container {
         display: flex;
         align-items: center;
         gap: 15px;
@@ -960,6 +963,10 @@
       }
 
       #mobile-user-info {
+        display: none;
+      }
+      body.logged-in #mobile-user-info {
+        display: block;
         padding: 20px;
         border-top: 1px solid rgba(255, 255, 255, 0.1);
       }
@@ -967,6 +974,13 @@
       #mobile-user-info .user-status {
         gap: 10px;
         margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+      }
+      
+      #mobile-user-info .user-status i {
+        font-size: 1.3rem;
+        color: var(--secondary);
       }
 
       #mobile-user-info .logout-btn {
@@ -1015,11 +1029,10 @@
         .navbar {
           display: none;
         }
-        #user-info-container {
-          display: none;
+        body.logged-in #user-info-container {
+          display: none; /* Explicitly hide desktop user info on mobile */
         }
-
-        .mobile-menu-btn {
+        body.logged-in .mobile-menu-btn {
           display: block;
         }
       }
@@ -1308,7 +1321,7 @@
               </li>
             </ul>
             <!-- User Info will be shown here after login -->
-            <div id="user-info-container" style="display: none">
+            <div id="user-info-container">
               <div class="user-status">
                 <i class="fas fa-user-circle"></i>
                 <span id="user-role-display"></span>
@@ -1376,7 +1389,7 @@
         </ul>
 
         <!-- Mobile User Info & Logout -->
-        <div id="mobile-user-info" style="display: none"></div>
+        <div id="mobile-user-info"></div>
       </div>
 
       <!-- Home/Hero Section -->
@@ -3082,6 +3095,7 @@
         // --- Login Logic ---
         function logout() {
           localStorage.removeItem("smartAgeUserRole");
+          document.body.classList.remove('logged-in');
           location.reload();
         }
 
@@ -3114,6 +3128,7 @@
         });
 
         function startApp() {
+          document.body.classList.add('logged-in');
           loginOverlay.style.opacity = "0";
           setTimeout(() => {
             loginOverlay.style.display = "none";
@@ -3140,16 +3155,13 @@
           }
 
           userRoleDisplay.textContent = roleText;
-          userInfoContainer.style.display = "flex";
           mobileUserInfoContainer.innerHTML = `
             <div class="user-status">
                <i class="fas fa-user-circle"></i> <span>${roleText}</span>
             </div>
             <button class="logout-btn mobile"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</button>
           `;
-          mobileUserInfoContainer.style.display = "block";
           document.querySelectorAll(".logout-btn").forEach(btn => btn.addEventListener("click", logout));
-          mobileMenuBtn.style.display = "block";
         }
 
         // --- Check for auto-login on page load ---
@@ -3419,4 +3431,5 @@
     </script>
   </body>
 </html>
+
 
